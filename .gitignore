@@ -1,0 +1,4 @@
+/realtime/target/*
+/delivery/target/*
+/realtime/.settings
+/delivery/.settings
