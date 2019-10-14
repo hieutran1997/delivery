@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import * as serviceWorker from './serviceWorker';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Router } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
-import App from './containers/App';
+import DashboardLayoutRoute from './containers/App';
 import Login from './containers/Login';
 import { createBrowserHistory } from "history";
 import apiMiddleware from './redux/middlewares/apiMiddleware';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import User from './modules/User';
 
 const history = createBrowserHistory();
 
@@ -30,7 +30,8 @@ const routing = (
   <Provider store={store}>
     <Router history={history}>
       <div>
-        <Route exact path="/" component={App} />
+        <DashboardLayoutRoute path="/" component={User} />
+        <DashboardLayoutRoute path="/users" component={User} />
         <Route exact path="/login" component={Login} />
       </div>
     </Router>
@@ -39,4 +40,3 @@ const routing = (
 
 ReactDOM.render(routing, document.getElementById('root'));
 
-serviceWorker.unregister();

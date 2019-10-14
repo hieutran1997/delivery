@@ -18,37 +18,37 @@ import com.erp.util.ResponseUtil;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-	
-	@Autowired
+
+    @Autowired
     private UserService userService;
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
-	
-	@RequestMapping(value="/signup", method = RequestMethod.POST)
-    public ResponseEntity<ResponseUtil<User>> signup(@RequestBody User user){
-    	ResponseUtil<User> result = new ResponseUtil<User>();
-    	User data = new User();
-    	data = this.userService.findUser(user.getUsername());
-    	if(data==null) {
-    		user.setPassword(passwordEncoder.encode(user.getPassword()));
-        	data = userService.save(user);
-        	if(data != null) {
-        		result.setObject(data);
-        		result.setError(false);
-        		return new ResponseEntity<>(result, HttpStatus.OK);
-        	}
-        	result.setMessage("Không lưu được, đăng ký thật bại!");
-    		result.setError(true);
-        	return new ResponseEntity<>(result, HttpStatus.OK);
-    	}
-    	result.setMessage("Đã tồn tại người dùng!");
-		result.setError(true);
-    	return new ResponseEntity<>(result, HttpStatus.OK);
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public ResponseEntity<ResponseUtil<User>> signup(@RequestBody User user) {
+        ResponseUtil<User> result = new ResponseUtil<User>();
+        User data = new User();
+        data = this.userService.findUser(user.getUsername());
+        if (data == null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            data = userService.save(user);
+            if (data != null) {
+                result.setObject(data);
+                result.setError(false);
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            result.setMessage("Không lưu được, đăng ký thật bại!");
+            result.setError(true);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        result.setMessage("Đã tồn tại người dùng!");
+        result.setError(true);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

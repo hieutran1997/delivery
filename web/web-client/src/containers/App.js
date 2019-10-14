@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Icon } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
 import { useSelector } from 'react-redux';
+import MenuComponent from '../components/MenuComponent';
+import { Route, Redirect } from 'react-router-dom';
+import { openNotification } from '../common';
 
 const { Header, Sider, Content } = Layout;
-//const { SubMenu } = Menu;
-
-const loginPage = {
-  pathname: '/login',
-  state: { firstPage: true }
-}
 
 function App(props) {
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const data = useSelector(state => state.authReducer);
+  let data = useSelector(state => state.authReducer);
   if (data && data.unauthorized) {
-    props.history.replace(loginPage);
+    openNotification('error', 'Lỗi', 'Phiên đăng nhập hết hạn!');
+    return <Redirect to='/login'/>;
   }
 
   const toggle = () => {
@@ -31,20 +29,7 @@ function App(props) {
         className="sider"
         trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1">
-            <Icon type="user" />
-            <span>nav 1</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Icon type="video-camera" />
-            <span>nav 2</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Icon type="upload" />
-            <span>nav 3</span>
-          </Menu.Item>
-        </Menu>
+        <MenuComponent />
       </Sider>
       <Layout>
         <Header style={{ background: '#fff', padding: 0 }}>
@@ -60,110 +45,27 @@ function App(props) {
             padding: 24,
             background: '#fff',
             minHeight: 280,
-            overflow: 'initial' 
+            overflow: 'initial'
           }}
         >
-          <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
-            ...
-          <br />
-            Really
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            long
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            ...
-          <br />
-            content
-        </div>
+          <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+            {props.children}
+          </div>
         </Content>
       </Layout>
     </Layout>
   );
 }
 
-export default App;
+const DashboardLayoutRoute = ({component: Component, ...rest}) => {  
+  return (  
+    <Route {...rest} render={matchProps => (  
+      <App>  
+          <Component {...matchProps} />  
+      </App>  
+    )} />  
+  )  
+};  
+  
+
+export default DashboardLayoutRoute;

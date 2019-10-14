@@ -1,26 +1,30 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import 'antd/dist/antd.css';
-import { DatePicker } from 'antd';
 import { connect } from 'react-redux';
 import { getAll } from '../actions';
 
-function User({getAll}) {
+function User(props) {
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAll);
+    if(!props.dataUser){
+      dispatch(props.getAll);
+    }else{
+      console.log('props.dataUser', props.dataUser);
+    }
   });
 
   return (
-    <div className="App">
-      <DatePicker></DatePicker>
+    <div>
+      aaaa
     </div>
   );
 }
 
 const mapStateToProps = state => ({
+  dataUser: state.userReducer
 });
 
 const mapDispatchToProps = { 
@@ -28,5 +32,6 @@ const mapDispatchToProps = {
  };
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(User);

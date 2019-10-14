@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card, Row, Col, Form, Icon, Input, Button, Checkbox, notification  } from 'antd';
+import { Card, Row, Col, Form, Icon, Input, Button, Checkbox  } from 'antd';
 import 'antd/dist/antd.css';
 import './Login.css';
 import { login } from '../actions';
+import { Route } from 'react-router-dom'; 
+import { openNotification } from '../common';
 
 const homePage = {
     pathname: '/',
@@ -26,9 +28,9 @@ class Login extends React.Component {
         if(authRecieve){
             if(!authRecieve.unauthorized){
                 if(authRecieve.error){
-                    this.openNotification('error', 'Thất bại', 'Đăng nhập không thành công!');
+                    openNotification('error', 'Thất bại', 'Đăng nhập không thành công!');
                 }else{
-                    this.openNotification('success', 'Thành công', 'Đăng nhập thành công!');
+                    openNotification('success', 'Thành công', 'Đăng nhập thành công!');
                     this.props.history.push(homePage);
                     this.props.history.replace(homePage);
                 }
@@ -36,19 +38,19 @@ class Login extends React.Component {
         }
     }
 
-    openNotification(type, message, description) {
-        const args = {
-          message: message,
-          description: description,
-          duration: 0,
-        };
-        if(type === 'error'){
-            notification.error(args);
-        }
-        else{
-            notification.success(args);
-        }
-      };
+    // openNotification(type, message, description) {
+    //     const args = {
+    //       message: message,
+    //       description: description,
+    //       duration: 0,
+    //     };
+    //     if(type === 'error'){
+    //         notification.error(args);
+    //     }
+    //     else{
+    //         notification.success(args);
+    //     }
+    //   };
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -100,6 +102,22 @@ class Login extends React.Component {
 
 const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(Login);
 
+const LoginLayout = ({ children }) => (                         
+    <div> 
+      {children}                                       
+    </div>  
+  );  
+
+const LoginLayoutRoute = ({component: Component, ...rest}) => {  
+    return (  
+      <Route {...rest} render={matchProps => (  
+        <LoginLayout>  
+            <Component {...matchProps} />  
+        </LoginLayout>  
+      )} />  
+    )  
+  };  
+
 const mapDispatchToProps = dispatch => ({
     onLogin: (username, password) => dispatch(login(username, password)),
 });
@@ -113,3 +131,5 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps, mapDispatchToProps
 )(WrappedNormalLoginForm);
+
+export {LoginLayoutRoute};

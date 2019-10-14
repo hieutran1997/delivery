@@ -27,3 +27,13 @@ export const client = axios.create({ //all axios can be used, shown in axios doc
         'Content-Type': 'application/json'
     }
 });
+
+export const menu = [
+    {
+        key: 1,
+        title: 'Người dùng',
+        component: 'User',
+        url_hash: 'users',
+        icon: 'user'
+    }
+]

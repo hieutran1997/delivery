@@ -8,17 +8,17 @@ const userReducer = (state, action) => {
     switch (action.type) {
         case GETALLUSER_REQUEST_SUCCESS:
             return {
-                ...action.payload,
+                ...action,
                 error: false
             };
         case GETALLUSER_SUCCESS:
             return {
-                ...action.payload,
+                ...action,
                 error: false
             };
         case GETALLUSER_ERROR:
             return {
-                ...action.payload,
+                ...action,
                 error: true
             };
         default:
