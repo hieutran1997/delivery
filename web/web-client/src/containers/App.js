@@ -42,9 +42,9 @@ function App(props) {
         <Content
           style={{
             margin: '24px 16px',
-            padding: 24,
+            padding: '8px 0px',
             background: '#fff',
-            minHeight: 280,
+            minHeight: 500,
             overflow: 'initial'
           }}
         >

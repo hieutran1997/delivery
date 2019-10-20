@@ -12,7 +12,7 @@ import Login from './containers/Login';
 import { createBrowserHistory } from "history";
 import apiMiddleware from './redux/middlewares/apiMiddleware';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import User from './modules/User';
+import User from './modules/usermodule/User';
 
 const history = createBrowserHistory();
 

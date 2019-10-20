@@ -1,28 +1,33 @@
 package com.erp.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
-public class User {
+@Table(name = "User")
+public class UserBO {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column
+
+    @Column(name = "username", nullable = false)
     private String username;
-    @Column
+
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column
+
+    @Column(name = "salary")
     private long salary;
-    @Column
+
+    @Column(name = "age")
     private int age;
-    
-    @Column
+
+    @Column(name = "first_name")
     private String firstname;
-    @Column
+
+    @Column(name = "last_name")
     private String lastname;
 
     public long getId() {
@@ -65,20 +70,20 @@ public class User {
         this.age = age;
     }
 
-	public String getFirstname() {
-		return firstname;
-	}
+    public String getFirstname() {
+        return firstname;
+    }
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-	public String getLastname() {
-		return lastname;
-	}
+    public String getLastname() {
+        return lastname;
+    }
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-    
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
 }

@@ -10,24 +10,24 @@ package com.erp.util;
  * @author hieut
  */
 public class SearchRequestUtil {
-    private int curPage;
-    private int perPage;
+    private int current;
+    private int pageSize;
     private String key;
 
-    public int getCurPage() {
-        return curPage;
+    public int getCurrent() {
+        return current;
     }
 
-    public void setCurPage(int curPage) {
-        this.curPage = curPage;
+    public void setCurrent(int current) {
+        this.current = current;
     }
 
-    public int getPerPage() {
-        return perPage;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setPerPage(int perPage) {
-        this.perPage = perPage;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     public String getKey() {
@@ -37,4 +37,5 @@ public class SearchRequestUtil {
     public void setKey(String key) {
         this.key = key;
     }
+    
 }

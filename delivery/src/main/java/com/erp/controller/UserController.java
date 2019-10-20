@@ -1,18 +1,17 @@
 package com.erp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.erp.model.User;
+import com.erp.model.UserBO;
 import com.erp.service.UserService;
 import com.erp.util.ResponseUtil;
+import com.erp.util.SearchRequestUtil;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 @RestController
 @RequestMapping("/users")
@@ -20,22 +19,19 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+       
+    @RequestMapping(value="/getAll", method = RequestMethod.GET)
+    public List<UserBO> listUser(){
+        return userService.findAll();
     }
     
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    
-    @RequestMapping(value="/user", method = RequestMethod.GET)
-    public List<User> listUser(){
-        return userService.findAll();
+    @RequestMapping(value = "/postQuery", method = RequestMethod.POST)
+    public Page<UserBO> postQuery(@RequestBody SearchRequestUtil pageable){
+        return userService.getDataSearch(pageable);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public User create(@RequestBody User user){
+    public UserBO create(@RequestBody UserBO user){
         return userService.save(user);
     }
 
@@ -47,8 +43,4 @@ public class UserController {
         result.setMessage("Thành công!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    
-    
-
-
 }

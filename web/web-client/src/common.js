@@ -13,3 +13,13 @@ export const openNotification = (type, message, description) => {
         notification.success(args);
     }
 };
+
+export const dataPost = {
+    current: 1,
+    pageSize: 10,
+    key: ''
+};
+
+export const message = {
+    messageConfirmDelete: 'Bạn có chắc chắn muốn xóa?'
+}

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.erp.model.User;
+import com.erp.model.UserBO;
 import com.erp.service.UserService;
 import com.erp.util.ResponseUtil;
 
@@ -31,9 +31,9 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<ResponseUtil<User>> signup(@RequestBody User user) {
-        ResponseUtil<User> result = new ResponseUtil<User>();
-        User data = new User();
+    public ResponseEntity<ResponseUtil<UserBO>> signup(@RequestBody UserBO user) {
+        ResponseUtil<UserBO> result = new ResponseUtil<UserBO>();
+        UserBO data = new UserBO();
         data = this.userService.findUser(user.getUsername());
         if (data == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
