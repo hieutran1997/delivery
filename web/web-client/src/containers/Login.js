@@ -56,7 +56,7 @@ class Login extends React.Component {
                                         />,
                                     )}
                                 </Form.Item>
-                                <Form.Item>
+                                <Form.Item hasFeedback>
                                     {getFieldDecorator('password', {
                                         rules: [{ required: true, message: 'Please input your Password!' }],
                                     })(

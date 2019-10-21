@@ -15,3 +15,7 @@ code {
 .icon-action:hover{
   cursor: pointer;
 }
+
+.error-message{
+  color: red;
+}

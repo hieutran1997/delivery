@@ -1,4 +1,4 @@
-package com.erp.service.impl;
+package com.erp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

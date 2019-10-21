@@ -4,7 +4,7 @@ export const openNotification = (type, message, description) => {
     const args = {
         message: message,
         description: description,
-        duration: 0,
+        duration: 2,
     };
     if (type === 'error') {
         notification.error(args);

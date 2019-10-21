@@ -30,12 +30,12 @@ public class UserController {
         return userService.getDataSearch(pageable);
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public UserBO create(@RequestBody UserBO user){
         return userService.save(user);
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<ResponseUtil<String>> delete(@PathVariable(value = "id") Long id){
         userService.delete(id);
         ResponseUtil<String> result = new ResponseUtil<String>();

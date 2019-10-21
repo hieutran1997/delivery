@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { getDataPaging } from '../../actions';
 import { dataPost, message } from '../../common';
 import { GETUSER_PAGING_SUCCESS } from '../../constants/ActionTypes';
-import { Table, Icon, Modal, Popconfirm, Form, Input } from 'antd';
+import { Table, Icon, Modal, Popconfirm, Row, Col } from 'antd';
+import useForm from 'react-hook-form'
 
 function User(props) {
 
@@ -14,6 +15,8 @@ function User(props) {
   const [dataSearch, setDataSearch] = useState(dataPost);
   const [isEdit, setIsEdit] = useState(false);
   const [dataDetail, setDataDetail] = useState({});
+  const { register, handleSubmit, errors } = useForm();
+  const onSubmit = data => console.log(data);
 
   const columns = [
     {
@@ -102,11 +105,6 @@ function User(props) {
     console.log('data', data);
   }
 
-  const handleFormChange = changedFields => {
-    console.log('changedFields', changedFields);
-    setDataDetail(changedFields);
-  };
-
   return (
     <div>
       <Table
@@ -122,11 +120,21 @@ function User(props) {
         title={"Sửa thông tin tài khoản: " + dataDetail.username}
         centered
         visible={isEdit}
-        onOk={() => setIsEdit(false)}
+        onOk={() => onSubmit}
         onCancel={() => setIsEdit(false)}
         width={800}
       >
-         <FormEdit {...dataDetail} onChange={handleFormChange}/>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Row type="flex" justify="space-around">
+            <input name="firstName" span={8} ref={register({ required: true, maxlength: 20 })} />
+            <span className="error-message">{errors.firstName && 'First name is required'}</span>
+
+            <input name="lastName" span={8} ref={register({ pattern: /^[A-Za-z]+$/i })} />
+          </Row>
+         
+          <br/>
+          <input name="age" span={12} type="number" ref={register({ min: 18, max: 99 })} />
+        </form>
       </Modal>
     </div>
   );
@@ -146,34 +154,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(User);
-
-
-
-const FormEdit = Form.create({
-  name: 'global_state',
-  onFieldsChange(props, changedFields) {
-    props.onChange(changedFields);
-  },
-  mapPropsToFields(props) {
-    return {
-      username: Form.createFormField({
-        ...props.username,
-        value: props.username.value,
-      }),
-    };
-  },
-  onValuesChange(_, values) {
-    console.log(values);
-  },
-})(props => {
-  const { getFieldDecorator } = props.form;
-  return (
-    <Form layout="inline">
-      <Form.Item label="Username">
-        {getFieldDecorator('username', {
-          rules: [{ required: true, message: 'Username is required!' }],
-        })(<Input />)}
-      </Form.Item>
-    </Form>
-  );
-});
