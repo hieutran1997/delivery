@@ -4,7 +4,13 @@ import {
     GETALLUSER_ERROR,
     GETUSER_PAGING_REQUEST_SUCCESS,
     GETUSER_PAGING_SUCCESS,
-    GETUSER_PAGING_ERROR
+    GETUSER_PAGING_ERROR,
+    UPDATE_USER_REQUEST_SUCCESS,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_ERROR,
+    DELETE_USER_REQUEST_SUCCESS,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_ERROR
 } from '../constants/ActionTypes';
 
 const userReducer = (state, action) => {
@@ -36,6 +42,38 @@ const userReducer = (state, action) => {
                 type: GETUSER_PAGING_SUCCESS
             }
         case GETUSER_PAGING_ERROR:
+            return {
+                ...action,
+                error: true
+            }
+        case UPDATE_USER_REQUEST_SUCCESS:
+            return {
+                ...action,
+                error: false
+            }
+        case UPDATE_USER_SUCCESS:
+            return {
+                ...action.result.data,
+                error: false,
+                type: UPDATE_USER_SUCCESS
+            }
+        case UPDATE_USER_ERROR:
+            return {
+                ...action,
+                error: true
+            }
+        case DELETE_USER_REQUEST_SUCCESS:
+            return {
+                ...action,
+                error: false
+            }
+        case DELETE_USER_SUCCESS:
+            return {
+                ...action.result.data,
+                error: false,
+                type: DELETE_USER_SUCCESS
+            }
+        case DELETE_USER_ERROR:
             return {
                 ...action,
                 error: true

@@ -19,3 +19,16 @@ code {
 .error-message{
   color: red;
 }
+
+.footer-modal{
+  margin-top: 40px;
+  text-align: right;
+}
+
+.btn-discard{
+  margin: 0 5px !important;
+}
+
+.btn-save{
+  margin: 0 5px !important;
+}

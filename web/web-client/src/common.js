@@ -21,5 +21,15 @@ export const dataPost = {
 };
 
 export const message = {
-    messageConfirmDelete: 'Bạn có chắc chắn muốn xóa?'
+    messageConfirmDelete: 'Bạn có chắc chắn muốn xóa?',
+    updateSuccess: 'Sửa thành công',
+    updateError: 'Không sửa được!',
+    deleteSuccess: 'Xóa thành công',
+    deleteError: 'Không xóa được!'
+}
+
+export function mappingDataChange(resource, destinnation){
+    for(var propt in resource){
+        destinnation[propt] = resource[propt];
+    }
 }

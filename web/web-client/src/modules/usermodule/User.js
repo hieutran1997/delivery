@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getDataPaging } from '../../actions';
-import { dataPost, message } from '../../common';
-import { GETUSER_PAGING_SUCCESS } from '../../constants/ActionTypes';
-import { Table, Icon, Modal, Popconfirm, Row, Col } from 'antd';
-import useForm from 'react-hook-form'
+import { getDataPaging, update, deleteData } from '../../actions';
+import { dataPost, message, mappingDataChange, openNotification } from '../../common';
+import { GETUSER_PAGING_SUCCESS, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, DELETE_USER_ERROR, DELETE_USER_SUCCESS } from '../../constants/ActionTypes';
+import { Table, Icon, Popconfirm } from 'antd';
+import { PopupInfo } from './popupInfo.component';
 
 function User(props) {
-
   const [dataContent, setDataContent] = useState([]);
   const [pagination, setPagination] = useState({});
   const [isLoading, setLoading] = useState(false);
   const [dataSearch, setDataSearch] = useState(dataPost);
   const [isEdit, setIsEdit] = useState(false);
   const [dataDetail, setDataDetail] = useState({});
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = data => console.log(data);
-
+  
   const columns = [
     {
       title: 'STT',
@@ -69,7 +66,7 @@ function User(props) {
   useEffect(() => {
     if (!props.dataUser) {
       setLoading(true);
-      if (dataContent) {
+      if (dataContent.length === 0) {
         props.filterData(dataSearch);
       }
     } else {
@@ -80,8 +77,24 @@ function User(props) {
           setPagination({
             current: props.dataUser.number + 1,
             pageSize: props.dataUser.size,
-            total: props.dataUser.totalElements
+            total: props.dataUser.totalElements,
+            size: 'small'
           });
+          break;
+        case UPDATE_USER_SUCCESS:
+          openNotification('success', 'Thành công', message.updateSuccess);
+          props.filterData(dataSearch);
+          closePopup();
+          break;
+        case UPDATE_USER_ERROR:
+          openNotification('error', 'Lỗi', message.updateSuccess);
+          break;
+        case DELETE_USER_SUCCESS:
+            openNotification('success', 'Thành công', message.deleteSuccess);
+            props.filterData(dataSearch);
+            break;
+        case DELETE_USER_ERROR:
+          openNotification('error', 'Lỗi', message.deleteError);
           break;
         default:
           console.log('1');
@@ -98,11 +111,22 @@ function User(props) {
   const handleEdit = (data) => {
     setDataDetail(data);
     setIsEdit(true);
-    console.log('data', data);
+  }
+
+  const closePopup = () => {
+    setIsEdit(false);
+  }
+
+  const onSaveChange = (data)=>{
+    var instance = dataDetail;
+    mappingDataChange(data, instance);
+    props.update(instance);
   }
 
   const handleDelete = (data) => {
-    console.log('data', data);
+    if(data){
+      props.deleteData(data);
+    }
   }
 
   return (
@@ -115,27 +139,7 @@ function User(props) {
         loading={isLoading}
         onChange={handleTableChange}
       />
-
-      <Modal
-        title={"Sửa thông tin tài khoản: " + dataDetail.username}
-        centered
-        visible={isEdit}
-        onOk={() => onSubmit}
-        onCancel={() => setIsEdit(false)}
-        width={800}
-      >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Row type="flex" justify="space-around">
-            <input name="firstName" span={8} ref={register({ required: true, maxlength: 20 })} />
-            <span className="error-message">{errors.firstName && 'First name is required'}</span>
-
-            <input name="lastName" span={8} ref={register({ pattern: /^[A-Za-z]+$/i })} />
-          </Row>
-         
-          <br/>
-          <input name="age" span={12} type="number" ref={register({ min: 18, max: 99 })} />
-        </form>
-      </Modal>
+      <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange}></PopupInfo>
     </div>
   );
 }
@@ -146,7 +150,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    filterData: (data) => dispatch(getDataPaging(data))
+    filterData: (data) => dispatch(getDataPaging(data)),
+    update: (data) => dispatch(update(data)),
+    deleteData: (data) => dispatch(deleteData(data))
   }
 };
 

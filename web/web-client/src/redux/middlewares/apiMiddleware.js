@@ -31,15 +31,15 @@ const apiMiddleware = store => next => action => {
 
   const actionPromise = api(_service);
   actionPromise.then(
-    (result) => next({ ...rest, result, type: SUCCESS }),
+    (result) => next({ result, type: SUCCESS }),
     (error) => {
       if(error.response && error.response.status === 401){
-        return next({ ...rest, error, type: UNAUTHORIZED });
+        return next({ error, type: UNAUTHORIZED });
       }
-      return next({ ...rest, error, type: FAILURE });
+      return next({ error, type: FAILURE });
     }
   ).catch((error) => {
-    next({ ...rest, error, type: FAILURE });
+    next({ error, type: FAILURE });
   });
 
   return actionPromise;

@@ -9,7 +9,8 @@ export const environments_prod = {
 }
 
 export const url_services = {
-    LOGIN: '/oauth/token'
+    LOGIN: '/oauth/token',
+    USER: 'users'
 }
 
 export default function environments() {

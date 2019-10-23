@@ -34,6 +34,11 @@ public class UserController {
     public UserBO create(@RequestBody UserBO user){
         return userService.save(user);
     }
+    
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public UserBO update(@RequestBody UserBO user){
+        return userService.save(user);
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<ResponseUtil<String>> delete(@PathVariable(value = "id") Long id){
