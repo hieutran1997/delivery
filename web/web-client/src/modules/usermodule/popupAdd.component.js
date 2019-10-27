@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Row, Col, Button } from 'antd';
 import useForm from 'react-hook-form';
 
-export function PopupInfo(props){
+export function PopupAdd(props){
     const { register, handleSubmit, errors, setValue } = useForm();
-    const [isEdit, setIsEdit] = useState(false);
+    const [isShowAdd, setIsShowAdd] = useState(false);
     const [dataDetail, setDataDetail] = useState(props);
     const onSaveEdit = data => {
         props.onSave(data);
@@ -20,13 +20,13 @@ export function PopupInfo(props){
                 setValue("lastname", props.dataDetail.lastname);
             }, 100);
         }
-        setIsEdit(props.isEdit);
+        setIsShowAdd(props.isShowAdd);
     }, [props, dataDetail, setValue]);
 
     return(
         <Modal
-        title={"Sửa thông tin tài khoản: " + dataDetail.username}
-        visible={isEdit}
+        title={"Thêm mới tài khoản: "}
+        visible={isShowAdd}
         footer={null}
         width={800}
         onCancel={props.closePopup}

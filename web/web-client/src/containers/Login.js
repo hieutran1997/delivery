@@ -4,7 +4,6 @@ import { Card, Row, Col, Form, Icon, Input, Button, Checkbox  } from 'antd';
 import 'antd/dist/antd.css';
 import './Login.css';
 import { login } from '../actions';
-import { Route } from 'react-router-dom'; 
 import { openNotification } from '../common';
 
 const homePage = {
@@ -31,8 +30,8 @@ class Login extends React.Component {
                     openNotification('error', 'Thất bại', 'Đăng nhập không thành công!');
                 }else{
                     openNotification('success', 'Thành công', 'Đăng nhập thành công!');
-                    this.props.history.push(homePage);
-                    this.props.history.replace(homePage);
+                    this.props.route.history.push(homePage);
+                    this.props.route.history.replace(homePage);
                 }
             }
         }
@@ -88,22 +87,6 @@ class Login extends React.Component {
 
 const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(Login);
 
-const LoginLayout = ({ children }) => (                         
-    <div> 
-      {children}                                       
-    </div>  
-  );  
-
-const LoginLayoutRoute = ({component: Component, ...rest}) => {  
-    return (  
-      <Route {...rest} render={matchProps => (  
-        <LoginLayout>  
-            <Component {...matchProps} />  
-        </LoginLayout>  
-      )} />  
-    )  
-  };  
-
 const mapDispatchToProps = dispatch => ({
     onLogin: (username, password) => dispatch(login(username, password)),
 });
@@ -118,4 +101,11 @@ export default connect(
     mapStateToProps, mapDispatchToProps
 )(WrappedNormalLoginForm);
 
-export {LoginLayoutRoute};
+
+export const AuthLayout = function(props){
+    const Component = props.component;
+    const route = props.route;
+    return (
+        <Component route={route}/>
+    );
+}

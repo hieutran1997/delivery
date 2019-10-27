@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { getDataPaging, update, deleteData } from '../../actions';
 import { dataPost, message, mappingDataChange, openNotification } from '../../common';
 import { GETUSER_PAGING_SUCCESS, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, DELETE_USER_ERROR, DELETE_USER_SUCCESS } from '../../constants/ActionTypes';
-import { Table, Icon, Popconfirm } from 'antd';
+import { Table, Icon, Popconfirm, Button } from 'antd';
 import { PopupInfo } from './popupInfo.component';
+import { PopupAdd } from './popupAdd.component';
 
 function User(props) {
   const [dataContent, setDataContent] = useState([]);
@@ -13,6 +14,7 @@ function User(props) {
   const [isLoading, setLoading] = useState(false);
   const [dataSearch, setDataSearch] = useState(dataPost);
   const [isEdit, setIsEdit] = useState(false);
+  const [isShowAdd, setIsShowAdd] = useState(false);
   const [dataDetail, setDataDetail] = useState({});
   
   const columns = [
@@ -52,6 +54,8 @@ function User(props) {
           &nbsp;&nbsp;&nbsp;&nbsp;
           <Popconfirm
             title={message.messageConfirmDelete}
+            okText= {message.okText}
+            cancelText= {message.cancelText}
             icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
             onConfirm={() => { handleDelete(record) }}
           >
@@ -113,14 +117,24 @@ function User(props) {
     setIsEdit(true);
   }
 
+  const handleAdd = () =>{
+    setDataDetail({});
+    setIsShowAdd(true);
+  }
+
   const closePopup = () => {
     setIsEdit(false);
+    setIsShowAdd(false);
   }
 
   const onSaveChange = (data)=>{
     var instance = dataDetail;
     mappingDataChange(data, instance);
     props.update(instance);
+  }
+
+  const onSave = (data)=>{
+    console.log('data', data);
   }
 
   const handleDelete = (data) => {
@@ -131,6 +145,10 @@ function User(props) {
 
   return (
     <div>
+      <Button type="primary" onClick={handleAdd} icon="plus" size="large">
+        {message.add}
+      </Button>
+      <br/>
       <Table
         columns={columns}
         rowKey={record => record.id}
@@ -139,6 +157,7 @@ function User(props) {
         loading={isLoading}
         onChange={handleTableChange}
       />
+      <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave}/>
       <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange}></PopupInfo>
     </div>
   );

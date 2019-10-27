@@ -25,7 +25,10 @@ export const message = {
     updateSuccess: 'Sửa thành công',
     updateError: 'Không sửa được!',
     deleteSuccess: 'Xóa thành công',
-    deleteError: 'Không xóa được!'
+    deleteError: 'Không xóa được!',
+    okText: 'Đồng ý',
+    cancelText: 'Hủy bỏ',
+    add: 'Thêm mới'
 }
 
 export function mappingDataChange(resource, destinnation){

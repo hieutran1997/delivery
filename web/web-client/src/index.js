@@ -1,20 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Route, Router } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
-import DashboardLayoutRoute from './containers/App';
-import Login from './containers/Login';
-import { createBrowserHistory } from "history";
 import apiMiddleware from './redux/middlewares/apiMiddleware';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import User from './modules/usermodule/User';
 
-const history = createBrowserHistory();
+import Template from './template';
 
 const middleware = [thunk];
 if (process.env.NODE_ENV !== 'production') {
@@ -28,13 +23,7 @@ const store = createStore(
 
 const routing = (
   <Provider store={store}>
-    <Router history={history}>
-      <div>
-        <DashboardLayoutRoute path="/" component={User} />
-        <DashboardLayoutRoute path="/users" component={User} />
-        <Route exact path="/login" component={Login} />
-      </div>
-    </Router>
+      <Template />
   </Provider>
 );
 

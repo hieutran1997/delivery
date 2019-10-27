@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import './App.css';
 import { useSelector } from 'react-redux';
 import MenuComponent from '../components/MenuComponent';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { openNotification } from '../common';
 
 const { Header, Sider, Content } = Layout;
@@ -13,8 +13,12 @@ function App(props) {
 
   const [collapsed, setCollapsed] = useState(false);
 
+  const Component = props.component;
+  const route = props.route;
+
   let data = useSelector(state => state.authReducer);
   if (data && data.unauthorized) {
+    localStorage.removeItem('deliveryApp');
     openNotification('error', 'Lỗi', 'Phiên đăng nhập hết hạn!');
     return <Redirect to='/login'/>;
   }
@@ -49,7 +53,7 @@ function App(props) {
           }}
         >
           <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-            {props.children}
+            <Component route={route}/>
           </div>
         </Content>
       </Layout>
@@ -57,15 +61,4 @@ function App(props) {
   );
 }
 
-const DashboardLayoutRoute = ({component: Component, ...rest}) => {  
-  return (  
-    <Route {...rest} render={matchProps => (  
-      <App>  
-          <Component {...matchProps} />  
-      </App>  
-    )} />  
-  )  
-};  
-  
-
-export default DashboardLayoutRoute;
+export default App;
