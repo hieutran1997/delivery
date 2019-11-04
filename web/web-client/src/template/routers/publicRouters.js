@@ -1,5 +1,5 @@
-import User from '../../modules/userModule/User';
-import Home from '../../modules/homeModule/Home';
+import User from '../../modules/usermodule/User';
+import Home from '../../modules/homemodule/Home';
 export default{
     Home: {
         component: Home,

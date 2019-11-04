@@ -9,10 +9,19 @@ package com.erp.util;
  *
  * @author hieut
  */
-public class SearchRequestUtil {
+public class SearchRequestUtil<T> {
     private int current;
     private int pageSize;
     private String key;
+    private T data;
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 
     public int getCurrent() {
         return current;

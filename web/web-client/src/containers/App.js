@@ -46,13 +46,11 @@ function App(props) {
         <Content
           style={{
             margin: '24px 16px',
-            padding: '8px 0px',
-            background: '#fff',
             minHeight: 500,
             overflow: 'initial'
           }}
         >
-          <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+          <div style={{ padding: 24, minHeight: 360 }}>
             <Component route={route}/>
           </div>
         </Content>

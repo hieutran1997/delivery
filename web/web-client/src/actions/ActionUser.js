@@ -17,6 +17,14 @@ const getDataPaging = (data) => {
     };
 };
 
+const insert = (data) => {
+    const url = `${url_services.USER}/`;
+    return {
+        types: [types.CREATE_USER_REQUEST_SUCCESS, types.CREATE_USER_SUCCESS, types.CREATE_USER_ERROR],
+        api: (axios) => axios.post(url, data)
+    };
+};
+
 const update = (data) => {
     const url = `${url_services.USER}/`;
     return {
@@ -33,4 +41,4 @@ const deleteData = (data) => {
     };
 };
 
-export { getAll, getDataPaging, update, deleteData };
+export { getAll, getDataPaging, insert, update, deleteData };

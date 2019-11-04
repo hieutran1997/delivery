@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getDataPaging, update, deleteData } from '../../actions';
+import { getDataPaging, insert, update, deleteData } from '../../actions';
 import { dataPost, message, mappingDataChange, openNotification } from '../../common';
-import { GETUSER_PAGING_SUCCESS, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, DELETE_USER_ERROR, DELETE_USER_SUCCESS } from '../../constants/ActionTypes';
-import { Table, Icon, Popconfirm, Button } from 'antd';
+import {  GETUSER_PAGING_SUCCESS, 
+          CREATE_USER_SUCCESS,
+          CREATE_USER_ERROR,
+          UPDATE_USER_SUCCESS, 
+          UPDATE_USER_ERROR, 
+          DELETE_USER_ERROR, 
+          DELETE_USER_SUCCESS } from '../../constants/ActionTypes';
+import { Table, Icon, Popconfirm, Card } from 'antd';
 import { PopupInfo } from './popupInfo.component';
 import { PopupAdd } from './popupAdd.component';
+import { FormSearch } from './formSearch.component';
 
 function User(props) {
   const [dataContent, setDataContent] = useState([]);
@@ -46,7 +53,7 @@ function User(props) {
       dataIndex: 'age'
     },
     {
-      title: 'Action',
+      title: '#',
       key: 'action',
       render: (text, record) => (
         <span>
@@ -77,11 +84,11 @@ function User(props) {
       setLoading(false);
       switch (props.dataUser.type) {
         case GETUSER_PAGING_SUCCESS:
-          setDataContent(props.dataUser.content);
+          setDataContent(props.dataUser.data);
           setPagination({
-            current: props.dataUser.number + 1,
-            pageSize: props.dataUser.size,
-            total: props.dataUser.totalElements,
+            current: props.dataUser.curPage + 1,
+            pageSize: props.dataUser.perPage,
+            total: props.dataUser.total,
             size: 'small'
           });
           break;
@@ -92,6 +99,14 @@ function User(props) {
           break;
         case UPDATE_USER_ERROR:
           openNotification('error', 'Lỗi', message.updateSuccess);
+          break;
+        case CREATE_USER_SUCCESS:
+          openNotification('success', 'Thành công', message.createSuccess);
+          props.filterData(dataSearch);
+          closePopup();
+          break;
+        case CREATE_USER_ERROR:
+          openNotification('error', 'Lỗi', message.createError);
           break;
         case DELETE_USER_SUCCESS:
             openNotification('success', 'Thành công', message.deleteSuccess);
@@ -106,6 +121,12 @@ function User(props) {
       }
     }
   }, [props, dataContent, dataSearch]);
+
+  const handlerSearch = data =>{
+    dataPost.data = data;
+    setDataSearch(dataPost);
+    props.filterData(dataSearch);
+  }
 
   const handleTableChange = (pagination) => {
     setDataSearch(pagination);
@@ -134,7 +155,8 @@ function User(props) {
   }
 
   const onSave = (data)=>{
-    console.log('data', data);
+    var instance = data;
+    props.insert(instance);
   }
 
   const handleDelete = (data) => {
@@ -145,18 +167,21 @@ function User(props) {
 
   return (
     <div>
-      <Button type="primary" onClick={handleAdd} icon="plus" size="large">
-        {message.add}
-      </Button>
+      <Card>
+        <FormSearch onCreate={handleAdd} onSearch={handlerSearch}></FormSearch>
+      </Card>
       <br/>
-      <Table
-        columns={columns}
-        rowKey={record => record.id}
-        dataSource={dataContent}
-        pagination={pagination}
-        loading={isLoading}
-        onChange={handleTableChange}
-      />
+      <Card>
+        <Table
+          columns={columns}
+          rowKey={record => record.username}
+          dataSource={dataContent}
+          pagination={pagination}
+          loading={isLoading}
+          onChange={handleTableChange}
+        />
+      </Card>
+     
       <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave}/>
       <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange}></PopupInfo>
     </div>
@@ -170,6 +195,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     filterData: (data) => dispatch(getDataPaging(data)),
+    insert: (data)=>dispatch(insert(data)),
     update: (data) => dispatch(update(data)),
     deleteData: (data) => dispatch(deleteData(data))
   }

@@ -14,15 +14,18 @@ import java.util.List;
 
 import com.erp.dao.UserDao;
 import com.erp.model.UserBO;
-import com.erp.service.UserService;
+import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
-import org.springframework.data.domain.PageRequest;
+import com.erp.util.VfData;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserDao userDao;
+    
+    @Autowired
+    private VfData vfData;
 
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         UserBO user = userDao.findByUsername(userId);
@@ -42,9 +45,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return list;
     }
     
-    public Page<UserBO> getDataSearch(SearchRequestUtil pageable){
-        PageRequest request = new PageRequest(pageable.getCurrent()- 1, pageable.getPageSize());
-        return userDao.findAll(request);
+    public PaginationUtil<UserBO> getDataSearch(SearchRequestUtil<UserBO> pageable){
+        return userDao.getDataPaging(pageable, vfData);
     }
 
     @Override

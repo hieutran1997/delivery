@@ -7,15 +7,28 @@ import org.springframework.web.bind.annotation.*;
 
 import com.erp.model.UserBO;
 import com.erp.service.UserService;
+import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
 import com.erp.util.SearchRequestUtil;
 
 import java.util.List;
-import org.springframework.data.domain.Page;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    
+    private static final String PASSWORD_DEFAULT = "admin@123";
+    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
@@ -26,12 +39,13 @@ public class UserController {
     }
     
     @RequestMapping(value = "/postQuery", method = RequestMethod.POST)
-    public Page<UserBO> postQuery(@RequestBody SearchRequestUtil pageable){
-        return userService.getDataSearch(pageable);
+    public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<UserBO> pageable){
+        return new ResponseEntity<PaginationUtil<UserBO>>(userService.getDataSearch(pageable), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public UserBO create(@RequestBody UserBO user){
+        user.setPassword(passwordEncoder.encode(PASSWORD_DEFAULT));
         return userService.save(user);
     }
     

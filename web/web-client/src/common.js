@@ -17,11 +17,14 @@ export const openNotification = (type, message, description) => {
 export const dataPost = {
     current: 1,
     pageSize: 10,
-    key: ''
+    key: '',
+    data: {}
 };
 
 export const message = {
     messageConfirmDelete: 'Bạn có chắc chắn muốn xóa?',
+    createSuccess: 'Thêm mới thành công',
+    createError: 'Không thêm được!',
     updateSuccess: 'Sửa thành công',
     updateError: 'Không sửa được!',
     deleteSuccess: 'Xóa thành công',

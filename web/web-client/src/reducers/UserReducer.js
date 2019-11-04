@@ -5,6 +5,9 @@ import {
     GETUSER_PAGING_REQUEST_SUCCESS,
     GETUSER_PAGING_SUCCESS,
     GETUSER_PAGING_ERROR,
+    CREATE_USER_REQUEST_SUCCESS,
+    CREATE_USER_SUCCESS,
+    CREATE_USER_ERROR,
     UPDATE_USER_REQUEST_SUCCESS,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_ERROR,
@@ -42,6 +45,22 @@ const userReducer = (state, action) => {
                 type: GETUSER_PAGING_SUCCESS
             }
         case GETUSER_PAGING_ERROR:
+            return {
+                ...action,
+                error: true
+            }
+        case CREATE_USER_REQUEST_SUCCESS:
+            return {
+                ...action,
+                error: false
+            }
+        case CREATE_USER_SUCCESS:
+            return {
+                ...action.result.data,
+                error: false,
+                type: CREATE_USER_SUCCESS
+            }
+        case CREATE_USER_ERROR:
             return {
                 ...action,
                 error: true
