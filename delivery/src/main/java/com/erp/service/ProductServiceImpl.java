@@ -6,7 +6,7 @@
 package com.erp.service;
 
 import com.erp.dao.ProductDao;
-import com.erp.model.ProductBO;
+import com.erp.model.ProductModel;
 import com.erp.redis.repository.RedisRepository;
 import com.erp.util.SearchRequestUtil;
 import java.util.List;
@@ -29,18 +29,12 @@ public class ProductServiceImpl implements ProductService{
     private RedisRepository redisRepository;
     
     @Override
-    public ProductBO save(ProductBO instance) {
+    public ProductModel save(ProductModel instance) {
         return productDao.save(instance);
     }
     
     @Override
-    public void delete(long id) {
-        productDao.delete(id);
-    }
-
-    @Override
-    public Page<ProductBO> getDataSearch(SearchRequestUtil pageable) {
-        PageRequest request = new PageRequest(pageable.getCurrent()- 1, pageable.getPageSize());
-        return productDao.findAll(request);
+    public void delete(ProductModel bo) {
+        productDao.delete(bo);
     }
 }

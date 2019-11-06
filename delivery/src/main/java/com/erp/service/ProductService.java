@@ -5,7 +5,7 @@
  */
 package com.erp.service;
 
-import com.erp.model.ProductBO;
+import com.erp.model.ProductModel;
 import com.erp.util.SearchRequestUtil;
 import org.springframework.data.domain.Page;
 
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
  * @author hieut
  */
 public interface ProductService {
-    ProductBO save(ProductBO instance);
-    void delete(long id);
-    Page<ProductBO> getDataSearch(SearchRequestUtil pageable);
+    ProductModel save(ProductModel instance);
+    void delete(ProductModel bo);
 }

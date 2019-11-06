@@ -39,3 +39,18 @@
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
+
+.currentInfo{
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.icon-header-right{
+  float: right;
+  margin: 25px;
+}
+
+.icon-header-right:hover{
+  cursor: pointer;
+}

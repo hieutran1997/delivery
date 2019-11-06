@@ -26,7 +26,7 @@ const apiMiddleware = store => next => action => {
   var token = localStorage.getItem('deliveryApp');
   if (token) {
     token = JSON.parse(token);
-    _service.defaults.headers.Authorization = `Bearer ${token.access_token}`;
+    _service.defaults.headers.Authorization = `Bearer ${token.token}`;
   }
 
   const actionPromise = api(_service);

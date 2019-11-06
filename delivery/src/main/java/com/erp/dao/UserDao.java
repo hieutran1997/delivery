@@ -2,7 +2,7 @@ package com.erp.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.erp.model.UserBO;
+import com.erp.model.UserModel;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
@@ -15,12 +15,12 @@ import org.hibernate.transform.Transformers;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface UserDao extends JpaRepository<UserBO, Long> {
+public interface UserDao extends JpaRepository<UserModel, Long> {
     
-    UserBO findByUsername(String username);
+    UserModel findByUsername(String username);
     
-    public default PaginationUtil<UserBO> getDataPaging(SearchRequestUtil<UserBO> pageable, VfData vfData){
-        PaginationUtil<UserBO> results = new PaginationUtil<>();
+    public default PaginationUtil<UserModel> getDataPaging(SearchRequestUtil<UserModel> pageable, VfData vfData){
+        PaginationUtil<UserModel> results = new PaginationUtil<>();
         int start = (pageable.getCurrent()-1) * pageable.getPageSize();
         int end = start+ pageable.getPageSize();
         
@@ -53,7 +53,7 @@ public interface UserDao extends JpaRepository<UserBO, Long> {
                 }
             }
         }
-        query.setResultTransformer(Transformers.aliasToBean(UserBO.class));
+        query.setResultTransformer(Transformers.aliasToBean(UserModel.class));
         results.setTotal(((BigInteger) queryCount.uniqueResult()).intValue());
         results.setCurPage(pageable.getCurrent());
         results.setPerPage(pageable.getPageSize());

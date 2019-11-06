@@ -31,7 +31,10 @@ export const message = {
     deleteError: 'Không xóa được!',
     okText: 'Đồng ý',
     cancelText: 'Hủy bỏ',
-    add: 'Thêm mới'
+    add: 'Thêm mới',
+    titleApp: 'QLCCU',
+    titleFormSearch: 'Tìm kiếm',
+    titleFormListUser: 'Danh sách người dùng'
 }
 
 export function mappingDataChange(resource, destinnation){

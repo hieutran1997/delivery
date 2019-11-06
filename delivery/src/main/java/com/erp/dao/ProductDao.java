@@ -5,7 +5,7 @@
  */
 package com.erp.dao;
 
-import com.erp.model.ProductBO;
+import com.erp.model.ProductModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author hieut
  */
 @Repository
-public interface ProductDao extends JpaRepository<ProductBO, Long>  {
+public interface ProductDao extends JpaRepository<ProductModel, Long>  {
     
 }

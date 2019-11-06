@@ -42,7 +42,7 @@ class Login extends React.Component {
         return (
             <div className="formLogin">
                 <Row gutter={16}>
-                    <Col span={10} offset={7}>
+                    <Col span={7} offset={9}>
                         <Card style={{ width: '100%' }} title="Đăng nhập">
                             <Form onSubmit={this.handleSubmit} className="login-form">
                                 <Form.Item>

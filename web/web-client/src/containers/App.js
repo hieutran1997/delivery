@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { Layout, Icon } from 'antd';
+import { Layout, Icon, Menu, Dropdown  } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import MenuComponent from '../components/MenuComponent';
 import { Redirect } from 'react-router-dom';
 import { openNotification } from '../common';
+import { useHistory } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
+
+const getCurrentUser = () =>{
+  var info = localStorage.getItem('deliveryApp');
+  if (info) {
+    info = JSON.parse(info);
+    return info;
+  }
+}
 
 function App(props) {
 
@@ -16,6 +25,7 @@ function App(props) {
   const Component = props.component;
   const route = props.route;
 
+  let history = useHistory();
   let data = useSelector(state => state.authReducer);
   if (data && data.unauthorized) {
     localStorage.removeItem('deliveryApp');
@@ -27,12 +37,34 @@ function App(props) {
     setCollapsed(!collapsed);
   };
 
+  const onClickDropDownUser = ({ key }) => {
+    if(key === "2"){
+      localStorage.removeItem('deliveryApp');
+      history.push("/login");
+    }  
+  };
+  
+  const dropDownUser = (
+    <Menu onClick={onClickDropDownUser}>
+      <Menu.Item key="1">
+        <Icon type="user" /> {props.currentUser.username}
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Icon type="logout" />  Đăng xuất
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <Layout>
       <Sider
         className="sider"
         trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" />
+        <div className="logo" >
+          <div className="currentInfo">
+            {/* <img src={process.env.PUBLIC_URL + '/logo.png'} alt={message.titleApp}/> */}
+          </div>
+        </div>
         <MenuComponent />
       </Sider>
       <Layout>
@@ -42,6 +74,9 @@ function App(props) {
             type={collapsed ? 'menu-unfold' : 'menu-fold'}
             onClick={() => toggle()}
           />
+          <Dropdown overlay={dropDownUser} trigger={['click']}>
+            <Icon type="user" className="icon-header-right" alt="User"/>
+          </Dropdown>
         </Header>
         <Content
           style={{
@@ -59,4 +94,6 @@ function App(props) {
   );
 }
 
-export default App;
+const mapStateToProps = state => ({ currentUser: getCurrentUser() })
+
+export default connect(mapStateToProps)(App)

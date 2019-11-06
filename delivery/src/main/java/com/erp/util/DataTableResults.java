@@ -4,11 +4,10 @@
  */
 package com.erp.util;
 
+import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.google.gson.Gson;
 
 /**
  * @author vietlv2

@@ -9,7 +9,7 @@ export const environments_prod = {
 }
 
 export const url_services = {
-    LOGIN: '/oauth/token',
+    LOGIN: '/auth/token',
     USER: 'users'
 }
 

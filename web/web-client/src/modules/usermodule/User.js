@@ -57,7 +57,7 @@ function User(props) {
       key: 'action',
       render: (text, record) => (
         <span>
-          <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" />
+          <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa"/>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <Popconfirm
             title={message.messageConfirmDelete}
@@ -66,7 +66,7 @@ function User(props) {
             icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
             onConfirm={() => { handleDelete(record) }}
           >
-            <Icon type="delete" className="icon-action" />
+            <Icon type="delete" className="icon-action" title="Xóa" />
           </Popconfirm>
         </span>
       ),
@@ -167,11 +167,11 @@ function User(props) {
 
   return (
     <div>
-      <Card>
+      <Card title={message.titleFormSearch}>
         <FormSearch onCreate={handleAdd} onSearch={handlerSearch}></FormSearch>
       </Card>
       <br/>
-      <Card>
+      <Card title={message.titleFormListUser}>
         <Table
           columns={columns}
           rowKey={record => record.username}
