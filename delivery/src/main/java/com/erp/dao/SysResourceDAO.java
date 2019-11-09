@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.erp.service;
+package com.erp.dao;
 
-import com.erp.model.ProductModel;
+import com.erp.model.SysResourceModel;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author hieut
  */
-public interface ProductService {
-    ProductModel save(ProductModel instance);
-    void delete(ProductModel bo);
+public interface SysResourceDAO extends JpaRepository<SysResourceModel, Long> {
+    
 }

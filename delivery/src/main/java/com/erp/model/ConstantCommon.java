@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.erp.service;
-
-import com.erp.model.ProductModel;
+package com.erp.model;
 
 /**
  *
  * @author hieut
  */
-public interface ProductService {
-    ProductModel save(ProductModel instance);
-    void delete(ProductModel bo);
+public interface ConstantCommon {
+    boolean is_use = true;
+    enum TYPEOFRESOURCE {
+        MENU,
+        CONTROL
+    }
 }

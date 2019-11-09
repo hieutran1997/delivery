@@ -5,13 +5,16 @@
  */
 package com.erp.service;
 
-import com.erp.model.ProductModel;
+import com.erp.model.SysResourceModel;
+import java.util.List;
 
 /**
  *
  * @author hieut
  */
-public interface ProductService {
-    ProductModel save(ProductModel instance);
-    void delete(ProductModel bo);
+public interface SysResourceService {
+    SysResourceModel save(SysResourceModel user);
+    List<SysResourceModel> findAll();
+    void delete(Long id);
 }
+

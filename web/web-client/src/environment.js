@@ -10,7 +10,8 @@ export const environments_prod = {
 
 export const url_services = {
     LOGIN: '/auth/token',
-    USER: 'users'
+    USER: 'users',
+    RESOURCES: 'resources'
 }
 
 export default function environments() {
@@ -35,6 +36,13 @@ export const menu = [
         title: 'Người dùng',
         component: 'User',
         url_hash: 'users',
+        icon: 'user'
+    },
+    {
+        key: 2,
+        title: 'Chức năng hệ thống',
+        component: 'SysResource',
+        url_hash: 'resources',
         icon: 'user'
     }
 ]

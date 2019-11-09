@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author hieut
  */
 @Repository
-public interface ProductDao extends JpaRepository<ProductModel, Long>  {
+public interface ProductDAO extends JpaRepository<ProductModel, Long>  {
     
 }

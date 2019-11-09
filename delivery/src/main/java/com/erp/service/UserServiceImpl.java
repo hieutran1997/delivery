@@ -7,19 +7,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.erp.dao.UserDao;
 import com.erp.model.UserModel;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import com.erp.dao.UserDAO;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
-    private UserDao userDao;
+    private UserDAO userDao;
     
     @Autowired
     private VfData vfData;
