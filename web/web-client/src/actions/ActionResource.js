@@ -1,10 +1,10 @@
 import * as types from '../constants/ActionTypes';
 import { url_services } from '../environment';
 
-const getAll = (data) => {
-    const url =  `${url_services.RESOURCES}/getAll`;
+const getDataPaging = (data) => {
+    const url =  `${url_services.RESOURCES}/postQuery`;
     return {
-        types: [types.GETALL_RESOURCES_REQUEST_SUCCESS, types.GETALL_RESOURCES_SUCCESS, types.GETALL_RESOURCES_ERROR],
+        types: [types.GETRESOURCES_PAGING_REQUEST_SUCCESS, types.GETRESOURCES_PAGING_SUCCESS, types.GETRESOURCES_PAGING_ERROR],
         api: (axios) => axios.post(url, data)
     };
 };
@@ -33,4 +33,4 @@ const deleteData = (data) => {
     };
 };
 
-export { getAll, insert, update, deleteData };
+export { getDataPaging, insert, update, deleteData };

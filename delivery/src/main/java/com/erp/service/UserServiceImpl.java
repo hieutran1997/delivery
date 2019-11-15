@@ -1,5 +1,6 @@
 package com.erp.service;
 
+import com.erp.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,13 +14,12 @@ import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import com.erp.dao.UserDAO;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
-    private UserDAO userDao;
+    private UserDao userDao;
     
     @Autowired
     private VfData vfData;

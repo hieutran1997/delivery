@@ -68,6 +68,7 @@ function User(props) {
           >
             <Icon type="delete" className="icon-action" title="Xóa" />
           </Popconfirm>
+          <Icon type="role" className="apartment" title="Xóa" />
         </span>
       ),
       width: '20%'

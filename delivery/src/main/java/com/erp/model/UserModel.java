@@ -1,11 +1,10 @@
 package com.erp.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "User")
-public class UserModel implements Serializable {
+public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,7 +1,7 @@
 import {
-    GETALL_RESOURCES_REQUEST_SUCCESS,
-    GETALL_RESOURCES_SUCCESS,
-    GETALL_RESOURCES_ERROR,
+    GETRESOURCES_PAGING_REQUEST_SUCCESS,
+    GETRESOURCES_PAGING_SUCCESS,
+    GETRESOURCES_PAGING_ERROR,
     CREATE_RESOURCES_REQUEST_SUCCESS,
     CREATE_RESOURCES_SUCCESS,
     CREATE_RESOURCES_ERROR,
@@ -15,20 +15,22 @@ import {
 
 const resourceReducer = (state, action) => {
     switch (action.type) {
-        case GETALL_RESOURCES_REQUEST_SUCCESS:
+        case GETRESOURCES_PAGING_REQUEST_SUCCESS:
             return {
                 ...action,
                 error: false
             };
-        case GETALL_RESOURCES_SUCCESS:
+        case GETRESOURCES_PAGING_SUCCESS:
             return {
-                ...action.result,
-                error: false
+                ...action.result.data,
+                error: false,
+                type: GETRESOURCES_PAGING_SUCCESS
             };
-        case GETALL_RESOURCES_ERROR:
+        case GETRESOURCES_PAGING_ERROR:
             return {
                 ...action,
-                error: true
+                error: true,
+                type: GETRESOURCES_PAGING_ERROR
             };
         case CREATE_RESOURCES_REQUEST_SUCCESS:
             return {
@@ -60,7 +62,7 @@ const resourceReducer = (state, action) => {
         case UPDATE_RESOURCES_ERROR:
             return {
                 ...action,
-                error: true
+                error: true,
             };
         case DELETE_RESOURCES_REQUEST_SUCCESS:
             return {

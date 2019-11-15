@@ -6,6 +6,8 @@
 package com.erp.service;
 
 import com.erp.model.SysResourceModel;
+import com.erp.util.PaginationUtil;
+import com.erp.util.SearchRequestUtil;
 import java.util.List;
 
 /**
@@ -13,7 +15,8 @@ import java.util.List;
  * @author hieut
  */
 public interface SysResourceService {
-    SysResourceModel save(SysResourceModel user);
+    PaginationUtil<SysResourceModel> getDataSearch(SearchRequestUtil<SysResourceModel> pageable);
+    SysResourceModel save(SysResourceModel sysResource);
     List<SysResourceModel> findAll();
     void delete(Long id);
 }

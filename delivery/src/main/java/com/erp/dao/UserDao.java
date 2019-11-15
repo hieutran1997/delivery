@@ -15,7 +15,7 @@ import org.hibernate.transform.Transformers;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface UserDAO extends JpaRepository<UserModel, Long> {
+public interface UserDao extends JpaRepository<UserModel, Long> {
     
     UserModel findByUsername(String username);
     
@@ -60,5 +60,4 @@ public interface UserDAO extends JpaRepository<UserModel, Long> {
         results.setData(query.list());
         return results;
     }
-
 }

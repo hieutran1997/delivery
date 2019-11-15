@@ -18,8 +18,8 @@ export function FormSearch(props) {
         if (props.dataDetail) {
             setDataDetail(props.dataDetail);
             setTimeout(function () {
-                setValue("firstname", props.dataDetail.firstname);
-                setValue("lastname", props.dataDetail.lastname);
+                setValue("code", props.dataDetail.code);
+                setValue("resourceName", props.dataDetail.resourceName);
             }, 100);
         }
     }, [props, dataDetail, setValue]);
@@ -29,13 +29,13 @@ export function FormSearch(props) {
             <form onSubmit={handleSubmit(onSearch)}>
                 <Row type="flex" justify="space-around">
                     <Col span={11}>
-                        <span>Họ:</span>
-                        <input name="firstname" className="ant-input" ref={register} />
+                        <span>Mã:</span>
+                        <input name="code" className="ant-input" ref={register} />
                     </Col>
                     <Col span={2}></Col>
                     <Col span={11}>
                         <span>Tên:</span>
-                        <input name="lastname" className="ant-input" ref={register} />
+                        <input name="resourceName" className="ant-input" ref={register} />
                     </Col>
                 </Row>
 

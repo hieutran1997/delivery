@@ -6,7 +6,9 @@
 package com.erp.controller;
 
 import com.erp.model.SysResourceModel;
+import com.erp.model.UserModel;
 import com.erp.service.SysResourceService;
+import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
 import com.erp.util.SearchRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,13 @@ public class SysResourceController {
     private SysResourceService sysResourceService;
     
     @RequestMapping(value = "/getAll", method = RequestMethod.POST)
-    public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<SysResourceModel> pageable){
+    public ResponseEntity<?> getAll(@RequestBody SearchRequestUtil<SysResourceModel> pageable){
         return new ResponseEntity<>(sysResourceService.findAll(), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/postQuery", method = RequestMethod.POST)
+    public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<SysResourceModel> pageable){
+        return new ResponseEntity<PaginationUtil<SysResourceModel>>(sysResourceService.getDataSearch(pageable), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

@@ -40,12 +40,12 @@ public class SysResourceModel extends BaseModel {
     private String component;
     
     @Column(name="type_of_resource", length = 10, nullable = false)
-    private ConstantCommon.TYPEOFRESOURCE typeOfResource;
+    private int typeOfResource;
     
     @Column(name="icon", length = 20, nullable = true)
     private String icon;
     
-    @Column(name="icon", length = 20, nullable = true)
+    @Column(name="keyTree", length = 20, nullable = true)
     private String keyTree;
 
     public String getKeyTree() {
@@ -104,11 +104,11 @@ public class SysResourceModel extends BaseModel {
         this.component = component;
     }
 
-    public ConstantCommon.TYPEOFRESOURCE getTypeOfResource() {
+    public int getTypeOfResource() {
         return typeOfResource;
     }
 
-    public void setTypeOfResource(ConstantCommon.TYPEOFRESOURCE typeOfResource) {
+    public void setTypeOfResource(int typeOfResource) {
         this.typeOfResource = typeOfResource;
     }
 
