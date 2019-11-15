@@ -11,7 +11,8 @@ export const environments_prod = {
 export const url_services = {
     LOGIN: '/auth/token',
     USER: 'users',
-    RESOURCES: 'resources'
+    RESOURCES: 'resources',
+    ROLE: 'roles'
 }
 
 export default function environments() {
@@ -32,17 +33,50 @@ export const client = axios.create({ //all axios can be used, shown in axios doc
 
 export const menu = [
     {
-        key: 1,
-        title: 'Người dùng',
-        component: 'User',
-        url_hash: 'users',
-        icon: 'user'
+        key: 'system',
+        title: 'Hệ thống',
+        component: 'System',
+        url_hash: 'system',
+        icon: 'branches',
+        childs: [
+            {
+                key: '/users',
+                title: 'Người dùng',
+                component: 'User',
+                url_hash: 'users',
+                icon: 'user'
+            },
+            {
+                key: '/resources',
+                title: 'Chức năng hệ thống',
+                component: 'SysResource',
+                url_hash: 'resources',
+                icon: 'solution'
+            },
+            {
+                key: '/roles',
+                title: 'Vai trò hệ thống',
+                component: 'SysRole',
+                url_hash: 'roles',
+                icon: 'api'
+            },
+            {
+                key: '/organization',
+                title: 'Đơn vị',
+                component: 'Organization',
+                url_hash: 'organization',
+                icon: 'database'
+            }
+        ]
     },
     {
-        key: 2,
-        title: 'Chức năng hệ thống',
-        component: 'SysResource',
-        url_hash: 'resources',
-        icon: 'user'
+        key: 'cat',
+        title: 'Danh mục',
+        component: 'System',
+        url_hash: 'cat',
+        icon: 'user',
+        childs: [
+            
+        ]
     }
 ]

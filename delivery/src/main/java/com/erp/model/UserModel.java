@@ -27,6 +27,9 @@ public class UserModel {
 
     @Column(name = "last_name")
     private String lastname;
+    
+    @Column(name = "organization_code")
+    private String organizationCode;
 
     public long getId() {
         return id;
@@ -84,4 +87,11 @@ public class UserModel {
         this.lastname = lastname;
     }
 
+    public String getOrganizationCode() {
+        return organizationCode;
+    }
+
+    public void setOrganizationCode(String organizationCode) {
+        this.organizationCode = organizationCode;
+    }
 }

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Layout, Icon, Menu, Dropdown  } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 import { useSelector, connect } from 'react-redux';
 import MenuComponent from '../components/MenuComponent';
 import { Redirect } from 'react-router-dom';
@@ -59,13 +62,14 @@ function App(props) {
     <Layout>
       <Sider
         className="sider"
+        width={240}
         trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" >
           <div className="currentInfo">
             {/* <img src={process.env.PUBLIC_URL + '/logo.png'} alt={message.titleApp}/> */}
           </div>
         </div>
-        <MenuComponent />
+        <MenuComponent pathUrl={route.location}/>
       </Sider>
       <Layout>
         <Header style={{ background: '#fff', padding: 0 }}>

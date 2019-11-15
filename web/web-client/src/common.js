@@ -35,7 +35,8 @@ export const message = {
     titleApp: 'QLCCU',
     titleFormSearch: 'Tìm kiếm',
     titleFormListUser: 'Danh sách người dùng',
-    titleFormResource: 'Danh sách tài nguyên'
+    titleFormResource: 'Danh sách tài nguyên',
+    titleFormRole: 'Danh sách tài nguyên'
 }
 
 export function mappingDataChange(resource, destinnation){
