@@ -21,6 +21,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author hieut
@@ -32,6 +35,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private UserService jwtUserDetailsService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    
+    private final Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -51,6 +56,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 System.out.println("JWT Token has expired");
             } catch(MalformedJwtException ex){
                 System.out.println("JWT Token invalid");
+                logger.error("JWT Token invalid");
             }
         } else {
             logger.warn("JWT Token does not begin with Bearer String");
