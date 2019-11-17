@@ -1,33 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Row, Col, Button } from 'antd';
+import {PickList} from 'primereact/picklist';
 import useForm from 'react-hook-form';
 
 export function PopupAdd(props){
     const { register, handleSubmit, errors, setValue } = useForm();
-    const [isShowAdd, setIsShowAdd] = useState(false);
-    const [dataDetail, setDataDetail] = useState(props);
-    const onSaveEdit = data => {
-        props.onSave(data);
-    };
-
-    useEffect(()=>{
-      if(props.dataDetail){
-          setDataDetail(props.dataDetail);
-          setTimeout(function(){
-              setValue("username", props.dataDetail.username);
-              setValue("age", props.dataDetail.age);
-              setValue("firstname", props.dataDetail.firstname);
-              setValue("lastname", props.dataDetail.lastname);
-              setValue("organizationCode", props.dataDetail.organizationCode);
-          }, 100);
-      }
-      setIsShowAdd(props.isShowAdd);
-    }, [props, dataDetail, setValue]);
-
+    
     return(
         <Modal
-        title={"Thêm mới tài khoản: "}
-        visible={isShowAdd}
+        title={"Gán vai trò "}
+        visible={isShowAddRole}
         footer={null}
         width={800}
         onCancel={props.closePopup}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getDataPaging, insert, update, deleteData } from '../../actions';
+import { getDataPaging, insert, update, deleteData } from '../../actions/ActionUser';
+import { getSelectedData } from '../../actions/ActionOrganization';
 import { dataPost, message, mappingDataChange, openNotification } from '../../common';
 import {  GETUSER_PAGING_SUCCESS, 
           CREATE_USER_SUCCESS,
@@ -9,13 +10,16 @@ import {  GETUSER_PAGING_SUCCESS,
           UPDATE_USER_SUCCESS, 
           UPDATE_USER_ERROR, 
           DELETE_USER_ERROR, 
-          DELETE_USER_SUCCESS } from '../../constants/ActionTypes';
+          DELETE_USER_SUCCESS,
+          GET_SELETED_ORGANIZATION_SUCCESS  
+        } from '../../constants/ActionTypes';
 import { Table, Icon, Popconfirm, Card } from 'antd';
 import { PopupInfo } from './popupInfo.component';
 import { PopupAdd } from './popupAdd.component';
 import { FormSearch } from './formSearch.component';
 
 function User(props) {
+  const [onInit, setOnInit] = useState(true);
   const [dataContent, setDataContent] = useState([]);
   const [pagination, setPagination] = useState({});
   const [isLoading, setLoading] = useState(false);
@@ -23,6 +27,7 @@ function User(props) {
   const [isEdit, setIsEdit] = useState(false);
   const [isShowAdd, setIsShowAdd] = useState(false);
   const [dataDetail, setDataDetail] = useState({});
+  const [lstOrg, setLstOrg] = useState([]);
   
   const columns = [
     {
@@ -57,6 +62,8 @@ function User(props) {
       key: 'action',
       render: (text, record) => (
         <span>
+          <Icon type="apartment" onClick={() => { handlerAddRole(record) }} className="icon-action" title="Gán vai trò" />
+          &nbsp;&nbsp;&nbsp;&nbsp;
           <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa"/>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <Popconfirm
@@ -68,7 +75,6 @@ function User(props) {
           >
             <Icon type="delete" className="icon-action" title="Xóa" />
           </Popconfirm>
-          <Icon type="role" className="apartment" title="Xóa" />
         </span>
       ),
       width: '20%'
@@ -76,12 +82,13 @@ function User(props) {
   ];
 
   useEffect(() => {
-    if (!props.dataUser) {
+    if(onInit){
       setLoading(true);
-      if (dataContent.length === 0) {
-        props.filterData(dataSearch);
-      }
-    } else {
+      props.filterData(dataSearch);
+      props.getAllOrganization();
+      setOnInit(false);
+    }
+    if(props.dataUser){
       setLoading(false);
       switch (props.dataUser.type) {
         case GETUSER_PAGING_SUCCESS:
@@ -121,7 +128,17 @@ function User(props) {
           break;
       }
     }
-  }, [props, dataContent, dataSearch]);
+    if(props.dataOrg){
+      switch (props.dataOrg.type) {
+        case GET_SELETED_ORGANIZATION_SUCCESS:
+          setLstOrg(props.dataOrg.data);
+          console.log('lstOrg', lstOrg);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [props, dataContent, dataSearch, lstOrg, onInit, setOnInit]);
 
   const handlerSearch = data =>{
     dataPost.data = data;
@@ -149,6 +166,10 @@ function User(props) {
     setIsShowAdd(false);
   }
 
+  const handlerAddRole = (item) =>{
+    console.log('item', item);
+  }
+
   const onSaveChange = (data)=>{
     var instance = dataDetail;
     mappingDataChange(data, instance);
@@ -169,7 +190,7 @@ function User(props) {
   return (
     <div>
       <Card title={message.titleFormSearch}>
-        <FormSearch onCreate={handleAdd} onSearch={handlerSearch}></FormSearch>
+        <FormSearch onCreate={handleAdd} onSearch={handlerSearch} lstOrg={lstOrg} ></FormSearch>
       </Card>
       <br/>
       <Card title={message.titleFormListUser}>
@@ -190,7 +211,8 @@ function User(props) {
 }
 
 const mapStateToProps = state => ({
-  dataUser: state.userReducer
+  dataUser: state.userReducer,
+  dataOrg: state.organizationReducer
 });
 
 const mapDispatchToProps = dispatch => {
@@ -198,7 +220,8 @@ const mapDispatchToProps = dispatch => {
     filterData: (data) => dispatch(getDataPaging(data)),
     insert: (data)=>dispatch(insert(data)),
     update: (data) => dispatch(update(data)),
-    deleteData: (data) => dispatch(deleteData(data))
+    deleteData: (data) => dispatch(deleteData(data)),
+    getAllOrganization: ()=> dispatch(getSelectedData())
   }
 };
 

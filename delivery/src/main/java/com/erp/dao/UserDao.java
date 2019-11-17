@@ -36,6 +36,10 @@ public interface UserDao extends JpaRepository<UserModel, Long> {
             strCondition.append(" AND LOWER(last_name) LIKE ? ");
             paramList.add("%" + pageable.getData().getLastname()+ "%");
         }
+        if(!CommonUtil.isNullOrEmpty(pageable.getData().getOrganizationCode())){
+            strCondition.append(" AND organization_code = ? ");
+            paramList.add(pageable.getData().getOrganizationCode());
+        }
         sql.append(strCondition);
         StringBuilder sqlCount = new StringBuilder("SELECT COUNT(*) FROM (");
         sqlCount.append(sql.toString());

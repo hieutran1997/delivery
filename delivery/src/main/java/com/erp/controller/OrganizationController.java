@@ -29,8 +29,8 @@ public class OrganizationController {
     @Autowired
     private OrganizationService sysRoleService;
     
-    @RequestMapping(value = "/getAll", method = RequestMethod.POST)
-    public ResponseEntity<?> getAll(@RequestBody SearchRequestUtil<OrganizationModel> pageable){
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    public ResponseEntity<?> getAll(){
         return new ResponseEntity<>(sysRoleService.findAll(), HttpStatus.OK);
     }
     
@@ -56,5 +56,10 @@ public class OrganizationController {
         result.setError(false);
         result.setMessage("Thành công!");
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/getSelectedData", method = RequestMethod.GET)
+    public ResponseEntity<?> getSelectedData(){
+        return new ResponseEntity<>(sysRoleService.getSeletedData(), HttpStatus.OK);
     }
 }

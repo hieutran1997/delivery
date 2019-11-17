@@ -6,6 +6,7 @@
 package com.erp.service;
 
 import com.erp.model.OrganizationModel;
+import com.erp.model.dto.SeletedFormDTO;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import java.util.List;
@@ -19,5 +20,6 @@ public interface OrganizationService {
     OrganizationModel save(OrganizationModel sysResource);
     List<OrganizationModel> findAll();
     void delete(Long id);
+    List<SeletedFormDTO> getSeletedData();
 }
 

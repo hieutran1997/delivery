@@ -8,7 +8,6 @@ const { SubMenu } = Menu;
 function MenuComponent(props) {
 
     const [menus] = useState(menu);
-    console.log('props', props);
     const renderMenu = menus.map((item) =>
         item.childs.length > 0 ?
             <SubMenu

@@ -12,7 +12,8 @@ export const url_services = {
     LOGIN: '/auth/token',
     USER: 'users',
     RESOURCES: 'resources',
-    ROLE: 'roles'
+    ROLE: 'roles',
+    ORGANIZATION: 'organizations'
 }
 
 export default function environments() {

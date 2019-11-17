@@ -54,3 +54,8 @@
 .icon-header-right:hover{
   cursor: pointer;
 }
+
+.custom-input-as-ant-input{
+  border: 1px solid #d9d9d9 !important;
+  width: 100% !important;
+}

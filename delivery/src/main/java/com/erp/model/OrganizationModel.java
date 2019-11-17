@@ -32,7 +32,7 @@ public class OrganizationModel extends BaseModel{
     @Column(name = "organization_name", nullable = false, length = 1000)
     private String organizationName;
     
-    @Column(name = "parent_code", nullable = false, length = 10) 
+    @Column(name = "parent_code", nullable = true, length = 10) 
     private String parentCode;
 
     public Long getId() {
