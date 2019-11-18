@@ -54,7 +54,12 @@ public class SysRoleController {
         sysRoleService.delete(id);
         ResponseUtil<String> result = new ResponseUtil<String>();
         result.setError(false);
-        result.setMessage("Th√†nh c√¥ng!");
+        result.setMessage("Th‡nh cÙng!");
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/getSelectedData", method = RequestMethod.GET)
+    public ResponseEntity<?> getSelectedData(){
+        return new ResponseEntity<>(sysRoleService.getSeletedData(), HttpStatus.OK);
     }
 }

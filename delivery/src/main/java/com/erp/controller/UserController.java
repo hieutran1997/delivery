@@ -44,7 +44,12 @@ public class UserController {
     
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public UserModel update(@RequestBody UserModel user){
-        return userService.save(user);
+    	UserModel instance = userService.findUser(user.getUsername());
+    	if(instance != null) {
+    		user.setPassword(instance.getPassword());
+    		return userService.save(user);
+    	}
+    	return userService.save(user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -52,7 +57,7 @@ public class UserController {
         userService.delete(id);
         ResponseUtil<String> result = new ResponseUtil<String>();
         result.setError(false);
-        result.setMessage("Th√†nh c√¥ng!");
+        result.setMessage("Th‡nh cÙng!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

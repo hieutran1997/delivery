@@ -10,7 +10,10 @@ import {
     UPDATE_ROLE_ERROR,
     DELETE_ROLE_REQUEST_SUCCESS,
     DELETE_ROLE_SUCCESS,
-    DELETE_ROLE_ERROR
+    DELETE_ROLE_ERROR,
+    GET_SELETED_ROLE_ERROR,
+    GET_SELETED_ROLE_REQUEST_SUCCESS,
+    GET_SELETED_ROLE_SUCCESS
 } from '../constants/ActionTypes';
 
 const roleReducer = (state, action) => {
@@ -31,6 +34,23 @@ const roleReducer = (state, action) => {
                 ...action,
                 error: true,
                 type: GETROLE_PAGING_ERROR
+            };
+        case GET_SELETED_ROLE_REQUEST_SUCCESS:
+            return {
+                ...action,
+                error: false
+            };
+        case GET_SELETED_ROLE_SUCCESS:
+            return {
+                ...action.result,
+                error: false,
+                type: GET_SELETED_ROLE_SUCCESS
+            };
+        case GET_SELETED_ROLE_ERROR:
+            return {
+                ...action,
+                error: true,
+                type: GET_SELETED_ROLE_ERROR
             };
         case CREATE_ROLE_REQUEST_SUCCESS:
             return {

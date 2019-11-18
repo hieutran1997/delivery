@@ -10,6 +10,7 @@ import com.erp.service.OrganizationService;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
 import com.erp.util.SearchRequestUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,39 +28,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/organizations")
 public class OrganizationController {
     @Autowired
-    private OrganizationService sysRoleService;
+    private OrganizationService orgService;
     
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity<?> getAll(){
-        return new ResponseEntity<>(sysRoleService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(orgService.findAll(), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/postQuery", method = RequestMethod.POST)
     public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<OrganizationModel> pageable){
-        return new ResponseEntity<PaginationUtil<OrganizationModel>>(sysRoleService.getDataSearch(pageable), HttpStatus.OK);
+        return new ResponseEntity<PaginationUtil<OrganizationModel>>(orgService.getDataSearch(pageable), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public OrganizationModel create(@RequestBody OrganizationModel org){
-        return sysRoleService.save(org);
+        return orgService.save(org);
     }
     
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public OrganizationModel update(@RequestBody OrganizationModel org){
-        return sysRoleService.save(org);
+        return orgService.save(org);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<ResponseUtil<String>> delete(@PathVariable(value = "id") Long id){
-        sysRoleService.delete(id);
+        orgService.delete(id);
         ResponseUtil<String> result = new ResponseUtil<String>();
         result.setError(false);
-        result.setMessage("Th√†nh c√¥ng!");
+        result.setMessage("Th‡nh cÙng!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/getSelectedData", method = RequestMethod.GET)
     public ResponseEntity<?> getSelectedData(){
-        return new ResponseEntity<>(sysRoleService.getSeletedData(), HttpStatus.OK);
+        return new ResponseEntity<>(orgService.getSeletedData(), HttpStatus.OK);
     }
 }

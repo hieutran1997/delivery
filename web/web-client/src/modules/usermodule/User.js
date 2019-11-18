@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
 import { getDataPaging, insert, update, deleteData } from '../../actions/ActionUser';
-import { getSelectedData } from '../../actions/ActionOrganization';
+import { getSelectedData as getSelectedDataOrg } from '../../actions/ActionOrganization';
+import { getSelectedData as getSelectedDataRole } from '../../actions/ActionRole';
 import { dataPost, message, mappingDataChange, openNotification } from '../../common';
 import {  GETUSER_PAGING_SUCCESS, 
           CREATE_USER_SUCCESS,
@@ -11,11 +12,13 @@ import {  GETUSER_PAGING_SUCCESS,
           UPDATE_USER_ERROR, 
           DELETE_USER_ERROR, 
           DELETE_USER_SUCCESS,
-          GET_SELETED_ORGANIZATION_SUCCESS  
+          GET_SELETED_ORGANIZATION_SUCCESS,  
+          GET_SELETED_ROLE_SUCCESS
         } from '../../constants/ActionTypes';
 import { Table, Icon, Popconfirm, Card } from 'antd';
 import { PopupInfo } from './popupInfo.component';
 import { PopupAdd } from './popupAdd.component';
+import { PopupAddRole } from './formAddRole.component';
 import { FormSearch } from './formSearch.component';
 
 function User(props) {
@@ -26,8 +29,10 @@ function User(props) {
   const [dataSearch, setDataSearch] = useState(dataPost);
   const [isEdit, setIsEdit] = useState(false);
   const [isShowAdd, setIsShowAdd] = useState(false);
+  const [isShowAddRole, setIsShowAddRole] = useState(false);
   const [dataDetail, setDataDetail] = useState({});
   const [lstOrg, setLstOrg] = useState([]);
+  const [lstRole, setLstRole] = useState([]);
   
   const columns = [
     {
@@ -85,7 +90,8 @@ function User(props) {
     if(onInit){
       setLoading(true);
       props.filterData(dataSearch);
-      props.getAllOrganization();
+      props.getSelectedDataOrg();
+      props.getSelectedDataRole();
       setOnInit(false);
     }
     if(props.dataUser){
@@ -129,16 +135,16 @@ function User(props) {
       }
     }
     if(props.dataOrg){
-      switch (props.dataOrg.type) {
-        case GET_SELETED_ORGANIZATION_SUCCESS:
-          setLstOrg(props.dataOrg.data);
-          console.log('lstOrg', lstOrg);
-          break;
-        default:
-          break;
+      if(props.dataOrg.type === GET_SELETED_ORGANIZATION_SUCCESS){
+        setLstOrg(props.dataOrg.data);
       }
     }
-  }, [props, dataContent, dataSearch, lstOrg, onInit, setOnInit]);
+    if(props.dataRole){
+      if(props.dataRole.type === GET_SELETED_ROLE_SUCCESS){
+        setLstRole(props.dataOrg.data);
+      }
+    }
+  }, [props, dataContent, dataSearch, onInit, setOnInit, setLstRole]);
 
   const handlerSearch = data =>{
     dataPost.data = data;
@@ -156,6 +162,11 @@ function User(props) {
     setIsEdit(true);
   }
 
+  const handlerAddRole = () =>{
+    setDataDetail({});
+    setIsShowAddRole(true);
+  }
+
   const handleAdd = () =>{
     setDataDetail({});
     setIsShowAdd(true);
@@ -164,10 +175,7 @@ function User(props) {
   const closePopup = () => {
     setIsEdit(false);
     setIsShowAdd(false);
-  }
-
-  const handlerAddRole = (item) =>{
-    console.log('item', item);
+    setIsShowAddRole(false)
   }
 
   const onSaveChange = (data)=>{
@@ -203,16 +211,18 @@ function User(props) {
           onChange={handleTableChange}
         />
       </Card>
-     
-      <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave}/>
-      <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange}></PopupInfo>
+
+      <PopupAddRole isShowAddRole={isShowAddRole} dataDetail={dataDetail} closePopup={closePopup} lstRole={lstRole} onSave={onSave}/>
+      <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSave}/>
+      <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSaveChange}/>
     </div>
   );
 }
 
 const mapStateToProps = state => ({
   dataUser: state.userReducer,
-  dataOrg: state.organizationReducer
+  dataOrg: state.organizationReducer,
+  dataRole: state.roleReducer
 });
 
 const mapDispatchToProps = dispatch => {
@@ -221,7 +231,8 @@ const mapDispatchToProps = dispatch => {
     insert: (data)=>dispatch(insert(data)),
     update: (data) => dispatch(update(data)),
     deleteData: (data) => dispatch(deleteData(data)),
-    getAllOrganization: ()=> dispatch(getSelectedData())
+    getSelectedDataOrg: ()=> dispatch(getSelectedDataOrg()),
+    getSelectedDataRole: ()=> dispatch(getSelectedDataRole()),
   }
 };
 

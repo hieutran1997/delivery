@@ -1,10 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Row, Col, Button } from 'antd';
-import {PickList} from 'primereact/picklist';
+import { Modal, Row, Button } from 'antd';
+import { PickList } from 'primereact/picklist';
 import useForm from 'react-hook-form';
 
-export function PopupAdd(props){
-    const { register, handleSubmit, errors, setValue } = useForm();
+export function PopupAddRole(props){
+    const { handleSubmit } = useForm();
+
+    const [isShowAddRole, setIsShowAddRole] = useState(false);
+    const [dataDetail, setDataDetail] = useState(props);
+    const [source, setSource] = useState([]);
+    const [target, setTarget] = useState([]);
+
+    const onSave = data => {
+      props.onSave(data);
+    };
+
+    useEffect(() => {
+      if (props.dataDetail) {
+        setDataDetail(props.dataDetail);
+        setTimeout(function () {
+          
+        }, 100);
+      }
+      setIsShowAddRole(props.isShowAddRole);
+    }, [props, dataDetail, setSource, setTarget]);
     
     return(
         <Modal
@@ -14,32 +33,10 @@ export function PopupAdd(props){
         width={800}
         onCancel={props.closePopup}
       >
-        <form onSubmit={handleSubmit(onSaveEdit)}>
+        <form onSubmit={handleSubmit(onSave)}>
           <Row type="flex" justify="space-around">
-            <Col span={11}>
-              <span>Tên đăng nhập:</span>
-              <input name="username" className="ant-input" ref={register({ required: true, maxlength: 20 })} />
-              <span className="error-message">{errors.username && 'Username is required'}</span>
-            </Col>
-            <Col span={2}></Col>
-            <Col span={11}>
-              <span>Tuổi:</span>
-              <input name="age" className="ant-input" ref={register} />
-            </Col>
-          </Row>
-          <br/>
-          <Row type="flex" justify="space-around">
-            <Col span={11}>
-              <span>Họ:</span>
-              <input name="firstname" className="ant-input" ref={register({ required: true, maxlength: 20 })} />
-              <span className="error-message">{errors.firstname && 'First name is required'}</span>
-            </Col>
-            <Col span={2}></Col>
-            <Col span={11}>
-              <span>Tên:</span>
-              <input name="lastname" className="ant-input" ref={register({ required: true })} />
-              <span className="error-message">{errors.lastname && 'Last name is required'}</span>
-            </Col>
+            <PickList source={source} target={target}
+                      onChange={(e) => {setSource(e.source); setTarget(e.target)}} responsive={true} sourceHeader="Danh sách vai trò" targetHeader="Danh sách vai trò đã chọn"/>
           </Row>
 
           <div className="footer-modal">

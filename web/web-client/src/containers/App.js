@@ -50,7 +50,7 @@ function App(props) {
   const dropDownUser = (
     <Menu onClick={onClickDropDownUser}>
       <Menu.Item key="1">
-        <Icon type="user" /> {props.currentUser.username}
+        <Icon type="user" /> {props.currentUser ? props.currentUser.username: 'Chưa đăng nhập'}
       </Menu.Item>
       <Menu.Item key="2">
         <Icon type="logout" />  Đăng xuất

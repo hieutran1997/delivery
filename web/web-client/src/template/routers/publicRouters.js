@@ -1,5 +1,5 @@
 import User from '../../modules/usermodule/User';
-import Home from '../../modules/homemodule/Home';
+import Home from '../../modules/homeModule/Home';
 import SysResource from '../../modules/sysresourcemodule/SysRersource';
 import SysRole from '../../modules/sysrolemodule/SysRole';
 import Organization from '../../modules/organizationmodule/Organization.component';

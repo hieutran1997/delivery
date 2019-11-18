@@ -27,7 +27,7 @@ public interface UserDao extends JpaRepository<UserModel, Long> {
         String limit = " Limit ?, ?";
         StringBuilder strCondition = new StringBuilder(" Where 1 = 1");
         List<Object> paramList = new ArrayList<Object>();
-        StringBuilder sql = new StringBuilder(" SELECT username, first_name firstname, last_name lastname, age FROM user ");
+        StringBuilder sql = new StringBuilder(" SELECT username, first_name firstname, last_name lastname, age, organization_code organizationCode FROM user ");
         if(!CommonUtil.isNullOrEmpty(pageable.getData().getFirstname())){
             strCondition.append(" AND LOWER(first_name) LIKE ? ");
             paramList.add("%" + pageable.getData().getFirstname() + "%");

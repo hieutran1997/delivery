@@ -33,4 +33,12 @@ const deleteData = (data) => {
     };
 };
 
-export { getDataPaging, insert, update, deleteData };
+const getSelectedData = ()=>{
+    const url =  `${url_services.ROLE}/getSelectedData`;
+    return {
+        types: [types.GET_SELETED_ROLE_REQUEST_SUCCESS, types.GET_SELETED_ROLE_SUCCESS, types.GET_SELETED_ROLE_ERROR],
+        api: (axios) => axios.get(url)
+    };
+} 
+
+export { getDataPaging, insert, update, deleteData, getSelectedData };

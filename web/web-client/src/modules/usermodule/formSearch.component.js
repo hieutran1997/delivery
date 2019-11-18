@@ -43,19 +43,19 @@ export function FormSearch(props) {
             <form onSubmit={handleSubmit(onSearch)}>
                 <Row type="flex" justify="space-around">
                     <Col span={11}>
-                        <p>Họ:</p>
+                        <span>Họ:</span>
                         <input name="firstname" className="ant-input" ref={register} />
                     </Col>
                     <Col span={2}></Col>
                     <Col span={11}>
-                        <p>Tên:</p>
+                        <span>Tên:</span>
                         <input name="lastname" className="ant-input" ref={register} />
                     </Col>
                 </Row>
                 <br />
                 <Row type="flex" >
                     <Col span={11}>
-                        <p>Đơn vị:</p>
+                        <span>Đơn vị:</span>
                         <Dropdown 
                             className="custom-input-as-ant-input"
                             value={orgCode}
@@ -70,7 +70,6 @@ export function FormSearch(props) {
                             width="100%"
                             />
                     </Col>
-                   
                 </Row>
 
                 <div className="footer-modal">
