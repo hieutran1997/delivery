@@ -9,7 +9,7 @@ package com.erp.model.dto;
  *
  * @author hieut
  */
-public class SeletedFormDTO {
+public class SelectedFormDTO {
     private String value;
     private String name;
 

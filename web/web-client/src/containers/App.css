@@ -60,6 +60,9 @@
   width: 100% !important;
 }
 
-.ant-modal-header{
-  /* background: #1890ff !important; */
+.p-picklist-source-controls {
+  display: none !important;
+}
+.p-picklist-target-controls{
+  display: none !important;
 }

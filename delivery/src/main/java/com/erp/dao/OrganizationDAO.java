@@ -6,7 +6,7 @@
 package com.erp.dao;
 
 import com.erp.model.OrganizationModel;
-import com.erp.model.dto.SeletedFormDTO;
+import com.erp.model.dto.SelectedFormDTO;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
@@ -64,10 +64,10 @@ public interface OrganizationDAO extends JpaRepository<OrganizationModel, Long> 
         return results;
     }
     
-    public default List<SeletedFormDTO> getSelectedData(VfData vfData){
+    public default List<SelectedFormDTO> getSelectedData(VfData vfData){
         String sql = " Select code value, organization_name name from organization ";
         SQLQuery query = vfData.createSQLQuery(sql);
-        vfData.setResultTransformer(query, SeletedFormDTO.class);
+        vfData.setResultTransformer(query, SelectedFormDTO.class);
         return query.list();
     }
 }

@@ -7,23 +7,35 @@ export function PopupAddRole(props){
     const { handleSubmit } = useForm();
 
     const [isShowAddRole, setIsShowAddRole] = useState(false);
-    const [dataDetail, setDataDetail] = useState(props);
     const [source, setSource] = useState([]);
     const [target, setTarget] = useState([]);
 
-    const onSave = data => {
+    const onSave = () => {
+      let data = {
+        username: props.dataDetail.username,
+        pickList: target
+      };
       props.onSave(data);
     };
 
     useEffect(() => {
-      if (props.dataDetail) {
-        setDataDetail(props.dataDetail);
-        setTimeout(function () {
-          
-        }, 100);
+      if (props.lstRole) {
+        setSource(props.lstRole);
+      }
+      if(!(props.dataDetail === {} || props.dataDetail === null || typeof props.dataDetail === undefined)){
+        console.log('props', props);
+        props.getUserRole(props.dataDetail.username);
       }
       setIsShowAddRole(props.isShowAddRole);
-    }, [props, dataDetail, setSource, setTarget]);
+    }, [props, setSource, setTarget]);
+
+    const template = (item) => {
+      return (
+          <div className="p-clearfix">
+              <div style={{}}>{item.name}</div>
+          </div>
+      );
+    }
     
     return(
         <Modal
@@ -35,8 +47,14 @@ export function PopupAddRole(props){
       >
         <form onSubmit={handleSubmit(onSave)}>
           <Row type="flex" justify="space-around">
-            <PickList source={source} target={target}
-                      onChange={(e) => {setSource(e.source); setTarget(e.target)}} responsive={true} sourceHeader="Danh sách vai trò" targetHeader="Danh sách vai trò đã chọn"/>
+            <PickList source={source} 
+                      target={target}
+                      onChange={(e) => {setSource(e.source); setTarget(e.target)}} 
+                      responsive={true} 
+                      sourceHeader="Danh sách vai trò" 
+                      targetHeader="Danh sách vai trò đã chọn"
+                      itemTemplate={template}
+                      />
           </Row>
 
           <div className="footer-modal">

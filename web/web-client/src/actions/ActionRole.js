@@ -41,4 +41,20 @@ const getSelectedData = ()=>{
     };
 } 
 
-export { getDataPaging, insert, update, deleteData, getSelectedData };
+const insertUserRole = (data) => {
+    const url = `${url_services.ROLE}/adduserrole`;
+    return {
+        types: [types.CREATE_USER_ROLE_REQUEST_SUCCESS, types.CREATE_USER_ROLE_SUCCESS, types.CREATE_USER_ROLE_ERROR],
+        api: (axios) => axios.post(url, data)
+    };
+};
+
+const getUserRole = (username) =>{
+    const url = `${url_services.ROLE}/getUserRole/${username}`;
+    return {
+        types: [types.GET_USER_ROLE_REQUEST_SUCCESS, types.GET_USER_ROLE_SUCCESS, types.GET_USER_ROLE_ERROR],
+        api: (axios) => axios.get(url)
+    };
+}
+
+export { getDataPaging, insert, update, deleteData, getSelectedData, insertUserRole, getUserRole };

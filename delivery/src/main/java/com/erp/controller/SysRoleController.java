@@ -6,6 +6,7 @@
 package com.erp.controller;
 
 import com.erp.model.SysRoleModel;
+import com.erp.model.dto.UserRoleDTO;
 import com.erp.service.SysRoleService;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
@@ -54,12 +55,23 @@ public class SysRoleController {
         sysRoleService.delete(id);
         ResponseUtil<String> result = new ResponseUtil<String>();
         result.setError(false);
-        result.setMessage("Th‡nh cÙng!");
+        result.setMessage("Th√†nh c√¥ng!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/getSelectedData", method = RequestMethod.GET)
     public ResponseEntity<?> getSelectedData(){
         return new ResponseEntity<>(sysRoleService.getSeletedData(), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/adduserrole", method = RequestMethod.POST)
+    public ResponseEntity<String> addUserRole(@RequestBody UserRoleDTO userRole){
+        sysRoleService.saveUserRole(userRole);
+        return new ResponseEntity<>("Ok", HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/getUserRole/{username}", method = RequestMethod.GET)
+    public ResponseEntity<?> getUserRole(@PathVariable(value = "username") String username){
+        return new ResponseEntity<>(sysRoleService.getUserRole(username), HttpStatus.OK);
     }
 }

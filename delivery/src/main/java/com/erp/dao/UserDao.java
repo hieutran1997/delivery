@@ -3,6 +3,7 @@ package com.erp.dao;
 import org.springframework.stereotype.Repository;
 
 import com.erp.model.UserModel;
+import com.erp.model.UserRoleModel;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
@@ -64,4 +65,16 @@ public interface UserDao extends JpaRepository<UserModel, Long> {
         results.setData(query.list());
         return results;
     }
+    
+    public default Long addRole(UserRoleModel data, VfData vfData){
+        UserRoleModel instance = new UserRoleModel();
+        StringBuilder sql = new StringBuilder("insert into user_role (created_by, created_date, role_code, username) ");
+        String values = " values (?, ?, ?, ?)";
+        sql.append(values);
+        SQLQuery query = vfData.createSQLQuery(sql.toString());
+        //query.setParameter(0, sql)
+        return (long) query.executeUpdate();
+        
+    }
+    
 }

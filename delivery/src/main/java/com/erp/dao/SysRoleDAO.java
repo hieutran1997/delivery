@@ -6,13 +6,16 @@
 package com.erp.dao;
 
 import com.erp.model.SysRoleModel;
-import com.erp.model.dto.SeletedFormDTO;
+import com.erp.model.UserRoleModel;
+import com.erp.model.dto.SelectedFormDTO;
+import com.erp.model.dto.UserRoleDTO;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.SQLQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -64,10 +67,36 @@ public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
         return results;
     }
     
-    public default List<SeletedFormDTO> getSelectedData(VfData vfData){
-        String sql = " Select code value, sys_role_name sysRoleName name from sys_role ";
+    public default List<SelectedFormDTO> getSelectedData(VfData vfData){
+        String sql = " Select code value, sys_role_name name from sys_role ";
         SQLQuery query = vfData.createSQLQuery(sql);
-        vfData.setResultTransformer(query, SeletedFormDTO.class);
+        vfData.setResultTransformer(query, SelectedFormDTO.class);
+        return query.list();
+    }
+    
+    public default void saveUserRole(VfData vfData, UserRoleDTO userRole){
+        //Xóa hết vai trò của username
+        String sqlDelete = " delete from user_role where username = ? ";
+        SQLQuery queryDelete = vfData.createSQLQuery(sqlDelete);
+        queryDelete.setParameter(0, userRole.getUsername());
+        queryDelete.executeUpdate();
+        //Thêm mới vai trò của user
+        for(SelectedFormDTO item : userRole.getPickList()){
+            String sql = " insert into user_role(created_by, created_date, role_code, username) value(?, ?, ?, ?)";
+            SQLQuery query = vfData.createSQLQuery(sql);
+            query.setParameter(0, "admin");
+            query.setParameter(1, new Date());
+            query.setParameter(2, item.getValue());
+            query.setParameter(3, userRole.getUsername());
+            query.executeUpdate();
+        }
+    }
+    
+    public default List<UserRoleModel> getUserRole(VfData vfData, String username){
+        String sql = " select username userName, role_code roleCode from user_role where username = ? ";
+        SQLQuery query = vfData.createSQLQuery(sql);
+        query.setParameter(0, username);
+        vfData.setResultTransformer(query, UserRoleModel.class);
         return query.list();
     }
 }

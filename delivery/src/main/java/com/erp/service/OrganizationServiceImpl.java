@@ -8,7 +8,7 @@ package com.erp.service;
 import com.erp.dao.OrganizationDAO;
 import com.erp.dao.SysRoleDAO;
 import com.erp.model.OrganizationModel;
-import com.erp.model.dto.SeletedFormDTO;
+import com.erp.model.dto.SelectedFormDTO;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
@@ -53,7 +53,7 @@ public class OrganizationServiceImpl implements OrganizationService{
     }
     
     @Override
-    public List<SeletedFormDTO> getSeletedData(){
+    public List<SelectedFormDTO> getSeletedData(){
         return organizationDao.getSelectedData(vfData);
     }
 }

@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
 import { getDataPaging, insert, update, deleteData } from '../../actions/ActionUser';
 import { getSelectedData as getSelectedDataOrg } from '../../actions/ActionOrganization';
-import { getSelectedData as getSelectedDataRole } from '../../actions/ActionRole';
+import { getSelectedData as getSelectedDataRole, insertUserRole, getUserRole } from '../../actions/ActionRole';
 import { dataPost, message, mappingDataChange, openNotification } from '../../common';
 import {  GETUSER_PAGING_SUCCESS, 
           CREATE_USER_SUCCESS,
@@ -30,7 +30,7 @@ function User(props) {
   const [isEdit, setIsEdit] = useState(false);
   const [isShowAdd, setIsShowAdd] = useState(false);
   const [isShowAddRole, setIsShowAddRole] = useState(false);
-  const [dataDetail, setDataDetail] = useState({});
+  const [dataDetail, setDataDetail] = useState(null);
   const [lstOrg, setLstOrg] = useState([]);
   const [lstRole, setLstRole] = useState([]);
   
@@ -141,7 +141,7 @@ function User(props) {
     }
     if(props.dataRole){
       if(props.dataRole.type === GET_SELETED_ROLE_SUCCESS){
-        setLstRole(props.dataOrg.data);
+        setLstRole(props.dataRole.data);
       }
     }
   }, [props, dataContent, dataSearch, onInit, setOnInit, setLstRole]);
@@ -162,13 +162,13 @@ function User(props) {
     setIsEdit(true);
   }
 
-  const handlerAddRole = () =>{
-    setDataDetail({});
+  const handlerAddRole = (data) =>{
+    setDataDetail(data);
     setIsShowAddRole(true);
   }
 
   const handleAdd = () =>{
-    setDataDetail({});
+    setDataDetail(null);
     setIsShowAdd(true);
   }
 
@@ -189,10 +189,18 @@ function User(props) {
     props.insert(instance);
   }
 
+  const onSaveRole = (data) => {
+    props.insertUserRole(data);
+  }
+
   const handleDelete = (data) => {
     if(data){
       props.deleteData(data);
     }
+  }
+
+  const getUserRoleOld = (username) =>{
+    props.getUserRole(username);
   }
 
   return (
@@ -212,7 +220,7 @@ function User(props) {
         />
       </Card>
 
-      <PopupAddRole isShowAddRole={isShowAddRole} dataDetail={dataDetail} closePopup={closePopup} lstRole={lstRole} onSave={onSave}/>
+      <PopupAddRole isShowAddRole={isShowAddRole} dataDetail={dataDetail} closePopup={closePopup} lstRole={lstRole} onSave={onSaveRole} getUserRole={getUserRoleOld}/>
       <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSave}/>
       <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSaveChange}/>
     </div>
@@ -233,6 +241,8 @@ const mapDispatchToProps = dispatch => {
     deleteData: (data) => dispatch(deleteData(data)),
     getSelectedDataOrg: ()=> dispatch(getSelectedDataOrg()),
     getSelectedDataRole: ()=> dispatch(getSelectedDataRole()),
+    insertUserRole: (data)=> dispatch(insertUserRole(data)),
+    getUserRole: (username) => dispatch(getUserRole(username))
   }
 };
 

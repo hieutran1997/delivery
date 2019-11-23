@@ -7,7 +7,9 @@ package com.erp.service;
 
 import com.erp.dao.SysRoleDAO;
 import com.erp.model.SysRoleModel;
-import com.erp.model.dto.SeletedFormDTO;
+import com.erp.model.UserRoleModel;
+import com.erp.model.dto.SelectedFormDTO;
+import com.erp.model.dto.UserRoleDTO;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
@@ -52,7 +54,17 @@ public class SysRoleServiceImpl implements SysRoleService{
     }
     
     @Override
-    public List<SeletedFormDTO> getSeletedData(){
+    public List<SelectedFormDTO> getSeletedData(){
         return sysRoleDao.getSelectedData(vfData);
+    }
+    
+    @Override
+    public void saveUserRole(UserRoleDTO userRole){
+        sysRoleDao.saveUserRole(vfData, userRole);
+    }
+    
+    @Override
+    public List<UserRoleModel> getUserRole(String username){
+        return sysRoleDao.getUserRole(vfData, username);
     }
 }
