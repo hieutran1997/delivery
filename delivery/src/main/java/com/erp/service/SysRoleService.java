@@ -6,7 +6,6 @@
 package com.erp.service;
 
 import com.erp.model.SysRoleModel;
-import com.erp.model.UserRoleModel;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.model.dto.UserRoleDTO;
 import com.erp.util.PaginationUtil;
@@ -24,6 +23,6 @@ public interface SysRoleService {
     void delete(Long id);
     List<SelectedFormDTO> getSeletedData();
     void saveUserRole(UserRoleDTO userRole);
-    List<UserRoleModel> getUserRole(String username);
+    UserRoleDTO getUserRole(String username);
 }
 

@@ -38,7 +38,7 @@ export function PopupInfo(props){
           <Row type="flex" justify="space-around">
             <Col span={11}>
               <span>Mã:</span>
-              <input name="code" className="ant-input" ref={register({ required: true, maxlength: 20 })} />
+              <input name="code" className="ant-input" readOnly ref={register({ required: true, maxlength: 20 })} />
               <span className="error-message">{errors.username && 'Code is required'}</span>
             </Col>
             <Col span={2}></Col>

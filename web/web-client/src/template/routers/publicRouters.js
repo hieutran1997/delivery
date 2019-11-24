@@ -1,8 +1,9 @@
-import User from '../../modules/usermodule/User';
-import Home from '../../modules/homeModule/Home';
-import SysResource from '../../modules/sysresourcemodule/SysRersource';
-import SysRole from '../../modules/sysrolemodule/SysRole';
-import Organization from '../../modules/organizationmodule/Organization.component';
+import { lazy } from 'react';
+const User = lazy(() => import('../../modules/usermodule/User'));
+const Home = lazy(() => import('../../modules/homeModule/Home'));
+const SysResource = lazy(() => import('../../modules/sysresourcemodule/SysRersource'));
+const SysRole = lazy(() => import('../../modules/sysrolemodule/SysRole'));
+const Organization = lazy(() => import('../../modules/organizationmodule/Organization.component'));
 
 export default{
     Home: {

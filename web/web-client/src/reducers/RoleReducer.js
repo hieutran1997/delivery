@@ -13,7 +13,10 @@ import {
     DELETE_ROLE_ERROR,
     GET_SELETED_ROLE_ERROR,
     GET_SELETED_ROLE_REQUEST_SUCCESS,
-    GET_SELETED_ROLE_SUCCESS
+    GET_SELETED_ROLE_SUCCESS,
+    CREATE_USER_ROLE_SUCCESS,
+    CREATE_USER_ROLE_ERROR,
+    GET_USER_ROLE_SUCCESS,
 } from '../constants/ActionTypes';
 
 const roleReducer = (state, action) => {
@@ -100,6 +103,24 @@ const roleReducer = (state, action) => {
                 ...action,
                 error: true
             };
+        case CREATE_USER_ROLE_SUCCESS:
+            return {
+                ...action.result.data,
+                error: false,
+                type: CREATE_USER_ROLE_SUCCESS
+            }; 
+        case CREATE_USER_ROLE_ERROR:
+            return {
+                ...action.result.data,
+                error: true,
+                type: CREATE_USER_ROLE_ERROR
+            }; 
+        case GET_USER_ROLE_SUCCESS:
+            return {
+                ...action.result,
+                error: false,
+                type: GET_USER_ROLE_SUCCESS
+            }; 
         default:
             return null;
     }

@@ -21,10 +21,14 @@
   color: #09d3ac;
 }
 
+.ant-layout-header{
+  height: 50px !important;
+  line-height: 50px !important;
+}
 
 .trigger {
   font-size: 18px;
-  line-height: 64px;
+  line-height: 50px;
   padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
@@ -48,7 +52,7 @@
 
 .icon-header-right{
   float: right;
-  margin: 25px;
+  margin: 16px;
 }
 
 .icon-header-right:hover{
@@ -65,4 +69,35 @@
 }
 .p-picklist-target-controls{
   display: none !important;
+}
+
+.ant-btn{
+  border-radius: 0px !important;
+}
+
+.p-breadcrumb{
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0px !important;
+}
+
+@media only screen and (max-width: 1460px) {
+  .custom-content{
+    height: 510px;
+  }
+}
+
+
+.custom-content .p-scrollpanel-wrapper {
+  border-right: 9px solid #f4f4f4;
+}
+
+.custom-content .p-scrollpanel-bar {
+  background-color: #1976d2;
+  opacity: 1;
+  transition: background-color .1s;
+}
+
+.custom-content .p-scrollpanel-bar:hover {
+  background-color: #135ba1;
 }

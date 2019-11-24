@@ -3,65 +3,90 @@ import { Modal, Row, Button } from 'antd';
 import { PickList } from 'primereact/picklist';
 import useForm from 'react-hook-form';
 
-export function PopupAddRole(props){
-    const { handleSubmit } = useForm();
+export function PopupAddRole(props) {
+  const { handleSubmit } = useForm();
 
-    const [isShowAddRole, setIsShowAddRole] = useState(false);
-    const [source, setSource] = useState([]);
-    const [target, setTarget] = useState([]);
+  const [isShowAddRole, setIsShowAddRole] = useState(false);
+  const [dataDetail, setDataDetail] = useState(props);
+  const [source, setSource] = useState([]);
+  const [target, setTarget] = useState([]);
+  const [onInitTarget, setOnInitTarget] = useState(true);
+  const [onInitSource, setOnInitSource] = useState(true);
 
-    const onSave = () => {
-      let data = {
-        username: props.dataDetail.username,
-        pickList: target
-      };
-      props.onSave(data);
+  const onSave = () => {
+    let data = {
+      username: props.dataDetail.username,
+      pickList: target
     };
+    setSource([]);
+    setTarget([]);
+    props.onSave(data);
+  };
 
-    useEffect(() => {
-      if (props.lstRole) {
-        setSource(props.lstRole);
-      }
-      if(!(props.dataDetail === {} || props.dataDetail === null || typeof props.dataDetail === undefined)){
-        console.log('props', props);
-        props.getUserRole(props.dataDetail.username);
-      }
-      setIsShowAddRole(props.isShowAddRole);
-    }, [props, setSource, setTarget]);
+  const onClose = () => {
+    setSource([]);
+    setTarget([]);
+    setOnInitTarget(true);
+    setOnInitSource(true);
+    props.closePopup();
+  }
 
-    const template = (item) => {
-      return (
-          <div className="p-clearfix">
-              <div style={{}}>{item.name}</div>
-          </div>
-      );
+  useEffect(() => {
+    if (props.isShowAddRole) {
+      if (props.dataDetail) {
+        setDataDetail(props.dataDetail);
+      }
+      if (props.lstRoleTarget && onInitTarget) {
+        setTarget(props.lstRoleTarget);
+        
+      }
+      if(props.lstRoleResource && onInitSource){
+        setSource(props.lstRoleResource);
+      }
     }
-    
-    return(
-        <Modal
-        title={"Gán vai trò "}
-        visible={isShowAddRole}
-        footer={null}
-        width={800}
-        onCancel={props.closePopup}
-      >
-        <form onSubmit={handleSubmit(onSave)}>
-          <Row type="flex" justify="space-around">
-            <PickList source={source} 
-                      target={target}
-                      onChange={(e) => {setSource(e.source); setTarget(e.target)}} 
-                      responsive={true} 
-                      sourceHeader="Danh sách vai trò" 
-                      targetHeader="Danh sách vai trò đã chọn"
-                      itemTemplate={template}
-                      />
-          </Row>
+    setIsShowAddRole(props.isShowAddRole);
+  }, [props, source, target, setSource, setTarget, onInitTarget, onInitSource]);
 
-          <div className="footer-modal">
-            <input type="submit" className="btn-save ant-btn btn-discard ant-btn-primary" value="Lưu lại"/>
-            <Button type="danger" className="btn-discard" onClick={props.closePopup}>Hủy</Button>
-          </div>
-        </form>
-      </Modal>
+  const template = (item) => {
+    return (
+      <div className="p-clearfix">
+        <div style={{}}>{item.name}</div>
+      </div>
     );
+  }
+
+  const onChange = (e) =>{
+    setOnInitTarget(false);
+    setOnInitSource(false);
+    setSource(e.source); 
+    setTarget(e.target);
+  }
+
+  return (
+    <Modal
+      title={`Gán vai trò: ${dataDetail.username}`}
+      visible={isShowAddRole}
+      footer={null}
+      width={800}
+      onCancel={onClose}
+    >
+      <form onSubmit={handleSubmit(onSave)}>
+        <Row type="flex" justify="space-around">
+          <PickList source={source}
+            target={target}
+            onChange={(e) => {onChange(e)}}
+            responsive={true}
+            sourceHeader="Danh sách vai trò"
+            targetHeader="Danh sách vai trò đã chọn"
+            itemTemplate={template}
+          />
+        </Row>
+
+        <div className="footer-modal">
+          <input type="submit" className="ant-btn ant-btn-primary" value="Lưu lại" />
+          <Button type="danger" className="btn-discard" onClick={onClose}>Hủy</Button>
+        </div>
+      </form>
+    </Modal>
+  );
 }

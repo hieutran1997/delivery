@@ -51,6 +51,10 @@ function SysResource(props) {
         {
           title: 'Loại',
           dataIndex: 'typeOfResource',
+          render: (text, record) => {
+            return record.typeOfResource === 0? 
+            <span>Menu</span> : <span>Controls</span> 
+          },
           width: '20%'
         },
         {

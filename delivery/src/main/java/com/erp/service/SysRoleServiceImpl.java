@@ -64,7 +64,29 @@ public class SysRoleServiceImpl implements SysRoleService{
     }
     
     @Override
-    public List<UserRoleModel> getUserRole(String username){
-        return sysRoleDao.getUserRole(vfData, username);
+    public UserRoleDTO getUserRole(String username){
+        UserRoleDTO result = new UserRoleDTO();
+        List<SelectedFormDTO> source = sysRoleDao.getSelectedData(vfData);
+        List<SelectedFormDTO> target = sysRoleDao.getUserRole(vfData, username);
+        List<SelectedFormDTO> sourceDelete = new ArrayList<SelectedFormDTO>();
+        if(source.size() > 0){
+            if(target.size() > 0){
+                for(SelectedFormDTO item : source){
+                    SelectedFormDTO exist = target.stream().filter(x->x.getValue().equals(item.getValue())).findFirst().orElse(null);
+                    if(exist != null){
+                        result.pushTarget(item);
+                        sourceDelete.add(item);
+                    }
+                }
+                for(SelectedFormDTO item : sourceDelete){
+                    source.remove(item);
+                }
+                result.setSource(source);
+            }
+            else{
+                result.setSource(source);
+            }
+        }
+        return result;
     }
 }

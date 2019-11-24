@@ -92,11 +92,11 @@ public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
         }
     }
     
-    public default List<UserRoleModel> getUserRole(VfData vfData, String username){
-        String sql = " select username userName, role_code roleCode from user_role where username = ? ";
+    public default List<SelectedFormDTO> getUserRole(VfData vfData, String username){
+        String sql = " select role_code value from user_role where username = ? ";
         SQLQuery query = vfData.createSQLQuery(sql);
         query.setParameter(0, username);
-        vfData.setResultTransformer(query, UserRoleModel.class);
+        vfData.setResultTransformer(query, SelectedFormDTO.class);
         return query.list();
     }
 }

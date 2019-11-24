@@ -13,7 +13,9 @@ import {  GETUSER_PAGING_SUCCESS,
           DELETE_USER_ERROR, 
           DELETE_USER_SUCCESS,
           GET_SELETED_ORGANIZATION_SUCCESS,  
-          GET_SELETED_ROLE_SUCCESS
+          GET_USER_ROLE_SUCCESS,
+          CREATE_USER_ROLE_SUCCESS,
+          CREATE_USER_ROLE_ERROR
         } from '../../constants/ActionTypes';
 import { Table, Icon, Popconfirm, Card } from 'antd';
 import { PopupInfo } from './popupInfo.component';
@@ -32,7 +34,8 @@ function User(props) {
   const [isShowAddRole, setIsShowAddRole] = useState(false);
   const [dataDetail, setDataDetail] = useState(null);
   const [lstOrg, setLstOrg] = useState([]);
-  const [lstRole, setLstRole] = useState([]);
+  const [lstRoleResource, setLstRoleResource] = useState([]);
+  const [lstRoleTarget, setLstRoleTarget] = useState([]);
   
   const columns = [
     {
@@ -87,11 +90,11 @@ function User(props) {
   ];
 
   useEffect(() => {
+
     if(onInit){
       setLoading(true);
       props.filterData(dataSearch);
       props.getSelectedDataOrg();
-      props.getSelectedDataRole();
       setOnInit(false);
     }
     if(props.dataUser){
@@ -140,11 +143,19 @@ function User(props) {
       }
     }
     if(props.dataRole){
-      if(props.dataRole.type === GET_SELETED_ROLE_SUCCESS){
-        setLstRole(props.dataRole.data);
+      if(props.dataRole.type === GET_USER_ROLE_SUCCESS){
+        setLstRoleResource(props.dataRole.data.source);
+        setLstRoleTarget(props.dataRole.data.target);
+      }
+      if(props.dataRole.type === CREATE_USER_ROLE_SUCCESS){
+        setIsShowAddRole(false);
+        openNotification('success', 'Thành công', 'Gán vai trò thành công!');
+      }
+      else if(props.dataRole.type === CREATE_USER_ROLE_ERROR){
+        openNotification('error', 'Thất bại', 'Xảy ra lỗi!');
       }
     }
-  }, [props, dataContent, dataSearch, onInit, setOnInit, setLstRole]);
+  }, [props, dataContent, dataSearch, onInit, setOnInit, setLstRoleResource, setLstRoleTarget]);
 
   const handlerSearch = data =>{
     dataPost.data = data;
@@ -163,8 +174,11 @@ function User(props) {
   }
 
   const handlerAddRole = (data) =>{
-    setDataDetail(data);
-    setIsShowAddRole(true);
+    props.getUserRole(data.username);
+    setTimeout(function(){
+      setDataDetail(data);
+      setIsShowAddRole(true);
+    }, 100)
   }
 
   const handleAdd = () =>{
@@ -175,7 +189,7 @@ function User(props) {
   const closePopup = () => {
     setIsEdit(false);
     setIsShowAdd(false);
-    setIsShowAddRole(false)
+    setIsShowAddRole(false);
   }
 
   const onSaveChange = (data)=>{
@@ -199,10 +213,6 @@ function User(props) {
     }
   }
 
-  const getUserRoleOld = (username) =>{
-    props.getUserRole(username);
-  }
-
   return (
     <div>
       <Card title={message.titleFormSearch}>
@@ -220,7 +230,7 @@ function User(props) {
         />
       </Card>
 
-      <PopupAddRole isShowAddRole={isShowAddRole} dataDetail={dataDetail} closePopup={closePopup} lstRole={lstRole} onSave={onSaveRole} getUserRole={getUserRoleOld}/>
+      <PopupAddRole isShowAddRole={isShowAddRole} dataDetail={dataDetail} closePopup={closePopup} lstRoleResource={lstRoleResource} lstRoleTarget={lstRoleTarget} onSave={onSaveRole} />
       <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSave}/>
       <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSaveChange}/>
     </div>
