@@ -8,6 +8,7 @@ package com.erp.service;
 import com.erp.model.SysRoleModel;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.model.dto.UserRoleDTO;
+import com.erp.model.form.RolePermissionForm;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import java.util.List;
@@ -24,5 +25,7 @@ public interface SysRoleService {
     List<SelectedFormDTO> getSeletedData();
     void saveUserRole(UserRoleDTO userRole);
     UserRoleDTO getUserRole(String username);
+    void saveRolePermission(RolePermissionForm rolePer);
+    RolePermissionForm getRolePermission(String roleCode);
 }
 

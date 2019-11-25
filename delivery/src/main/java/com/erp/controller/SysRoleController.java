@@ -7,6 +7,7 @@ package com.erp.controller;
 
 import com.erp.model.SysRoleModel;
 import com.erp.model.dto.UserRoleDTO;
+import com.erp.model.form.RolePermissionForm;
 import com.erp.service.SysRoleService;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
@@ -73,5 +74,16 @@ public class SysRoleController {
     @RequestMapping(value = "/getUserRole/{username}", method = RequestMethod.GET)
     public ResponseEntity<?> getUserRole(@PathVariable(value = "username") String username){
         return new ResponseEntity<>(sysRoleService.getUserRole(username), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/addPermission", method = RequestMethod.POST)
+    public ResponseEntity<String> addPermission(@RequestBody RolePermissionForm rolePer){
+        sysRoleService.saveRolePermission(rolePer);
+        return new ResponseEntity<>("Ok", HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/getRolePermission/{role}", method = RequestMethod.GET)
+    public ResponseEntity<?> getRolePermission(@PathVariable(value = "role") String roleCode){
+        return new ResponseEntity<>(sysRoleService.getRolePermission(roleCode), HttpStatus.OK);
     }
 }

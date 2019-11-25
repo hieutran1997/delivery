@@ -7,8 +7,10 @@ package com.erp.dao;
 
 import com.erp.model.SysRoleModel;
 import com.erp.model.UserRoleModel;
+import com.erp.model.dto.RolePermissionDTO;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.model.dto.UserRoleDTO;
+import com.erp.model.form.RolePermissionForm;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
@@ -97,6 +99,35 @@ public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
         SQLQuery query = vfData.createSQLQuery(sql);
         query.setParameter(0, username);
         vfData.setResultTransformer(query, SelectedFormDTO.class);
+        return query.list();
+    }
+    
+    public default void saveRolePermission(VfData vfData, RolePermissionForm rolePer){
+        //Xóa hết quyền của vai trò
+        String sqlDelete = " delete from sys_role_permission where role_code = ? ";
+        SQLQuery queryDelete = vfData.createSQLQuery(sqlDelete);
+        queryDelete.setParameter(0, rolePer.getRoleCode());
+        queryDelete.executeUpdate();
+         //Thêm mới quyền của vai trò
+        for(RolePermissionDTO item : rolePer.getTarget()){
+            String sql = " insert into sys_role_permission(has_add, has_edit, has_delete, has_approve, resource_code, role_code)"
+                   + " value(?, ?, ?, ?, ?, ?)";
+            SQLQuery query = vfData.createSQLQuery(sql);
+            query.setParameter(0, item.isHasAdd());
+            query.setParameter(1, item.isHasEdit());
+            query.setParameter(2, item.isHasDelete());
+            query.setParameter(3, item.isHasApprove());
+            query.setParameter(4, item.getResourceCode());
+            query.setParameter(5, rolePer.getRoleCode());
+            query.executeUpdate();
+        }
+    }
+    
+    public default List<RolePermissionDTO> getRolePermission(VfData vfData, String roleCode){
+        String sql = " select resource_code resourceCode, has_add hasAdd, has_edit hasEdit, has_delete hasDelete, has_approve hasApprove from sys_role_permission where role_code = ? ";
+        SQLQuery query = vfData.createSQLQuery(sql);
+        query.setParameter(0, roleCode);
+        vfData.setResultTransformer(query, RolePermissionDTO.class);
         return query.list();
     }
 }

@@ -36,7 +36,7 @@ export const message = {
     titleFormSearch: 'Tìm kiếm',
     titleFormListUser: 'Danh sách người dùng',
     titleFormResource: 'Danh sách tài nguyên',
-    titleFormRole: 'Danh sách tài nguyên'
+    titleFormRole: 'Danh sách vai trò'
 }
 
 export function mappingDataChange(resource, destinnation){

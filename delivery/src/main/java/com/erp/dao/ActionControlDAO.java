@@ -5,8 +5,9 @@
  */
 package com.erp.dao;
 
-import com.erp.model.SysResourceModel;
-import com.erp.model.dto.RolePermissionDTO;
+import com.erp.model.ActionsControlModel;
+import com.erp.model.ResourceControlModel;
+import com.erp.model.dto.ActionControlDTO;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
@@ -22,23 +23,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author hieut
  */
-public interface SysResourceDAO extends JpaRepository<SysResourceModel, Long> {
-    public default PaginationUtil<SysResourceModel> getDataPaging(SearchRequestUtil<SysResourceModel> pageable, VfData vfData){
-        PaginationUtil<SysResourceModel> results = new PaginationUtil<>();
+public interface ActionControlDAO extends JpaRepository<ActionsControlModel, Long>{
+    public default PaginationUtil<ActionsControlModel> getDataPaging(SearchRequestUtil<ActionsControlModel> pageable, VfData vfData){
+        PaginationUtil<ActionsControlModel> results = new PaginationUtil<>();
         int start = (pageable.getCurrent()-1) * pageable.getPageSize();
         int end = start+ pageable.getPageSize();
         
         String limit = " Limit ?, ?";
         StringBuilder strCondition = new StringBuilder(" Where 1 = 1");
         List<Object> paramList = new ArrayList<Object>();
-        StringBuilder sql = new StringBuilder("  SELECT syr.id, syr.code, syr.component, syr.icon, syr.parent_code parentCode, syr.path_url pathUrl, syr.resource_name resourceName, syr.type_of_resource typeOfResource FROM sys_resource syr ");
+        StringBuilder sql = new StringBuilder("  SELECT syr.id, syr.code, syr.action_name actionName, text_html textHtml FROM sys_actions_control syr ");
         if(!CommonUtil.isNullOrEmpty(pageable.getData().getCode())){
             strCondition.append(" AND LOWER(syr.code) = LOWER(?) ");
             paramList.add(pageable.getData().getCode());
         }
-        if(!CommonUtil.isNullOrEmpty(pageable.getData().getResourceName())){
-            strCondition.append(" AND LOWER(syr.resource_name) LIKE LOWER(?) ");
-            paramList.add("%" + pageable.getData().getResourceName()+ "%");
+        if(!CommonUtil.isNullOrEmpty(pageable.getData().getActionName())){
+            strCondition.append(" AND LOWER(syr.action_name) LIKE LOWER(?) ");
+            paramList.add("%" + pageable.getData().getActionName()+ "%");
         }
         sql.append(strCondition);
         StringBuilder sqlCount = new StringBuilder("SELECT COUNT(*) FROM (");
@@ -57,7 +58,7 @@ public interface SysResourceDAO extends JpaRepository<SysResourceModel, Long> {
                 }
             }
         }
-        vfData.setResultTransformer(query, SysResourceModel.class);
+        vfData.setResultTransformer(query, ActionsControlModel.class);
         results.setTotal(((BigInteger) queryCount.uniqueResult()).intValue());
         results.setCurPage(pageable.getCurrent());
         results.setPerPage(pageable.getPageSize());
@@ -65,10 +66,23 @@ public interface SysResourceDAO extends JpaRepository<SysResourceModel, Long> {
         return results;
     }
     
-     public default List<RolePermissionDTO> getSelectedData(VfData vfData){
-        String sql = " select code resourceCode, resource_name resourceName from sys_resource ";
+    public default List<SelectedFormDTO> getSelectedData(VfData vfData){
+        String sql = " Select code value, action_name name from sys_actions_control ";
         SQLQuery query = vfData.createSQLQuery(sql);
-        vfData.setResultTransformer(query, RolePermissionDTO.class);
+        vfData.setResultTransformer(query, SelectedFormDTO.class);
         return query.list();
+    }
+    
+    public default List<ActionControlDTO> getControl(VfData vfData, String resourceCode){
+        String sql = " select rc.control_code controlCode, ac.text_html htmlCode from sys_actions_control ac "
+                   + " inner join sys_resource_control rc on ac.`code` = rc.control_code where rc.resource_code = ?";
+        SQLQuery query = vfData.createSQLQuery(sql);
+        query.setParameter(0, resourceCode);
+        vfData.setResultTransformer(query, ActionControlDTO.class);
+        return query.list();
+    }
+    
+    public default void mapResource(VfData vfData, ResourceControlModel control){
+        
     }
 }

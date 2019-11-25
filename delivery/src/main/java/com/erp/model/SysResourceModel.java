@@ -45,7 +45,7 @@ public class SysResourceModel extends BaseModel {
     @Column(name="icon", length = 20, nullable = true)
     private String icon;
     
-    @Column(name="keyTree", length = 20, nullable = true)
+    @Column(name="key_tree", length = 20, nullable = true)
     private String keyTree;
 
     public String getKeyTree() {

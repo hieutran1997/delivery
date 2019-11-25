@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Card, Table, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
-import { getDataPaging, insert, update, deleteData } from '../../actions/ActionRole';
+import { getDataPaging
+        , insert
+        , update
+        , deleteData
+        , insertRolePermission
+        , getRolePermission 
+    } from '../../actions/ActionRole';
 import { dataPost, message, openNotification, mappingDataChange } from '../../common';
 import {
     GETROLE_PAGING_SUCCESS,
@@ -12,71 +18,82 @@ import {
     CREATE_ROLE_ERROR,
     DELETE_ROLE_SUCCESS,
     DELETE_ROLE_ERROR,
-    GETUSER_PAGING_ERROR
+    GETUSER_PAGING_ERROR,
+    CREATE_ROLE_PERMISSION_ERROR,
+    CREATE_ROLE_PERMISSION_SUCCESS,
+    GET_ROLE_PERMISSION_SUCCESS
 } from '../../constants/ActionTypes';
 import { PopupInfo } from './popupInfo.component';
 import { PopupAdd } from './popupAdd.component';
 import { FormSearch } from './formSearch.component';
+import { PopupAddPermission } from './formAddPermission.component';
 
 function SysRole(props) {
+    const [onInit, setOnInit] = useState(true);
     const [dataContent, setDataContent] = useState([]);
     const [pagination, setPagination] = useState({});
     const [isLoading, setLoading] = useState(false);
     const [dataSearch, setDataSearch] = useState(dataPost);
     const [isEdit, setIsEdit] = useState(false);
     const [isShowAdd, setIsShowAdd] = useState(false);
+    const [isShowAddPermission, setIsShowAddPermission] = useState(false);
     const [dataDetail, setDataDetail] = useState({});
     const [isError, setError] = useState(false);
+    const [lstResource, setLstResource] = useState([]);
+    const [lstTarget, setLstTarget] = useState([]);
 
     const columns = [
         {
-          title: 'STT',
-          dataIndex: 'stt',
-          width: '5%',
-          render: (value, row, index) => {
-            return index + 1;
-          }
+            title: 'STT',
+            dataIndex: 'stt',
+            width: '5%',
+            render: (value, row, index) => {
+                return index + 1;
+            }
         },
         {
-          title: 'Mã vai trò',
-          dataIndex: 'code',
-          width: '20%'
+            title: 'Mã vai trò',
+            dataIndex: 'code',
+            width: '20%'
         },
         {
-          title: 'Tên vai trò',
-          dataIndex: 'sysRoleName',
-          width: '20%'
+            title: 'Tên vai trò',
+            dataIndex: 'sysRoleName',
+            width: '20%'
         },
         {
-          title: '#',
-          key: 'action',
-          render: (text, record) => (
-            <span>
-              <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa"/>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <Popconfirm
-                title={message.messageConfirmDelete}
-                okText= {message.okText}
-                cancelText= {message.cancelText}
-                icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
-                onConfirm={() => { handleDelete(record) }}
-              >
-                <Icon type="delete" className="icon-action" title="Xóa" />
-              </Popconfirm>
-            </span>
-          ),
-          width: '20%'
+            title: '#',
+            key: 'action',
+            render: (text, record) => (
+                <span>
+                    <Icon type="apartment" onClick={() => { handlerAddPer(record) }} className="icon-action" title="Phân quyền" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <Popconfirm
+                        title={message.messageConfirmDelete}
+                        okText={message.okText}
+                        cancelText={message.cancelText}
+                        icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+                        onConfirm={() => { handleDelete(record) }}
+                    >
+                        <Icon type="delete" className="icon-action" title="Xóa" />
+                    </Popconfirm>
+                </span>
+            ),
+            width: '20%'
         },
-      ];
-    
+    ];
 
     useEffect(() => {
-        if (!props.role && !isError) {
+        if(onInit){
+            setOnInit(false);
             setLoading(true);
             if (dataContent.length === 0) {
                 props.filterData(dataSearch);
-              }
-        } else {
+            }
+        }
+        if(props.role) {
             setLoading(false);
             switch (props.role.type) {
                 case GETROLE_PAGING_SUCCESS:
@@ -90,7 +107,7 @@ function SysRole(props) {
                     });
                     break;
                 case GETUSER_PAGING_ERROR:
-                        setDataContent([]);
+                    setDataContent([]);
                     setError(true);
                     break;
                 case UPDATE_ROLE_SUCCESS:
@@ -116,12 +133,25 @@ function SysRole(props) {
                 case DELETE_ROLE_ERROR:
                     openNotification('error', 'Lỗi', message.deleteError);
                     break;
+                case CREATE_ROLE_PERMISSION_SUCCESS:
+                    openNotification('success', 'Thành công', message.createSuccess);
+                    closePopup();
+                    break;
+                case CREATE_ROLE_PERMISSION_ERROR:
+                    openNotification('error', 'Lỗi', message.createError);
+                    break;
+                case GET_ROLE_PERMISSION_SUCCESS:
+                    setLstResource(props.role.source);
+                    setLstTarget(props.role.target);
+                    console.log('props.role', props.role);
+                    break;
                 default:
                     console.log('1');
                     break;
             }
+        
         }
-    }, [props, dataSearch, dataContent, isError]);
+    }, [props, dataSearch, dataContent, isError, onInit, setOnInit, setLstResource, setLstTarget]);
 
     const handlerSearch = data => {
         dataPost.data = data;
@@ -144,9 +174,16 @@ function SysRole(props) {
         setIsShowAdd(true);
     }
 
+    const handlerAddPer = (data) =>{
+        props.getRolePermission(data.code);
+        setDataDetail({});
+        setIsShowAddPermission(true);
+    }
+
     const closePopup = () => {
         setIsEdit(false);
         setIsShowAdd(false);
+        setIsShowAddPermission(false);
     }
 
     const onSaveChange = (data) => {
@@ -183,6 +220,7 @@ function SysRole(props) {
                 />
             </Card>
 
+            <PopupAddPermission isShowAddPermission={isShowAddPermission} dataDetail={dataDetail} closePopup={closePopup} lstResource={lstResource} lstTarget={lstTarget} />
             <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave} />
             <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange}></PopupInfo>
         </div>
@@ -198,7 +236,9 @@ const mapDispatchToProps = dispatch => {
         filterData: (data) => dispatch(getDataPaging(data)),
         insert: (data) => dispatch(insert(data)),
         update: (data) => dispatch(update(data)),
-        deleteData: (data) => dispatch(deleteData(data))
+        deleteData: (data) => dispatch(deleteData(data)),
+        insertRolePermission: (data) => dispatch(insertRolePermission(data)),
+        getRolePermission: (resourceCode) => dispatch(getRolePermission(resourceCode))
     }
 };
 

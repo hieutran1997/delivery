@@ -17,6 +17,10 @@ import {
     CREATE_USER_ROLE_SUCCESS,
     CREATE_USER_ROLE_ERROR,
     GET_USER_ROLE_SUCCESS,
+    CREATE_ROLE_PERMISSION_SUCCESS,
+    CREATE_ROLE_PERMISSION_ERROR,
+    GET_ROLE_PERMISSION_SUCCESS,
+    GET_ROLE_PERMISSION_ERROR
 } from '../constants/ActionTypes';
 
 const roleReducer = (state, action) => {
@@ -121,6 +125,30 @@ const roleReducer = (state, action) => {
                 error: false,
                 type: GET_USER_ROLE_SUCCESS
             }; 
+        case CREATE_ROLE_PERMISSION_SUCCESS:
+            return {
+                ...action.result,
+                error: false,
+                type: CREATE_ROLE_PERMISSION_SUCCESS
+            }
+        case CREATE_ROLE_PERMISSION_ERROR:
+            return {
+                ...action.result,
+                error: true,
+                type: CREATE_ROLE_PERMISSION_ERROR
+            }
+        case GET_ROLE_PERMISSION_SUCCESS:
+            return {
+                ...action.result.data,
+                error: false,
+                type: GET_ROLE_PERMISSION_SUCCESS
+            }
+        case GET_ROLE_PERMISSION_ERROR:
+            return {
+                ...action.result,
+                error: true,
+                type: GET_ROLE_PERMISSION_ERROR
+            }
         default:
             return null;
     }

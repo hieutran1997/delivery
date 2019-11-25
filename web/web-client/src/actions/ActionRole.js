@@ -57,4 +57,28 @@ const getUserRole = (username) =>{
     };
 }
 
-export { getDataPaging, insert, update, deleteData, getSelectedData, insertUserRole, getUserRole };
+const insertRolePermission = (data) => {
+    const url = `${url_services.ROLE}/addPermission`;
+    return {
+        types: [types.CREATE_ROLE_PERMISSION_REQUEST_SUCCESS, types.CREATE_ROLE_PERMISSION_SUCCESS, types.CREATE_ROLE_PERMISSION_ERROR],
+        api: (axios) => axios.post(url, data)
+    };
+};
+
+const getRolePermission = (resourceCode) =>{
+    const url = `${url_services.ROLE}/getRolePermission/${resourceCode}`;
+    return {
+        types: [types.GET_ROLE_PERMISSION_REQUEST_SUCCESS, types.GET_ROLE_PERMISSION_SUCCESS, types.GET_ROLE_PERMISSION_ERROR],
+        api: (axios) => axios.get(url)
+    };
+}
+
+export { getDataPaging
+    , insert, update
+    , deleteData
+    , getSelectedData
+    , insertUserRole
+    , getUserRole
+    , insertRolePermission
+    , getRolePermission
+};

@@ -5,11 +5,14 @@
  */
 package com.erp.service;
 
+import com.erp.dao.SysResourceDAO;
 import com.erp.dao.SysRoleDAO;
 import com.erp.model.SysRoleModel;
 import com.erp.model.UserRoleModel;
+import com.erp.model.dto.RolePermissionDTO;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.model.dto.UserRoleDTO;
+import com.erp.model.form.RolePermissionForm;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
@@ -27,6 +30,8 @@ public class SysRoleServiceImpl implements SysRoleService{
     
     @Autowired
     private SysRoleDAO sysRoleDao;
+    @Autowired
+    private SysResourceDAO sysResourceDao;
 
     @Autowired
     private VfData vfData;
@@ -68,7 +73,7 @@ public class SysRoleServiceImpl implements SysRoleService{
         UserRoleDTO result = new UserRoleDTO();
         List<SelectedFormDTO> source = sysRoleDao.getSelectedData(vfData);
         List<SelectedFormDTO> target = sysRoleDao.getUserRole(vfData, username);
-        List<SelectedFormDTO> sourceDelete = new ArrayList<SelectedFormDTO>();
+        List<SelectedFormDTO> sourceDelete = new ArrayList<>();
         if(source.size() > 0){
             if(target.size() > 0){
                 for(SelectedFormDTO item : source){
@@ -79,6 +84,38 @@ public class SysRoleServiceImpl implements SysRoleService{
                     }
                 }
                 for(SelectedFormDTO item : sourceDelete){
+                    source.remove(item);
+                }
+                result.setSource(source);
+            }
+            else{
+                result.setSource(source);
+            }
+        }
+        return result;
+    }
+    
+    @Override
+    public void saveRolePermission(RolePermissionForm rolePer){
+        sysRoleDao.saveRolePermission(vfData, rolePer);
+    }
+    
+    @Override
+    public RolePermissionForm getRolePermission(String roleCode){
+        RolePermissionForm result = new RolePermissionForm();
+        List<RolePermissionDTO> source = sysResourceDao.getSelectedData(vfData);
+        List<RolePermissionDTO> target = sysRoleDao.getRolePermission(vfData, roleCode);
+        List<RolePermissionDTO> sourceDelete = new ArrayList<>();
+        if(source.size() > 0){
+            if(target.size() > 0){
+                for(RolePermissionDTO item : source){
+                    RolePermissionDTO exist = target.stream().filter(x->x.getResourceCode().equals(item.getResourceCode())).findFirst().orElse(null);
+                    if(exist != null){
+                        result.pushTarget(item);
+                        sourceDelete.add(item);
+                    }
+                }
+                for(RolePermissionDTO item : sourceDelete){
                     source.remove(item);
                 }
                 result.setSource(source);
