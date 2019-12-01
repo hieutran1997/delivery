@@ -15,13 +15,13 @@ public class RolePermissionDTO {
     
     private String resourceName;
     
-    private boolean hasAdd;
+    private Long hasAdd;
     
-    private boolean hasEdit;
+    private Long hasEdit;
     
-    private boolean hasDelete;
+    private Long hasDelete;
     
-    private boolean hasApprove;
+    private Long hasApprove;
 
     public String getResourceCode() {
         return resourceCode;
@@ -31,35 +31,35 @@ public class RolePermissionDTO {
         this.resourceCode = resourceCode;
     }
 
-    public boolean isHasAdd() {
+    public Long getHasAdd() {
         return hasAdd;
     }
 
-    public void setHasAdd(boolean hasAdd) {
+    public void setHasAdd(Long hasAdd) {
         this.hasAdd = hasAdd;
     }
 
-    public boolean isHasEdit() {
+    public Long getHasEdit() {
         return hasEdit;
     }
 
-    public void setHasEdit(boolean hasEdit) {
+    public void setHasEdit(Long hasEdit) {
         this.hasEdit = hasEdit;
     }
 
-    public boolean isHasDelete() {
+    public Long getHasDelete() {
         return hasDelete;
     }
 
-    public void setHasDelete(boolean hasDelete) {
+    public void setHasDelete(Long hasDelete) {
         this.hasDelete = hasDelete;
     }
 
-    public boolean isHasApprove() {
+    public Long getHasApprove() {
         return hasApprove;
     }
 
-    public void setHasApprove(boolean hasApprove) {
+    public void setHasApprove(Long hasApprove) {
         this.hasApprove = hasApprove;
     }
 

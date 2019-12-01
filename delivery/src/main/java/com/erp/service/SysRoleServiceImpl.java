@@ -101,29 +101,8 @@ public class SysRoleServiceImpl implements SysRoleService{
     }
     
     @Override
-    public RolePermissionForm getRolePermission(String roleCode){
-        RolePermissionForm result = new RolePermissionForm();
-        List<RolePermissionDTO> source = sysResourceDao.getSelectedData(vfData);
-        List<RolePermissionDTO> target = sysRoleDao.getRolePermission(vfData, roleCode);
-        List<RolePermissionDTO> sourceDelete = new ArrayList<>();
-        if(source.size() > 0){
-            if(target.size() > 0){
-                for(RolePermissionDTO item : source){
-                    RolePermissionDTO exist = target.stream().filter(x->x.getResourceCode().equals(item.getResourceCode())).findFirst().orElse(null);
-                    if(exist != null){
-                        result.pushTarget(item);
-                        sourceDelete.add(item);
-                    }
-                }
-                for(RolePermissionDTO item : sourceDelete){
-                    source.remove(item);
-                }
-                result.setSource(source);
-            }
-            else{
-                result.setSource(source);
-            }
-        }
-        return result;
+    public List<RolePermissionDTO> getRolePermission(String roleCode){
+        List<RolePermissionDTO> source = sysResourceDao.getSelectedPermission(vfData, roleCode);
+        return source;
     }
 }

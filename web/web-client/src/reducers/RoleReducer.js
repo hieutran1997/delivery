@@ -139,7 +139,7 @@ const roleReducer = (state, action) => {
             }
         case GET_ROLE_PERMISSION_SUCCESS:
             return {
-                ...action.result.data,
+                ...action.result,
                 error: false,
                 type: GET_ROLE_PERMISSION_SUCCESS
             }

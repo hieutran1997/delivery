@@ -33,4 +33,12 @@ const deleteData = (data) => {
     };
 };
 
-export { getDataPaging, insert, update, deleteData };
+const getSelectedData = ()=>{
+    const url =  `${url_services.RESOURCES}/getSelectedData`;
+    return {
+        types: [types.GET_SELETED_RESOURCES_REQUEST_SUCCESS, types.GET_SELETED_RESOURCES_SUCCESS, types.GET_SELETED_RESOURCES_ERROR],
+        api: (axios) => axios.get(url)
+    };
+} 
+
+export { getDataPaging, insert, update, deleteData, getSelectedData };

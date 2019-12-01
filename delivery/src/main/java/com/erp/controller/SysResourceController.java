@@ -6,7 +6,6 @@
 package com.erp.controller;
 
 import com.erp.model.SysResourceModel;
-import com.erp.model.UserModel;
 import com.erp.service.SysResourceService;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;

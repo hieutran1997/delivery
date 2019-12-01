@@ -13,7 +13,8 @@ export const url_services = {
     USER: 'users',
     RESOURCES: 'resources',
     ROLE: 'roles',
-    ORGANIZATION: 'organizations'
+    ORGANIZATION: 'organizations',
+    CONTROL: 'actioncontrol'
 }
 
 export default function environments() {
@@ -61,6 +62,13 @@ export const menu = [
                 url_hash: 'roles',
                 icon: 'api'
             },
+            // {
+            //     key: '/control',
+            //     title: 'Hoạt động điều khiển',
+            //     component: 'Control',
+            //     url_hash: 'control',
+            //     icon: 'api'
+            // },
             {
                 key: '/organization',
                 title: 'Đơn vị',

@@ -10,7 +10,9 @@ import {
     UPDATE_RESOURCES_ERROR,
     DELETE_RESOURCES_REQUEST_SUCCESS,
     DELETE_RESOURCES_SUCCESS,
-    DELETE_RESOURCES_ERROR
+    DELETE_RESOURCES_ERROR,
+    GET_SELETED_RESOURCES_ERROR,
+    GET_SELETED_RESOURCES_SUCCESS,
 } from '../constants/ActionTypes';
 
 const resourceReducer = (state, action) => {
@@ -76,6 +78,18 @@ const resourceReducer = (state, action) => {
                 type: DELETE_RESOURCES_SUCCESS
             };
         case DELETE_RESOURCES_ERROR:
+            return {
+                ...action,
+                error: true
+            };
+
+        case GET_SELETED_RESOURCES_SUCCESS:
+            return {
+                ...action.result,
+                error: false,
+                type: GET_SELETED_RESOURCES_SUCCESS
+            };
+        case GET_SELETED_RESOURCES_ERROR:
             return {
                 ...action,
                 error: true

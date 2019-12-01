@@ -31,9 +31,6 @@ public class ActionsControlModel {
     
     @Column(name="text_html", length = 500, nullable = true)
     private String textHtml;
-    
-    @Column(name="is_default", nullable = true)
-    private boolean isDefault;
 
     public Long getId() {
         return id;
@@ -65,13 +62,5 @@ public class ActionsControlModel {
 
     public void setTextHtml(String textHtml) {
         this.textHtml = textHtml;
-    }
-
-    public boolean isIsDefault() {
-        return isDefault;
-    }
-
-    public void setIsDefault(boolean isDefault) {
-        this.isDefault = isDefault;
     }
 }

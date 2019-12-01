@@ -5,18 +5,12 @@
  */
 package com.erp.model;
 
-import com.erp.util.JsonToMapConverter;
-import java.util.HashMap;
-import java.util.Map;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 /**
  *
@@ -36,9 +30,17 @@ public class SysRolePermissionModel {
     @Column(name="role_code", length = 10)
     private String roleCode;
     
-    @Column(name = "permissions", columnDefinition = "json")
-    @Convert(attributeName = "permissions", converter = JsonToMapConverter.class)
-    private String permissions;
+    @Column(name="has_add")
+    private boolean hasAdd;
+    
+    @Column(name="has_edit")
+    private boolean hasEdit;
+    
+    @Column(name="has_delete")
+    private boolean hasDelete;
+    
+    @Column(name="has_approve")
+    private boolean hasApprove;
 
     public Long getId() {
         return id;
@@ -64,11 +66,35 @@ public class SysRolePermissionModel {
         this.roleCode = roleCode;
     }
 
-    public String getPermissions() {
-        return permissions;
+    public boolean isHasAdd() {
+        return hasAdd;
     }
 
-    public void setPermissions(String permissions) {
-        this.permissions = permissions;
+    public void setHasAdd(boolean hasAdd) {
+        this.hasAdd = hasAdd;
+    }
+
+    public boolean isHasEdit() {
+        return hasEdit;
+    }
+
+    public void setHasEdit(boolean hasEdit) {
+        this.hasEdit = hasEdit;
+    }
+
+    public boolean isHasDelete() {
+        return hasDelete;
+    }
+
+    public void setHasDelete(boolean hasDelete) {
+        this.hasDelete = hasDelete;
+    }
+
+    public boolean isHasApprove() {
+        return hasApprove;
+    }
+
+    public void setHasApprove(boolean hasApprove) {
+        this.hasApprove = hasApprove;
     }
 }

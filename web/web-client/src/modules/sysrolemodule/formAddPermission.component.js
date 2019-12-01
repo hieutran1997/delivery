@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Row, Button } from 'antd';
-import { PickList } from 'primereact/picklist';
+import { Modal, Button, Table, Checkbox } from 'antd';
 import useForm from 'react-hook-form';
 
 export function PopupAddPermission(props) {
@@ -8,26 +7,57 @@ export function PopupAddPermission(props) {
 
   const [isShowAddPermission, setIsShowAddPermission] = useState(false);
   const [dataDetail, setDataDetail] = useState(props);
-  const [source, setSource] = useState([]);
   const [target, setTarget] = useState([]);
   const [onInitTarget, setOnInitTarget] = useState(true);
-  const [onInitSource, setOnInitSource] = useState(true);
+
+  const columns = [
+    {
+      title: 'Tên tài nguyên',
+      dataIndex: 'resourceName',
+    },
+    {
+      title: 'Thêm mới',
+      dataIndex: 'hasAdd',
+      render: (text, record) => {
+        if( record && record.hasAdd){
+          record.hasAdd = (record.hasAdd === 1);
+        }else{
+          record.hasAdd = false;
+        }
+        const changeValue = (e) =>{
+          record.hasAdd = e.target.checked;
+        }
+        return <Checkbox checked={record.hasAdd} onChange={changeValue}></Checkbox>
+      }
+    },
+    {
+      title: 'Sửa',
+      dataIndex: 'hasEdit',
+    },
+    {
+      title: 'Xóa',
+      dataIndex: 'hasDelete',
+    },
+    {
+      title: 'Duyệt',
+      dataIndex: 'hasApprove',
+    },
+
+  ];
 
   const onSave = () => {
     let data = {
       roleCode: props.dataDetail.code,
       target: target
     };
-    setSource([]);
+    console.log('target', target);
     setTarget([]);
-    props.onSave(data);
+    //props.onSave(data);
   };
 
   const onClose = () => {
-    setSource([]);
     setTarget([]);
     setOnInitTarget(true);
-    setOnInitSource(true);
     props.closePopup();
   }
 
@@ -39,50 +69,26 @@ export function PopupAddPermission(props) {
       if (props.lstTarget && onInitTarget) {
         setTarget(props.lstTarget);
       }
-      if(props.lstResource && onInitSource){
-        setSource(props.lstResource);
-      }
     }
     setIsShowAddPermission(props.isShowAddPermission);
-  }, [props, source, target, setSource, setTarget, onInitTarget, onInitSource]);
+  }, [props, target, setTarget, onInitTarget]);
 
-  const template = (item) => {
-    return (
-      <div className="p-clearfix">
-        <div style={{}}>
-          {/* {item.resourceName} */}
-        </div>
-      </div>
-    );
-  }
-
-  const onChange = (e) =>{
-    setOnInitTarget(false);
-    setOnInitSource(false);
-    setSource(e.source); 
-    setTarget(e.target);
-  }
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+  };
 
   return (
     <Modal
-      title={`Gán quyền: ${dataDetail.username}`}
+      title={`Gán quyền: ${dataDetail.sysRoleName}`}
       visible={isShowAddPermission}
       footer={null}
       width={800}
       onCancel={onClose}
     >
       <form onSubmit={handleSubmit(onSave)}>
-        <Row type="flex" justify="space-around">
-          <PickList source={source}
-            target={target}
-            onChange={(e) => {onChange(e)}}
-            responsive={true}
-            sourceHeader="Danh sách tài nguyên"
-            targetHeader="Danh sách tài nguyên đã chọn"
-            itemTemplate={template}
-          />
-        </Row>
-
+        <Table rowSelection={rowSelection} columns={columns} dataSource={target} scroll={{ y: 240 }} pagination={false} />
         <div className="footer-modal">
           <input type="submit" className="ant-btn ant-btn-primary" value="Lưu lại" />
           <Button type="danger" className="btn-discard" onClick={onClose}>Hủy</Button>

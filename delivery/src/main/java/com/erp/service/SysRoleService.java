@@ -6,6 +6,7 @@
 package com.erp.service;
 
 import com.erp.model.SysRoleModel;
+import com.erp.model.dto.RolePermissionDTO;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.model.dto.UserRoleDTO;
 import com.erp.model.form.RolePermissionForm;
@@ -26,6 +27,6 @@ public interface SysRoleService {
     void saveUserRole(UserRoleDTO userRole);
     UserRoleDTO getUserRole(String username);
     void saveRolePermission(RolePermissionForm rolePer);
-    RolePermissionForm getRolePermission(String roleCode);
+    List<RolePermissionDTO> getRolePermission(String roleCode);
 }
 

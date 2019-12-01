@@ -113,10 +113,10 @@ public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
             String sql = " insert into sys_role_permission(has_add, has_edit, has_delete, has_approve, resource_code, role_code)"
                    + " value(?, ?, ?, ?, ?, ?)";
             SQLQuery query = vfData.createSQLQuery(sql);
-            query.setParameter(0, item.isHasAdd());
-            query.setParameter(1, item.isHasEdit());
-            query.setParameter(2, item.isHasDelete());
-            query.setParameter(3, item.isHasApprove());
+            query.setParameter(0, item.getHasAdd());
+            query.setParameter(1, item.getHasEdit());
+            query.setParameter(2, item.getHasDelete());
+            query.setParameter(3, item.getHasApprove());
             query.setParameter(4, item.getResourceCode());
             query.setParameter(5, rolePer.getRoleCode());
             query.executeUpdate();

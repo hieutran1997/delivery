@@ -4,6 +4,7 @@ const Home = lazy(() => import('../../modules/homeModule/Home'));
 const SysResource = lazy(() => import('../../modules/sysresourcemodule/SysRersource'));
 const SysRole = lazy(() => import('../../modules/sysrolemodule/SysRole'));
 const Organization = lazy(() => import('../../modules/organizationmodule/Organization.component'));
+// const Control = lazy(() => import('../../modules/controlmodule/Control'));
 
 export default{
     Home: {
@@ -25,5 +26,9 @@ export default{
     Organization:{
         component: Organization,
         path: '/organization'
-    }
+    },
+    // Control: {
+    //     component: Control,
+    //     path: '/control'
+    // }
 }

@@ -7,6 +7,7 @@ package com.erp.service;
 
 import com.erp.dao.SysResourceDAO;
 import com.erp.model.SysResourceModel;
+import com.erp.model.dto.RolePermissionDTO;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
