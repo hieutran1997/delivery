@@ -4,7 +4,7 @@ const Home = lazy(() => import('../../modules/homeModule/Home'));
 const SysResource = lazy(() => import('../../modules/sysresourcemodule/SysRersource'));
 const SysRole = lazy(() => import('../../modules/sysrolemodule/SysRole'));
 const Organization = lazy(() => import('../../modules/organizationmodule/Organization.component'));
-// const Control = lazy(() => import('../../modules/controlmodule/Control'));
+const HasNotPermission = lazy(() => import('../../modules/invalidModule/HasNotPermission'));
 
 export default{
     Home: {
@@ -13,22 +13,22 @@ export default{
     },
     User: {
         component: User,
-        path: '/users'
+        path: '/user'
     },
     SysResource: {
         component: SysResource,
-        path: '/resources'
+        path: '/resource'
     },
     SysRole: {
         component: SysRole,
-        path: '/roles'
+        path: '/role'
     },
     Organization:{
         component: Organization,
-        path: '/organization'
+        path: '/org'
     },
-    // Control: {
-    //     component: Control,
-    //     path: '/control'
-    // }
+    HasNotPermission: {
+        component: HasNotPermission,
+        path: '/permission'
+    }
 }

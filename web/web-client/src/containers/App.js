@@ -8,20 +8,12 @@ import 'primeicons/primeicons.css';
 import { useSelector, connect } from 'react-redux';
 import MenuComponent from '../components/MenuComponent';
 import { Redirect } from 'react-router-dom';
-import { openNotification } from '../common';
+import { openNotification, getCurrentUser, getPathMenu, hasMenu } from '../common';
 import { useHistory } from "react-router-dom";
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { ScrollPanel } from 'primereact/scrollpanel';
 
 const { Header, Sider, Content } = Layout;
-
-const getCurrentUser = () => {
-  var info = localStorage.getItem('deliveryApp');
-  if (info) {
-    info = JSON.parse(info);
-    return info;
-  }
-}
 
 function App(props) {
 
@@ -34,8 +26,15 @@ function App(props) {
   let data = useSelector(state => state.authReducer);
   if (data && data.unauthorized) {
     localStorage.removeItem('deliveryApp');
+    localStorage.removeItem('deliveryAppScope');
     openNotification('error', 'Lỗi', 'Phiên đăng nhập hết hạn!');
     return <Redirect to='/login' />;
+  }
+
+  console.log('history', history);
+
+  if(!hasMenu(history.location.pathname.substring(1)) && "/permission" !== history.location.pathname && "/" !== history.location.pathname){ //Loại bỏ dấu /
+    history.push("/permission");
   }
 
   const toggle = () => {
@@ -45,6 +44,7 @@ function App(props) {
   const onClickDropDownUser = ({ key }) => {
     if (key === "2") {
       localStorage.removeItem('deliveryApp');
+      localStorage.removeItem('deliveryAppScope');
       history.push("/login");
     }
   };
@@ -60,15 +60,7 @@ function App(props) {
     </Menu>
   );
 
-  const items = [
-    { label: 'Categories' },
-    { label: 'Sports' },
-    { label: 'Football' },
-    { label: 'Countries' },
-    { label: 'Spain' }
-  ];
-
-  const home = { icon: 'pi pi-home', url: 'https://www.primefaces.org/primereact' }
+  const home = { icon: 'pi pi-home', url: '/' }
 
   return (
     <Layout>
@@ -102,7 +94,7 @@ function App(props) {
           }}
         >
           <ScrollPanel style={{width: '100%'}} className="custom-content">
-            <BreadCrumb model={items} home={home} />
+            <BreadCrumb model={getPathMenu(history.location.pathname)} home={home} />
             <Component route={route} />
           </ScrollPanel>
         </Content>

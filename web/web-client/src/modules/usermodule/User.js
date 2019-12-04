@@ -4,19 +4,20 @@ import { connect } from 'react-redux';
 import { getDataPaging, insert, update, deleteData } from '../../actions/ActionUser';
 import { getSelectedData as getSelectedDataOrg } from '../../actions/ActionOrganization';
 import { getSelectedData as getSelectedDataRole, insertUserRole, getUserRole } from '../../actions/ActionRole';
-import { dataPost, message, mappingDataChange, openNotification } from '../../common';
-import {  GETUSER_PAGING_SUCCESS, 
-          CREATE_USER_SUCCESS,
-          CREATE_USER_ERROR,
-          UPDATE_USER_SUCCESS, 
-          UPDATE_USER_ERROR, 
-          DELETE_USER_ERROR, 
-          DELETE_USER_SUCCESS,
-          GET_SELETED_ORGANIZATION_SUCCESS,  
-          GET_USER_ROLE_SUCCESS,
-          CREATE_USER_ROLE_SUCCESS,
-          CREATE_USER_ROLE_ERROR
-        } from '../../constants/ActionTypes';
+import { dataPost, message, mappingDataChange, openNotification, hasPermission } from '../../common';
+import {
+  GETUSER_PAGING_SUCCESS,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_ERROR,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
+  DELETE_USER_ERROR,
+  DELETE_USER_SUCCESS,
+  GET_SELETED_ORGANIZATION_SUCCESS,
+  GET_USER_ROLE_SUCCESS,
+  CREATE_USER_ROLE_SUCCESS,
+  CREATE_USER_ROLE_ERROR
+} from '../../constants/ActionTypes';
 import { Table, Icon, Popconfirm, Card } from 'antd';
 import { PopupInfo } from './popupInfo.component';
 import { PopupAdd } from './popupAdd.component';
@@ -36,7 +37,7 @@ function User(props) {
   const [lstOrg, setLstOrg] = useState([]);
   const [lstRoleResource, setLstRoleResource] = useState([]);
   const [lstRoleTarget, setLstRoleTarget] = useState([]);
-  
+
   const columns = [
     {
       title: 'STT',
@@ -70,19 +71,20 @@ function User(props) {
       key: 'action',
       render: (text, record) => (
         <span>
-          <Icon type="apartment" onClick={() => { handlerAddRole(record) }} className="icon-action" title="Gán vai trò" />
+          {hasPermission("user", "addRole", 1) === 1 ? <Icon type="apartment" onClick={() => { handlerAddRole(record) }} className="icon-action" title="Gán vai trò" /> : ""}
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa"/>
+          {hasPermission("user", "hasEdit") === 1 ? <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" /> : ""}
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <Popconfirm
-            title={message.messageConfirmDelete}
-            okText= {message.okText}
-            cancelText= {message.cancelText}
-            icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
-            onConfirm={() => { handleDelete(record) }}
-          >
-            <Icon type="delete" className="icon-action" title="Xóa" />
-          </Popconfirm>
+          {hasPermission("user", "hasDelete") === 1 ?
+            <Popconfirm
+              title={message.messageConfirmDelete}
+              okText={message.okText}
+              cancelText={message.cancelText}
+              icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+              onConfirm={() => { handleDelete(record) }}
+            >
+              <Icon type="delete" className="icon-action" title="Xóa" />
+            </Popconfirm> : ""}
         </span>
       ),
       width: '20%'
@@ -91,13 +93,13 @@ function User(props) {
 
   useEffect(() => {
 
-    if(onInit){
+    if (onInit) {
       setLoading(true);
       props.filterData(dataSearch);
       props.getSelectedDataOrg();
       setOnInit(false);
     }
-    if(props.dataUser){
+    if (props.dataUser) {
       setLoading(false);
       switch (props.dataUser.type) {
         case GETUSER_PAGING_SUCCESS:
@@ -126,9 +128,9 @@ function User(props) {
           openNotification('error', 'Lỗi', message.createError);
           break;
         case DELETE_USER_SUCCESS:
-            openNotification('success', 'Thành công', message.deleteSuccess);
-            props.filterData(dataSearch);
-            break;
+          openNotification('success', 'Thành công', message.deleteSuccess);
+          props.filterData(dataSearch);
+          break;
         case DELETE_USER_ERROR:
           openNotification('error', 'Lỗi', message.deleteError);
           break;
@@ -137,27 +139,27 @@ function User(props) {
           break;
       }
     }
-    if(props.dataOrg){
-      if(props.dataOrg.type === GET_SELETED_ORGANIZATION_SUCCESS){
+    if (props.dataOrg) {
+      if (props.dataOrg.type === GET_SELETED_ORGANIZATION_SUCCESS) {
         setLstOrg(props.dataOrg.data);
       }
     }
-    if(props.dataRole){
-      if(props.dataRole.type === GET_USER_ROLE_SUCCESS){
+    if (props.dataRole) {
+      if (props.dataRole.type === GET_USER_ROLE_SUCCESS) {
         setLstRoleResource(props.dataRole.data.source);
         setLstRoleTarget(props.dataRole.data.target);
       }
-      if(props.dataRole.type === CREATE_USER_ROLE_SUCCESS){
+      if (props.dataRole.type === CREATE_USER_ROLE_SUCCESS) {
         setIsShowAddRole(false);
         openNotification('success', 'Thành công', 'Gán vai trò thành công!');
       }
-      else if(props.dataRole.type === CREATE_USER_ROLE_ERROR){
+      else if (props.dataRole.type === CREATE_USER_ROLE_ERROR) {
         openNotification('error', 'Thất bại', 'Xảy ra lỗi!');
       }
     }
   }, [props, dataContent, dataSearch, onInit, setOnInit, setLstRoleResource, setLstRoleTarget]);
 
-  const handlerSearch = data =>{
+  const handlerSearch = data => {
     dataPost.data = data;
     setDataSearch(dataPost);
     props.filterData(dataSearch);
@@ -173,15 +175,15 @@ function User(props) {
     setIsEdit(true);
   }
 
-  const handlerAddRole = (data) =>{
+  const handlerAddRole = (data) => {
     props.getUserRole(data.username);
-    setTimeout(function(){
+    setTimeout(function () {
       setDataDetail(data);
       setIsShowAddRole(true);
     }, 100)
   }
 
-  const handleAdd = () =>{
+  const handleAdd = () => {
     setDataDetail(null);
     setIsShowAdd(true);
   }
@@ -192,13 +194,13 @@ function User(props) {
     setIsShowAddRole(false);
   }
 
-  const onSaveChange = (data)=>{
+  const onSaveChange = (data) => {
     var instance = dataDetail;
     mappingDataChange(data, instance);
     props.update(instance);
   }
 
-  const onSave = (data)=>{
+  const onSave = (data) => {
     var instance = data;
     props.insert(instance);
   }
@@ -208,7 +210,7 @@ function User(props) {
   }
 
   const handleDelete = (data) => {
-    if(data){
+    if (data) {
       props.deleteData(data);
     }
   }
@@ -218,21 +220,34 @@ function User(props) {
       <Card title={message.titleFormSearch}>
         <FormSearch onCreate={handleAdd} onSearch={handlerSearch} lstOrg={lstOrg} ></FormSearch>
       </Card>
-      <br/>
+      <br />
       <Card title={message.titleFormListUser}>
-        <Table
-          columns={columns}
-          rowKey={record => record.username}
-          dataSource={dataContent}
-          pagination={pagination}
-          loading={isLoading}
-          onChange={handleTableChange}
-        />
+        {hasPermission("user", "hasEdit") === 1 ? 
+          <Table
+            columns={columns}
+            rowKey={record => record.username}
+            dataSource={dataContent}
+            pagination={pagination}
+            loading={isLoading}
+            onChange={handleTableChange}
+          /> : 
+          <b>Không có quyền xem</b>
+      }
+        
       </Card>
+      {
+        hasPermission("user", "addRole", 1) === 1 ?<PopupAddRole isShowAddRole={isShowAddRole} dataDetail={dataDetail} closePopup={closePopup} lstRoleResource={lstRoleResource} lstRoleTarget={lstRoleTarget} onSave={onSaveRole} /> : ""
+      }
 
-      <PopupAddRole isShowAddRole={isShowAddRole} dataDetail={dataDetail} closePopup={closePopup} lstRoleResource={lstRoleResource} lstRoleTarget={lstRoleTarget} onSave={onSaveRole} />
-      <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSave}/>
-      <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSaveChange}/>
+      {
+        hasPermission("user", "hasEdit") === 1 ? <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSaveChange} /> : ""
+      }
+
+      {
+        hasPermission("user", "hasAdd") === 1 ? <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSave} /> : ""
+      }
+      
+      
     </div>
   );
 }
@@ -246,12 +261,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     filterData: (data) => dispatch(getDataPaging(data)),
-    insert: (data)=>dispatch(insert(data)),
+    insert: (data) => dispatch(insert(data)),
     update: (data) => dispatch(update(data)),
     deleteData: (data) => dispatch(deleteData(data)),
-    getSelectedDataOrg: ()=> dispatch(getSelectedDataOrg()),
-    getSelectedDataRole: ()=> dispatch(getSelectedDataRole()),
-    insertUserRole: (data)=> dispatch(insertUserRole(data)),
+    getSelectedDataOrg: () => dispatch(getSelectedDataOrg()),
+    getSelectedDataRole: () => dispatch(getSelectedDataRole()),
+    insertUserRole: (data) => dispatch(insertUserRole(data)),
     getUserRole: (username) => dispatch(getUserRole(username))
   }
 };

@@ -42,24 +42,24 @@ export const menu = [
         icon: 'branches',
         childs: [
             {
-                key: '/users',
+                key: 'user',
                 title: 'Người dùng',
                 component: 'User',
-                url_hash: 'users',
+                url_hash: 'user',
                 icon: 'user'
             },
             {
-                key: '/resources',
+                key: 'resource',
                 title: 'Chức năng hệ thống',
                 component: 'SysResource',
-                url_hash: 'resources',
+                url_hash: 'resource',
                 icon: 'solution'
             },
             {
-                key: '/roles',
+                key: 'role',
                 title: 'Vai trò hệ thống',
                 component: 'SysRole',
-                url_hash: 'roles',
+                url_hash: 'role',
                 icon: 'api'
             },
             // {
@@ -70,10 +70,10 @@ export const menu = [
             //     icon: 'api'
             // },
             {
-                key: '/organization',
+                key: 'org',
                 title: 'Đơn vị',
                 component: 'Organization',
-                url_hash: 'organization',
+                url_hash: 'org',
                 icon: 'database'
             }
         ]

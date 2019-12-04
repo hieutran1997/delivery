@@ -18,8 +18,14 @@ const signIn = async (username, password) => {
         const result = await _serviceLogin.post(url_services.LOGIN, data);
         if (result.status === 200) {
             //var token = result.data.token;
-            var profile = JSON.stringify(result.data);
+            
             try {
+                var scope = result.data.scope;
+                var info = result.data;
+                scope = JSON.stringify(scope);
+                localStorage.setItem('deliveryAppScope', scope);
+                delete info.scope; 
+                var profile = JSON.stringify(info);
                 localStorage.setItem('deliveryApp', profile);
             } catch (error) {
 
