@@ -41,4 +41,12 @@ const getSelectedData = ()=>{
     };
 } 
 
-export { getDataPaging, insert, update, deleteData, getSelectedData };
+const insertControl = (data) => {
+    const url = `${url_services.RESOURCES}/addControl`;
+    return {
+        types: [types.CREATE_RESOURCES_CONTROL_REQUEST_SUCCESS, types.CREATE_RESOURCES_CONTROL_SUCCESS, types.CREATE_RESOURCES_CONTROL_ERROR],
+        api: (axios) => axios.post(url, data)
+    };
+};
+
+export { getDataPaging, insert, update, deleteData, getSelectedData, insertControl };

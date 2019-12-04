@@ -13,6 +13,8 @@ import {
     DELETE_RESOURCES_ERROR,
     GET_SELETED_RESOURCES_ERROR,
     GET_SELETED_RESOURCES_SUCCESS,
+    CREATE_RESOURCES_CONTROL_SUCCESS,
+    CREATE_RESOURCES_CONTROL_ERROR
 } from '../constants/ActionTypes';
 
 const resourceReducer = (state, action) => {
@@ -82,7 +84,6 @@ const resourceReducer = (state, action) => {
                 ...action,
                 error: true
             };
-
         case GET_SELETED_RESOURCES_SUCCESS:
             return {
                 ...action.result,
@@ -93,6 +94,18 @@ const resourceReducer = (state, action) => {
             return {
                 ...action,
                 error: true
+            };
+        case CREATE_RESOURCES_CONTROL_SUCCESS:
+            return {
+                ...action.result,
+                error: false,
+                type: CREATE_RESOURCES_CONTROL_SUCCESS
+            };
+        case CREATE_RESOURCES_CONTROL_ERROR:
+            return {
+                ...action,
+                error: true,
+                type: CREATE_RESOURCES_CONTROL_ERROR
             };
         default:
             return null;

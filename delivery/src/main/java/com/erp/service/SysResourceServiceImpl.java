@@ -7,7 +7,7 @@ package com.erp.service;
 
 import com.erp.dao.SysResourceDAO;
 import com.erp.model.SysResourceModel;
-import com.erp.model.dto.RolePermissionDTO;
+import com.erp.model.dto.ResourceDTO;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
@@ -35,7 +35,7 @@ public class SysResourceServiceImpl implements SysResourceService{
     }
     
     @Override
-    public PaginationUtil<SysResourceModel> getDataSearch(SearchRequestUtil<SysResourceModel> pageable){
+    public PaginationUtil<ResourceDTO> getDataSearch(SearchRequestUtil<SysResourceModel> pageable){
         return sysResourceDao.getDataPaging(pageable, vfData);
     }
     
@@ -49,5 +49,21 @@ public class SysResourceServiceImpl implements SysResourceService{
     @Override
     public void delete(Long id) {
         sysResourceDao.delete(id);
+    }
+    
+    @Override
+    public boolean saveOrUpdateOrtherControl(SysResourceModel data){
+        SysResourceModel source = sysResourceDao.findOne(data.getId());
+        if(source == null){
+            return false;
+        }else{
+            try {
+                source.setOrtherControls(data.getOrtherControls());
+                sysResourceDao.save(source);
+            } catch (Exception e) {
+                return false;
+            }
+            return true;
+        }
     }
 }

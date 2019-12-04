@@ -5,10 +5,10 @@
  */
 package com.erp.util;
 
+import com.erp.config.JwtRequestFilter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -20,41 +20,29 @@ import org.slf4j.LoggerFactory;
  * @author hieut
  */
 @Converter
-public class JsonToMapConverter 
-                    implements AttributeConverter<String, Map<String, Object>> 
-{
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonToMapConverter.class);
+public class JsonToMapConverter
+        implements AttributeConverter<Map<String, Object>, String> {
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public Map<String, Object> convertToDatabaseColumn(String attribute)
-    {
-        if (attribute == null) {
-           return new HashMap<>();
+    private static final Logger logger = LoggerFactory.getLogger(JsonToMapConverter.class);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    public String convertToDatabaseColumn(Map<String, Object> customerInfo) {
+        String customerInfoJson = null;
+        try {
+            customerInfoJson = objectMapper.writeValueAsString(customerInfo);
+        } catch (JsonProcessingException jsonProcessingException) {
+             logger.error("Json value khong cast duoc sang String!", jsonProcessingException);
         }
-        try
-        {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(attribute, HashMap.class);
-        }
-        catch (IOException e) {
-            LOGGER.error("Convert error while trying to convert string(JSON) to map data structure.");
-        }
-        return new HashMap<>();
+        return customerInfoJson;
     }
 
-    @Override
-    public String convertToEntityAttribute(Map<String, Object> dbData)
-    {
-        try
-        {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(dbData);
+    public Map<String, Object> convertToEntityAttribute(String customerInfoJSON) {
+        Map<String, Object> customerInfo = null;
+        try {
+            customerInfo = (Map<String, Object>) objectMapper.readValue(customerInfoJSON, Map.class);
+        } catch (IOException iOException) {
+            logger.error("Json value khong cast duoc sang map!", iOException);
         }
-        catch (JsonProcessingException e)
-        {
-            LOGGER.error("Could not convert map to json string.");
-            return null;
-        }
+        return customerInfo;
     }
 }

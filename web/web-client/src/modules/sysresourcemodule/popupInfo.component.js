@@ -7,6 +7,7 @@ export function PopupInfo(props){
     const [isEdit, setIsEdit] = useState(false);
     const [dataDetail, setDataDetail] = useState(props);
     const onSaveEdit = data => {
+        data.ortherControls = JSON.parse(props.dataDetail.ortherControls);
         props.onSave(data);
     };
 
@@ -17,7 +18,7 @@ export function PopupInfo(props){
               setValue("code", props.dataDetail.code);
               setValue("resourceName", props.dataDetail.resourceName);
               setValue("icon", props.dataDetail.icon);
-              setValue("path", props.dataDetail.path);
+              setValue("pathUrl", props.dataDetail.pathUrl);
               setValue("parentCode", props.dataDetail.parentCode);
               setValue("component", props.dataDetail.component);
               setValue("typeOfResource", props.dataDetail.typeOfResource);

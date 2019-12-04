@@ -140,8 +140,41 @@ function SysRole(props) {
                     openNotification('error', 'Lỗi', message.createError);
                     break;
                 case GET_ROLE_PERMISSION_SUCCESS:
+                    if(props.role.data){
+                        props.role.data.forEach(function(item){
+                            let resourceControl = JSON.parse(item.ortherControlsOfResource);
+                            let perControl = JSON.parse(item.ortherControls);
+                            let temp = {}
+                            if(perControl){
+                                for (const [key, valuePermission] of Object.entries(perControl)) {
+                                    if(key in resourceControl){
+                                        temp[key] = {
+                                            title: resourceControl[key],
+                                            value: valuePermission
+                                        }
+                                    }
+                                }
+                                for (const [key, valueResource] of Object.entries(resourceControl)) {
+                                    if(!(key in perControl)){
+                                        temp[key] = {
+                                            title: valueResource,
+                                            value: 0
+                                        }
+                                    }
+                                }
+                            }
+                            else{
+                                for (const [key, valueResource] of Object.entries(resourceControl)) {
+                                    temp[key] = {
+                                        title: valueResource,
+                                        value: 0
+                                    }
+                                }
+                            }
+                            item.ortherControls = temp;
+                        });
+                    }
                     setLstTarget(props.role.data);
-                    console.log('props.role', props.role);
                     break;
                 default:
                     console.log('1');
@@ -201,6 +234,11 @@ function SysRole(props) {
         }
     }
 
+    const onSavePermission = (data)=>{
+        console.log('data', data);
+        props.insertRolePermission(data);
+    }
+
     return (
         <div>
             <Card title={message.titleFormSearch}>
@@ -218,7 +256,7 @@ function SysRole(props) {
                 />
             </Card>
 
-            <PopupAddPermission isShowAddPermission={isShowAddPermission} dataDetail={dataDetail} closePopup={closePopup} lstTarget={lstTarget} />
+            <PopupAddPermission isShowAddPermission={isShowAddPermission} dataDetail={dataDetail} closePopup={closePopup} lstTarget={lstTarget} onSave={onSavePermission}/>
             <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave} />
             <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange}></PopupInfo>
         </div>

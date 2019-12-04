@@ -83,7 +83,7 @@
 
 @media only screen and (max-width: 1460px) {
   .custom-content{
-    height: 510px;
+    height: 555px;
   }
 }
 
@@ -93,11 +93,15 @@
 }
 
 .custom-content .p-scrollpanel-bar {
-  background-color: #1976d2;
+  background-color: rgb(186, 190, 194);
   opacity: 1;
   transition: background-color .1s;
 }
 
 .custom-content .p-scrollpanel-bar:hover {
   background-color: #135ba1;
+}
+
+.custom-content-popup{
+  height: 300px;
 }

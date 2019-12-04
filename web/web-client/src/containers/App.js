@@ -97,12 +97,12 @@ function App(props) {
         <Content
           style={{
             margin: '10px 8px',
-            minHeight: 300,
+            minHeight: 350,
             overflow: 'initial'
           }}
         >
-          <BreadCrumb model={items} home={home} />
           <ScrollPanel style={{width: '100%'}} className="custom-content">
+            <BreadCrumb model={items} home={home} />
             <Component route={route} />
           </ScrollPanel>
         </Content>

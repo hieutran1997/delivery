@@ -4,6 +4,7 @@
  */
 package com.erp.util;
 
+import com.erp.model.UserModel;
 import com.google.gson.Gson;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -66,20 +67,9 @@ import org.apache.commons.beanutils.converters.LongConverter;
 public class CommonUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonUtil.class);
-    private static final String[] SIGNED_ARR = new String[]{"��", "��", "���", "���", "��", "��", "���", "���", "���", "���", "���",
-        "��", "���", "���", "���", "���", "���", "��", "��", "���", "���", "���", "��", "��?", "���", "���", "���", "���", "��", "��", "���", "���",
-        "��", "��", "��", "��?", "��?", "��", "��", "���", "���", "���", "���", "���", "��", "��?", "���", "���", "���", "���", "��", "��", "���",
-        "���", "��", "��", "���", "���", "���", "���", "���", "���", "��", "���", "���", "���", "��", "��", "�?", "���", "���", "��", "��", "���",
-        "���", "���", "���", "���", "��", "���", "���", "���", "���", "���", "��", "��", "���", "���", "���", "��", "���", "���", "���", "���", "���",
-        "��", "�?", "���", "���", "��", "��", "��", "���", "���", "��", "��", "���", "��?", "���", "���", "���", "��", "���", "���", "���", "���",
-        "���", "��", "��", "���", "���", "��", "��", "���", "���", "���", "���", "���", "���", "�?", "���", "���", "���", "�?"};
-    private static final String[] UNSIGNED_ARR = new String[]{"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",
-        "a", "a", "a", "a", "a", "a", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "i", "i", "i", "i",
-        "i", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "u", "u", "u",
-        "u", "u", "u", "u", "u", "u", "u", "u", "y", "y", "y", "y", "y", "d", "A", "A", "A", "A", "A", "A", "A",
-        "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E",
-        "I", "I", "I", "I", "I", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O",
-        "O", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "Y", "Y", "Y", "Y", "Y", "D"};
+    private static final String[] SIGNED_ARR = new String[]{", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", ", "};
+
+    private static final String[] UNSIGNED_ARR = new String[]{"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "i", "i", "i", "i", "i", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "u", "u", "u", "u", "u", "u", "u", "u", "u", "u", "u", "y", "y", "y", "y", "y", "d", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "I", "I", "I", "I", "I", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "Y", "Y", "Y", "Y", "Y", "D"};
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -1448,7 +1438,7 @@ public class CommonUtil {
      * @return
      */
     public static void filterConflictDate(Date startDate, Date endDate, StringBuilder queryString, List<Object> paramList,
-             String fieldStartDate, String fieldEndDate) {
+            String fieldStartDate, String fieldEndDate) {
         String cond = " AND (0=1 ";
         if (endDate == null) { // input endDate == null
             /**
@@ -1767,6 +1757,16 @@ public class CommonUtil {
         } else {
             DecimalFormat format = new DecimalFormat("###,###,###");
             return format.format(d);
+        }
+    }
+    
+    public static UserModel getCurrentUser(){
+        try{
+            UserModel currentUser = (UserModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return currentUser;
+        }catch(Exception ex){
+            LOGGER.error(ex.getMessage());
+            return null;
         }
     }
 }

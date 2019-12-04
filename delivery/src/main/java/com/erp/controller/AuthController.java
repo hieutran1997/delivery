@@ -3,6 +3,7 @@ package com.erp.controller;
 import com.erp.config.JwtRequest;
 import com.erp.config.JwtResponse;
 import com.erp.config.JwtTokenUtil;
+import com.erp.dao.SysRoleDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.model.UserModel;
+import com.erp.model.dto.RolePermissionDTO;
 import com.erp.service.UserService;
 import com.erp.util.ResponseUtil;
+import com.erp.util.VfData;
+import java.util.List;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -36,14 +40,21 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private SysRoleDAO sysRoleDAO;
+    
+    @Autowired
+    private VfData vfData;
 
     @RequestMapping(value = "/auth/token", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
             final UserModel userDetails = userService.findUser(authenticationRequest.getUsername());
+            final List<RolePermissionDTO> lstScope = sysRoleDAO.getListPermission(vfData, userDetails.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails);
-            return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userDetails.getFirstname(), userDetails.getLastname()));
+            return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userDetails.getFirstname(), userDetails.getLastname(), lstScope));
         }catch (DisabledException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tài khoản mật khẩu không chính xác!");
         } catch (BadCredentialsException e) {

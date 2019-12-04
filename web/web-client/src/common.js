@@ -38,6 +38,7 @@ export const message = {
     titleFormResource: 'Danh sách tài nguyên',
     titleFormRole: 'Danh sách vai trò',
     titleFormControl: 'Danh sách hoạt động',
+    missingNameControlError: 'Tên control chưa được chọn!',
 }
 
 export function mappingDataChange(resource, destinnation){

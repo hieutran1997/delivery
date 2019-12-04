@@ -5,7 +5,11 @@
  */
 package com.erp.model;
 
+import com.erp.util.JsonToMapConverter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +34,9 @@ public class SysRolePermissionModel {
     @Column(name="role_code", length = 10)
     private String roleCode;
     
+    @Column(name="has_view")
+    private boolean hasView;
+    
     @Column(name="has_add")
     private boolean hasAdd;
     
@@ -41,6 +48,10 @@ public class SysRolePermissionModel {
     
     @Column(name="has_approve")
     private boolean hasApprove;
+    
+    @Column(name = "orther_control")
+    @Convert(converter = JsonToMapConverter.class)
+    private Map<String, Object> ortherControls = new HashMap<>();
 
     public Long getId() {
         return id;
@@ -66,6 +77,14 @@ public class SysRolePermissionModel {
         this.roleCode = roleCode;
     }
 
+    public boolean isHasView() {
+        return hasView;
+    }
+
+    public void setHasView(boolean hasView) {
+        this.hasView = hasView;
+    }
+    
     public boolean isHasAdd() {
         return hasAdd;
     }
@@ -97,4 +116,13 @@ public class SysRolePermissionModel {
     public void setHasApprove(boolean hasApprove) {
         this.hasApprove = hasApprove;
     }
+
+    public Map<String, Object> getOrtherControls() {
+        return ortherControls;
+    }
+
+    public void setOrtherControls(Map<String, Object> ortherControls) {
+        this.ortherControls = ortherControls;
+    }
+    
 }

@@ -5,7 +5,7 @@ import { createBrowserHistory } from "history";
 
 import publicRoutes from '../template/routers/publicRouters';
 import authRouters from '../template/routers/authRouters';
-import {ProgressSpinner} from 'primereact/progressspinner';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import { AuthLayout } from '../containers/Login';
 
 const App = lazy(() => import('../containers/App'));
@@ -14,7 +14,7 @@ export default function Template() {
     const history = createBrowserHistory();
     return (
         <Router history={history}>
-            <Suspense fallback={<ProgressSpinner style={{position:'fixed', top: '50%', left: '50%'}}/>}>
+            <Suspense fallback={<ProgressSpinner style={{ position: 'fixed', top: '50%', left: '50%' }} />}>
                 <Switch>
                     {_.map(publicRoutes, (route, key) => {
                         const { component, path } = route;

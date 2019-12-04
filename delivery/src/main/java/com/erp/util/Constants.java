@@ -18,6 +18,16 @@ public class Constants {
      * @since Nov 27, 2018
      * @version 1.0
      */
+    
+    public static class PERMISSION {
+        public static final String ADD = "ADD";
+        public static final String EDIT = "EDIT";
+        public static final String DELETE = "DELETE";
+        public static final String VIEW = "VIEW";
+        public static final String APPROVE = "APPROVE";
+        public static final String ORTHER = "ORTHER";
+    }
+    
     private static HttpServletRequest req;
     public static String SCHEMA_PAYROLL="vhcm_report";
     public static class RESPONSE_TYPE {

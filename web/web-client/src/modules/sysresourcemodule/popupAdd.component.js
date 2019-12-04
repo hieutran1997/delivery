@@ -17,7 +17,7 @@ export function PopupAdd(props){
                 setValue("code", props.dataDetail.code);
                 setValue("resourceName", props.dataDetail.resourceName);
                 setValue("icon", props.dataDetail.icon);
-                setValue("path", props.dataDetail.path);
+                setValue("pathUrl", props.dataDetail.pathUrl);
                 setValue("parentCode", props.dataDetail.parentCode);
                 setValue("component", props.dataDetail.component);
                 setValue("typeOfResource", props.dataDetail.typeOfResource);
@@ -38,8 +38,8 @@ export function PopupAdd(props){
           <Row type="flex" justify="space-around">
             <Col span={11}>
               <span>Mã:</span>
-              <input name="code" className="ant-input" ref={register({ required: true, maxlength: 20 })} />
-              <span className="error-message">{errors.username && 'Code is required'}</span>
+              <input name="code" className="ant-input" ref={register({ required: true, maxlength: 10 })} />
+              <span className="error-message">{errors.code && 'Bắt buộc nhập'}</span>
             </Col>
             <Col span={2}></Col>
             <Col span={11}>

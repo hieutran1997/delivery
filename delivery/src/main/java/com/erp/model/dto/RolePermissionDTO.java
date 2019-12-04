@@ -11,9 +11,13 @@ package com.erp.model.dto;
  */
 public class RolePermissionDTO {
     
+    private String roleCode;
+    
     private String resourceCode;
     
     private String resourceName;
+    
+    private Long hasView;
     
     private Long hasAdd;
     
@@ -22,7 +26,19 @@ public class RolePermissionDTO {
     private Long hasDelete;
     
     private Long hasApprove;
+    
+    private String ortherControlsOfResource;
+    
+    private String ortherControls;
 
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+    
     public String getResourceCode() {
         return resourceCode;
     }
@@ -31,6 +47,14 @@ public class RolePermissionDTO {
         this.resourceCode = resourceCode;
     }
 
+    public Long getHasView() {
+        return hasView;
+    }
+
+    public void setHasView(Long hasView) {
+        this.hasView = hasView;
+    }
+    
     public Long getHasAdd() {
         return hasAdd;
     }
@@ -70,5 +94,20 @@ public class RolePermissionDTO {
     public void setResourceName(String resourceName) {
         this.resourceName = resourceName;
     }
-    
+
+    public String getOrtherControls() {
+        return ortherControls;
+    }
+
+    public void setOrtherControls(String ortherControls) {
+        this.ortherControls = ortherControls;
+    }
+
+    public String getOrtherControlsOfResource() {
+        return ortherControlsOfResource;
+    }
+
+    public void setOrtherControlsOfResource(String ortherControlsOfResource) {
+        this.ortherControlsOfResource = ortherControlsOfResource;
+    }
 }

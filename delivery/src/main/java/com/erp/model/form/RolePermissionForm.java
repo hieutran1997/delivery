@@ -6,7 +6,6 @@
 package com.erp.model.form;
 
 import com.erp.model.dto.RolePermissionDTO;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,24 +13,15 @@ import java.util.List;
  * @author hieut
  */
 public class RolePermissionForm {
-    private List<RolePermissionDTO> source;
-    private List<RolePermissionDTO> target;
+    private List<RolePermissionDTO> data;
     private String roleCode;
 
-    public List<RolePermissionDTO> getSource() {
-        return source;
+    public List<RolePermissionDTO> getData() {
+        return data;
     }
 
-    public void setSource(List<RolePermissionDTO> source) {
-        this.source = source;
-    }
-
-    public List<RolePermissionDTO> getTarget() {
-        return target;
-    }
-
-    public void setTarget(List<RolePermissionDTO> target) {
-        this.target = target;
+    public void setData(List<RolePermissionDTO> data) {
+        this.data = data;
     }
 
     public String getRoleCode() {
@@ -41,11 +31,5 @@ public class RolePermissionForm {
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
     }
-
-    public void pushTarget(RolePermissionDTO data){
-        if(this.target != null){
-            this.target = new ArrayList<>();
-        } 
-        this.target.add(data);
-    }
+    
 }

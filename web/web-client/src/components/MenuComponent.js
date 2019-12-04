@@ -42,13 +42,13 @@ function MenuComponent(props) {
     );
 
     return (
-        <Menu theme="dark" 
-              mode="inline"
-              selectable={true}
-              defaultSelectedKeys={["1"]} 
-              defaultOpenKeys={["system"]} 
-              selectedKeys={[props.pathUrl.pathname]}
-            >
+        <Menu theme="dark"
+            mode="inline"
+            selectable={true}
+            defaultSelectedKeys={["1"]}
+            defaultOpenKeys={["system"]}
+            selectedKeys={[props.pathUrl.pathname]}
+        >
             {renderMenu}
         </Menu>
     );

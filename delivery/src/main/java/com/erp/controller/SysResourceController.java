@@ -6,6 +6,7 @@
 package com.erp.controller;
 
 import com.erp.model.SysResourceModel;
+import com.erp.model.dto.ResourceDTO;
 import com.erp.service.SysResourceService;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
@@ -36,7 +37,7 @@ public class SysResourceController {
     
     @RequestMapping(value = "/postQuery", method = RequestMethod.POST)
     public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<SysResourceModel> pageable){
-        return new ResponseEntity<PaginationUtil<SysResourceModel>>(sysResourceService.getDataSearch(pageable), HttpStatus.OK);
+        return new ResponseEntity<PaginationUtil<ResourceDTO>>(sysResourceService.getDataSearch(pageable), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -56,5 +57,19 @@ public class SysResourceController {
         result.setError(false);
         result.setMessage("Thành công!");
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/addControl", method = RequestMethod.POST)
+    public ResponseEntity<?> addControl(@RequestBody SysResourceModel data){
+        ResponseUtil<String> response = new ResponseUtil<>();
+        boolean result = sysResourceService.saveOrUpdateOrtherControl(data);
+        if(result){
+            response.setError(false);
+            response.setMessage("Thành công");
+        }else{
+            response.setError(true);
+            response.setMessage("Thất bại");
+        }
+        return new ResponseEntity<ResponseUtil<String>>(response, HttpStatus.OK);
     }
 }

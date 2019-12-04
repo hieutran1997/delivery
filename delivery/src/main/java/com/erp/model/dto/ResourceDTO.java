@@ -3,67 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.erp.model;
-
-import com.erp.util.JsonToMapConverter;
-import java.util.HashMap;
-import java.util.Map;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+package com.erp.model.dto;
 
 /**
  *
  * @author hieut
  */
-@Entity
-@Table(name = "sys_resource")
-public class SysResourceModel extends BaseModel {
+public class ResourceDTO {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column(name="code", length = 10, nullable = false)
     private String code;
     
-    @Column(name="resource_name", length = 255, nullable = false)
     private String resourceName;
     
-    @Column(name="parent_code", length = 10, nullable = true)
     private String parentCode;
     
-    @Column(name="path_url", length = 50, nullable = true)
     private String pathUrl;
     
-    @Column(name="component", length = 50, nullable = true)
     private String component;
     
-    @Column(name="type_of_resource", length = 10, nullable = false)
     private Long typeOfResource;
     
-    @Column(name="icon", length = 20, nullable = true)
     private String icon;
     
-    @Column(name="key_tree", length = 20, nullable = true)
     private String keyTree;
     
-    @Column(name = "orther_control")
-    @Convert(converter = JsonToMapConverter.class)
-    private Map<String, Object> ortherControls = new HashMap<>();
+    private String ortherControls;
 
-    public String getKeyTree() {
-        return keyTree;
-    }
-
-    public void setKeyTree(String keyTree) {
-        this.keyTree = keyTree;
-    }
-    
     public Long getId() {
         return id;
     }
@@ -128,12 +95,21 @@ public class SysResourceModel extends BaseModel {
         this.icon = icon;
     }
 
-    public Map<String, Object> getOrtherControls() {
+    public String getKeyTree() {
+        return keyTree;
+    }
+
+    public void setKeyTree(String keyTree) {
+        this.keyTree = keyTree;
+    }
+
+    public String getOrtherControls() {
         return ortherControls;
     }
 
-    public void setOrtherControls(Map<String, Object> ortherControls) {
+    public void setOrtherControls(String ortherControls) {
         this.ortherControls = ortherControls;
     }
+    
     
 }

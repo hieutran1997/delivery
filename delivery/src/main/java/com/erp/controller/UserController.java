@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.*;
 
 import com.erp.model.UserModel;
 import com.erp.service.UserService;
+import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
 import com.erp.util.SearchRequestUtil;
 
 import java.util.List;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
@@ -57,7 +60,7 @@ public class UserController {
         userService.delete(id);
         ResponseUtil<String> result = new ResponseUtil<String>();
         result.setError(false);
-        result.setMessage("Thành công!");
+        result.setMessage("Thï¿½nh cï¿½ng!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

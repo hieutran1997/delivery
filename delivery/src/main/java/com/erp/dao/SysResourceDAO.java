@@ -6,8 +6,8 @@
 package com.erp.dao;
 
 import com.erp.model.SysResourceModel;
+import com.erp.model.dto.ResourceDTO;
 import com.erp.model.dto.RolePermissionDTO;
-import com.erp.model.dto.SelectedFormDTO;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
@@ -16,23 +16,26 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SQLQuery;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author hieut
  */
-public interface SysResourceDAO extends JpaRepository<SysResourceModel, Long> {
+public interface SysResourceDAO extends CrudRepository<SysResourceModel, Long> {
 
-    public default PaginationUtil<SysResourceModel> getDataPaging(SearchRequestUtil<SysResourceModel> pageable, VfData vfData) {
-        PaginationUtil<SysResourceModel> results = new PaginationUtil<>();
+    public default PaginationUtil<ResourceDTO> getDataPaging(SearchRequestUtil<SysResourceModel> pageable, VfData vfData) {
+        PaginationUtil<ResourceDTO> results = new PaginationUtil<>();
         int start = (pageable.getCurrent() - 1) * pageable.getPageSize();
         int end = start + pageable.getPageSize();
 
         String limit = " Limit ?, ?";
         StringBuilder strCondition = new StringBuilder(" Where 1 = 1");
         List<Object> paramList = new ArrayList<Object>();
-        StringBuilder sql = new StringBuilder("  SELECT syr.id, syr.code, syr.component, syr.icon, syr.parent_code parentCode, syr.path_url pathUrl, syr.resource_name resourceName, syr.type_of_resource typeOfResource FROM sys_resource syr ");
+        StringBuilder sql = new StringBuilder(" SELECT syr.id, syr.code, syr.component, syr.icon, syr.parent_code parentCode"
+                                            + " , syr.path_url pathUrl, syr.resource_name resourceName"
+                                            + " , syr.type_of_resource typeOfResource, syr.orther_control ortherControls"
+                                            + " FROM sys_resource syr ");
         if (!CommonUtil.isNullOrEmpty(pageable.getData().getCode())) {
             strCondition.append(" AND LOWER(syr.code) = LOWER(?) ");
             paramList.add(pageable.getData().getCode());
@@ -58,7 +61,7 @@ public interface SysResourceDAO extends JpaRepository<SysResourceModel, Long> {
                 }
             }
         }
-        vfData.setResultTransformer(query, SysResourceModel.class);
+        vfData.setResultTransformer(query, ResourceDTO.class);
         results.setTotal(((BigInteger) queryCount.uniqueResult()).intValue());
         results.setCurPage(pageable.getCurrent());
         results.setPerPage(pageable.getPageSize());
@@ -74,7 +77,8 @@ public interface SysResourceDAO extends JpaRepository<SysResourceModel, Long> {
     }
 
     public default List<RolePermissionDTO> getSelectedPermission(VfData vfData, String roleCode) {
-        String sql = " SELECT res.code resourceCode, res.resource_name resourceName, has_add hasAdd, has_edit hasEdit, has_delete hasDelete, has_approve hasApprove "
+        String sql = " SELECT res.code resourceCode, res.resource_name resourceName, per.has_view hasView, per.has_add hasAdd, per.has_edit hasEdit, per.has_delete hasDelete"
+                + " , per.has_approve hasApprove, res.orther_control ortherControlsOfResource, per.orther_control ortherControls "
                 + " FROM sys_resource res LEFT JOIN sys_role_permission per ON res.code = per.resource_code "
                 + " WHERE per.role_code = :role_code OR per.role_code IS NULL ";
         SQLQuery query = vfData.createSQLQuery(sql);
