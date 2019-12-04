@@ -30,6 +30,9 @@ public class UserModel {
     
     @Column(name = "organization_code")
     private String organizationCode;
+    
+    @Column(name = "type_of_user")
+    private Integer typeOfUser;
 
     public long getId() {
         return id;
@@ -93,5 +96,13 @@ public class UserModel {
 
     public void setOrganizationCode(String organizationCode) {
         this.organizationCode = organizationCode;
+    }
+
+    public Integer getTypeOfUser() {
+        return typeOfUser;
+    }
+
+    public void setTypeOfUser(Integer typeOfUser) {
+        this.typeOfUser = typeOfUser;
     }
 }

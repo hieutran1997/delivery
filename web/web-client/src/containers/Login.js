@@ -4,7 +4,7 @@ import { Card, Row, Col, Form, Icon, Input, Button, Checkbox, Spin  } from 'antd
 import 'antd/dist/antd.css';
 import './Login.css';
 import { login } from '../actions';
-import { openNotification } from '../common';
+import { openNotification, getCurrentUser } from '../common';
 
 const homePage = {
     pathname: '/',
@@ -33,7 +33,7 @@ class Login extends React.Component {
                 this.setState({ loading: false });
                 if(authRecieve.error){
                     openNotification('error', 'Thất bại', 'Đăng nhập không thành công!');
-                }else{
+                }else if(getCurrentUser()){
                     openNotification('success', 'Thành công', 'Đăng nhập thành công!');
                     this.props.route.history.push(homePage);
                     this.props.route.history.replace(homePage);

@@ -54,7 +54,7 @@ public class AuthController {
             final UserModel userDetails = userService.findUser(authenticationRequest.getUsername());
             final List<RolePermissionDTO> lstScope = sysRoleDAO.getListPermission(vfData, userDetails.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails);
-            return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userDetails.getFirstname(), userDetails.getLastname(), lstScope));
+            return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userDetails.getFirstname(), userDetails.getLastname(), lstScope, userDetails.getTypeOfUser()));
         }catch (DisabledException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tài khoản mật khẩu không chính xác!");
         } catch (BadCredentialsException e) {

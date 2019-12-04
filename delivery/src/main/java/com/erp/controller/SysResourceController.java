@@ -8,9 +8,11 @@ package com.erp.controller;
 import com.erp.model.SysResourceModel;
 import com.erp.model.dto.ResourceDTO;
 import com.erp.service.SysResourceService;
+import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
 import com.erp.util.SearchRequestUtil;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,13 +43,17 @@ public class SysResourceController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public SysResourceModel create(@RequestBody SysResourceModel user){
-        return sysResourceService.save(user);
+    public SysResourceModel create(@RequestBody SysResourceModel resource){
+        resource.setCreatedBy(CommonUtil.getCurrentUser().getUsername());
+        resource.setCreatedDate(new Date());
+        return sysResourceService.save(resource);
     }
     
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public SysResourceModel update(@RequestBody SysResourceModel user){
-        return sysResourceService.save(user);
+    public SysResourceModel update(@RequestBody SysResourceModel resource){
+        resource.setUpdatedBy(CommonUtil.getCurrentUser().getUsername());
+        resource.setUpdatedDate(new Date());
+        return sysResourceService.save(resource);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

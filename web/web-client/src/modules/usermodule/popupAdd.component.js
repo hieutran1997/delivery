@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Row, Col, Button } from 'antd';
+import { Modal, Row, Col, Button, Checkbox } from 'antd';
 import { Dropdown } from 'primereact/dropdown';
 import useForm from 'react-hook-form';
 
@@ -9,11 +9,13 @@ export function PopupAdd(props) {
   const [dataDetail, setDataDetail] = useState(props);
   const [lstOrg, setLstOrg] = useState([]);
   const [orgCode, setOrgCode] = useState({});
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const onSaveEdit = data => {
     if (orgCode) {
       data.organizationCode = orgCode.value;
     }
+    data.typeOfUser = isAdmin ? 1 : 0;
     props.onSave(data);
   };
 
@@ -91,7 +93,10 @@ export function PopupAdd(props) {
               width="100%"
             />
           </Col>
-
+          <Col span={2}></Col>
+          <Col span={11} style={{top: '50%'}}>
+            <Checkbox checked={isAdmin} onChange={e => setIsAdmin(e.target.checked)}>Là quản trị viên</Checkbox>
+          </Col>
         </Row>
 
         <div className="footer-modal">

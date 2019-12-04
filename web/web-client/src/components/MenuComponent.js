@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { menu } from '../environment';
 import { Menu, Icon } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { hasMenu } from '../common';
+import { hasMenu, getCurrentUser } from '../common';
 
 const { SubMenu } = Menu;
 
@@ -15,10 +15,11 @@ function MenuComponent(props) {
         let data = [...menu];
         let dataTmp = data;
         for(var i = 0; i< dataTmp.length; i++){
-            if(hasMenu(menu[i].key) || dataTmp[i].childs.length > 0){
+            if(hasMenu(dataTmp[i].key) || dataTmp[i].childs.length > 0){
                 for(var j = 0; j< dataTmp[i].childs.length; j++){
                     if(!hasMenu(dataTmp[i].childs[j].key)){
                         data[i].childs.splice(j, 1);
+                        j--;
                     }
                 }
             }else{
@@ -30,7 +31,14 @@ function MenuComponent(props) {
     }
 
     if(onInit){
-        filterMenu();
+        var currentUser = getCurrentUser();
+        if(currentUser && currentUser.typeOfUser === 1){
+            setMenu(menu);
+            setOnInit(false);
+        }
+        else if(currentUser && currentUser.typeOfUser !== 1){
+            filterMenu();
+        }
     }
     
     const renderMenu = menus.map((item) =>

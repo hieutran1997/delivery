@@ -351,9 +351,9 @@ public class VfDataImpl implements VfData {
                 LOGGER.debug(aliasColumn + " is not defined");
             } else {
                 Type hbmType = null;
-                if ("class java.lang.Long".equals(dataType)) {
+                if ("class java.lang.Long".equals(dataType) || "long".equals(dataType)) {
                     hbmType = LongType.INSTANCE;
-                } else if ("class java.lang.Integer".equals(dataType)) {
+                } else if ("class java.lang.Integer".equals(dataType) || "int".equals(dataType)) {
                     hbmType = IntegerType.INSTANCE;
                 } else if ("class java.lang.Double".equals(dataType)) {
                     hbmType = DoubleType.INSTANCE;

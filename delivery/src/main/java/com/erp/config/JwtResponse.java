@@ -22,14 +22,17 @@ public class JwtResponse implements Serializable {
     private final String firstName;
     private final String lastName;
     
+    private final Integer typeOfUser;
+    
     private final List<RolePermissionDTO> scope;
 
-    public JwtResponse(String jwttoken, String userName, String lastName, String firstName, List<RolePermissionDTO> scope) {
+    public JwtResponse(String jwttoken, String userName, String lastName, String firstName, List<RolePermissionDTO> scope, Integer typeOfUser) {
         this.jwttoken = jwttoken;        
         this.userName = userName;
         this.lastName = lastName;
         this.firstName = firstName;
         this.scope = scope;
+        this.typeOfUser = typeOfUser;
     }
 
     public String getToken() {
@@ -50,6 +53,10 @@ public class JwtResponse implements Serializable {
 
     public List<RolePermissionDTO> getScope() {
         return scope;
+    }
+
+    public Integer getTypeOfUser() {
+        return typeOfUser;
     }
     
 }

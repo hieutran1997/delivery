@@ -31,10 +31,13 @@ function App(props) {
     return <Redirect to='/login' />;
   }
 
-  console.log('history', history);
-
-  if(!hasMenu(history.location.pathname.substring(1)) && "/permission" !== history.location.pathname && "/" !== history.location.pathname){ //Loại bỏ dấu /
+  if(props.currentUser){
+    if(!hasMenu(history.location.pathname.substring(1)) 
+    && props.currentUser.typeOfUser !== 1
+    && "/permission" !== history.location.pathname 
+    && "/" !== history.location.pathname){ //Loại bỏ dấu /
     history.push("/permission");
+  }
   }
 
   const toggle = () => {

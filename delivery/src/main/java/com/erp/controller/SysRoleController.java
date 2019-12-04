@@ -9,9 +9,11 @@ import com.erp.model.SysRoleModel;
 import com.erp.model.dto.UserRoleDTO;
 import com.erp.model.form.RolePermissionForm;
 import com.erp.service.SysRoleService;
+import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
 import com.erp.util.SearchRequestUtil;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,11 +45,15 @@ public class SysRoleController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public SysRoleModel create(@RequestBody SysRoleModel role){
+        role.setCreatedBy(CommonUtil.getCurrentUser().getUsername());
+        role.setCreatedDate(new Date());
         return sysRoleService.save(role);
     }
     
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public SysRoleModel update(@RequestBody SysRoleModel role){
+        role.setUpdatedBy(CommonUtil.getCurrentUser().getUsername());
+        role.setUpdatedDate(new Date());
         return sysRoleService.save(role);
     }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Row, Col, Button } from 'antd';
+import { Modal, Row, Col, Button, Checkbox } from 'antd';
 import { Dropdown } from 'primereact/dropdown';
 import useForm from 'react-hook-form';
 
@@ -9,11 +9,13 @@ export function PopupInfo(props) {
   const [dataDetail, setDataDetail] = useState(props);
   const [lstOrg, setLstOrg] = useState([]);
   const [orgCode, setOrgCode] = useState({});
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const onSaveEdit = data => {
     if (orgCode) {
       data.organizationCode = orgCode.value;
     }
+    data.typeOfUser = isAdmin ? 1 : 0;
     props.onSave(data);
   };
 
@@ -29,6 +31,7 @@ export function PopupInfo(props) {
         setValue("firstname", props.dataDetail.firstname);
         setValue("lastname", props.dataDetail.lastname);
         setOrgCode({'value': props.dataDetail.organizationCode});
+        setIsAdmin(props.dataDetail.typeOfUser === 1? true: false);
       }, 100);
     }
     setIsEdit(props.isEdit);
@@ -91,7 +94,10 @@ export function PopupInfo(props) {
               width="100%"
             />
           </Col>
-
+          <Col span={2}></Col>
+          <Col span={11}>
+            <Checkbox checked={isAdmin} onChange={e => setIsAdmin(e.target.checked)}>Là quản trị viên</Checkbox>
+          </Col>
         </Row>
 
         <div className="footer-modal">

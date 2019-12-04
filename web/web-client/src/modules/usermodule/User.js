@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getDataPaging, insert, update, deleteData } from '../../actions/ActionUser';
 import { getSelectedData as getSelectedDataOrg } from '../../actions/ActionOrganization';
 import { getSelectedData as getSelectedDataRole, insertUserRole, getUserRole } from '../../actions/ActionRole';
-import { dataPost, message, mappingDataChange, openNotification, hasPermission } from '../../common';
+import { dataPost, message, mappingDataChange, openNotification, hasPermission, control, resourceCode } from '../../common';
 import {
   GETUSER_PAGING_SUCCESS,
   CREATE_USER_SUCCESS,
@@ -71,11 +71,11 @@ function User(props) {
       key: 'action',
       render: (text, record) => (
         <span>
-          {hasPermission("user", "addRole", 1) === 1 ? <Icon type="apartment" onClick={() => { handlerAddRole(record) }} className="icon-action" title="Gán vai trò" /> : ""}
+          {hasPermission(resourceCode.user, control.addRole, 1) === 1 ? <Icon type="apartment" onClick={() => { handlerAddRole(record) }} className="icon-action" title="Gán vai trò" /> : ""}
           &nbsp;&nbsp;&nbsp;&nbsp;
-          {hasPermission("user", "hasEdit") === 1 ? <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" /> : ""}
+          {hasPermission(resourceCode.user, control.hasEdit) === 1 ? <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" /> : ""}
           &nbsp;&nbsp;&nbsp;&nbsp;
-          {hasPermission("user", "hasDelete") === 1 ?
+          {hasPermission(resourceCode.user, control.hasDelete) === 1 ?
             <Popconfirm
               title={message.messageConfirmDelete}
               okText={message.okText}
@@ -222,7 +222,7 @@ function User(props) {
       </Card>
       <br />
       <Card title={message.titleFormListUser}>
-        {hasPermission("user", "hasEdit") === 1 ? 
+        {hasPermission(resourceCode.user, control.hasView) === 1 ? 
           <Table
             columns={columns}
             rowKey={record => record.username}
@@ -236,18 +236,16 @@ function User(props) {
         
       </Card>
       {
-        hasPermission("user", "addRole", 1) === 1 ?<PopupAddRole isShowAddRole={isShowAddRole} dataDetail={dataDetail} closePopup={closePopup} lstRoleResource={lstRoleResource} lstRoleTarget={lstRoleTarget} onSave={onSaveRole} /> : ""
+        hasPermission(resourceCode.user, control.addRole, 1) === 1 ?<PopupAddRole isShowAddRole={isShowAddRole} dataDetail={dataDetail} closePopup={closePopup} lstRoleResource={lstRoleResource} lstRoleTarget={lstRoleTarget} onSave={onSaveRole} /> : ""
       }
 
       {
-        hasPermission("user", "hasEdit") === 1 ? <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSaveChange} /> : ""
+        hasPermission(resourceCode.user, control.hasEdit) === 1 ? <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSaveChange} /> : ""
       }
 
       {
-        hasPermission("user", "hasAdd") === 1 ? <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSave} /> : ""
+        hasPermission(resourceCode.user, control.hasAdd) === 1 ? <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} lstOrg={lstOrg} onSave={onSave} /> : ""
       }
-      
-      
     </div>
   );
 }

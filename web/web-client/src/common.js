@@ -42,6 +42,26 @@ export const message = {
     missingNameControlError: 'Tên control chưa được chọn!',
 }
 
+/**
+ * Tên quyền của các control
+ */
+export const control = {
+    hasEdit: "hasEdit",
+    hasDelete: "hasDelete",
+    hasAdd: "hasAdd",
+    hasView: "hasView",
+    hasApprove: "hasApprove",
+
+    //other control
+    addRole: "addRole",
+    addPerssion: "addPerssion"
+}
+
+export const resourceCode = {
+    user: "user",
+    role: "role"
+}
+
 export function mappingDataChange(resource, destinnation) {
     for (var propt in resource) {
         destinnation[propt] = resource[propt];
@@ -63,6 +83,10 @@ export const getCurrentUser = () => {
  * @param {*} type 
  */
 export const hasPermission = (resourceCode, hasPermission, type) => {
+    var currentUser = getCurrentUser();
+    if(currentUser && currentUser.typeOfUser === 1){ //Là quyền admin
+        return 1;
+    }
     var scope = localStorage.getItem('deliveryAppScope');
     if (scope) {
         scope = JSON.parse(scope);
@@ -88,6 +112,13 @@ export const hasPermission = (resourceCode, hasPermission, type) => {
  * @param {*} keyMenu 
  */
 export const hasMenu = (keyMenu) => {
+    var currentUser = getCurrentUser();
+    if(currentUser && currentUser.typeOfUser === 1){ //Là quyền admin
+        return true;
+    }
+    else if(!currentUser){
+        return false;
+    }
     var scope = localStorage.getItem('deliveryAppScope');
     if (scope) {
         scope = JSON.parse(scope);

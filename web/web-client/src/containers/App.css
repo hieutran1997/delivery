@@ -105,3 +105,11 @@
 .custom-content-popup{
   height: 300px;
 }
+
+.ant-table-column-title{
+  font-weight: 500;
+}
+
+.ant-card-head-title{
+  font-weight: 500;
+}

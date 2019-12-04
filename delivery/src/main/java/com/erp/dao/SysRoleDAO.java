@@ -139,7 +139,7 @@ public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
                     +" from sys_role_permission srp" 
                     +" inner join sys_role sr on sr.code = srp.role_code" 
                     +" inner join sys_resource sre on srp.resource_code = sre.code"
-                    +" where sr.code in (select ur.username from user_role ur where ur.username = ?)";
+                    +" where sr.code in (select ur.role_code from user_role ur where ur.username = ?)";
         SQLQuery query = vfData.createSQLQuery(sql);
         query.setParameter(0, userName);
         vfData.setResultTransformer(query, RolePermissionDTO.class);

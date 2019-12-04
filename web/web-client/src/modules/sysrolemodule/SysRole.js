@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Card, Table, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
-import { getDataPaging
-        , insert
-        , update
-        , deleteData
-        , insertRolePermission
-        , getRolePermission 
-    } from '../../actions/ActionRole';
-import { dataPost, message, openNotification, mappingDataChange } from '../../common';
+import {
+    getDataPaging
+    , insert
+    , update
+    , deleteData
+    , insertRolePermission
+    , getRolePermission
+} from '../../actions/ActionRole';
+import { dataPost, message, openNotification, mappingDataChange, hasPermission, control, resourceCode } from '../../common';
 import {
     GETROLE_PAGING_SUCCESS,
     UPDATE_ROLE_SUCCESS,
@@ -58,41 +59,50 @@ function SysRole(props) {
         {
             title: 'Tên vai trò',
             dataIndex: 'sysRoleName',
-            width: '20%'
+            width: '30%'
         },
         {
             title: '#',
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <Icon type="apartment" onClick={() => { handlerAddPer(record) }} className="icon-action" title="Phân quyền" />
+                    {
+                        hasPermission(resourceCode.role, control.addPerssion) === 1 ?
+                        <Icon type="apartment" onClick={() => { handlerAddPer(record) }} className="icon-action" title="Phân quyền" /> : ""
+                    }
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" />
+                    {
+                        hasPermission(resourceCode.role, control.hasEdit) === 1 ?
+                        <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" /> : ""
+                    }
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <Popconfirm
-                        title={message.messageConfirmDelete}
-                        okText={message.okText}
-                        cancelText={message.cancelText}
-                        icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
-                        onConfirm={() => { handleDelete(record) }}
-                    >
-                        <Icon type="delete" className="icon-action" title="Xóa" />
-                    </Popconfirm>
+                    {
+                        hasPermission(resourceCode.role, control.hasDelete) === 1 ?
+                        <Popconfirm
+                            title={message.messageConfirmDelete}
+                            okText={message.okText}
+                            cancelText={message.cancelText}
+                            icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+                            onConfirm={() => { handleDelete(record) }}
+                        >
+                            <Icon type="delete" className="icon-action" title="Xóa" />
+                        </Popconfirm> : ""
+                    }
                 </span>
             ),
-            width: '20%'
+            width: '10%'
         },
     ];
 
     useEffect(() => {
-        if(onInit){
+        if (onInit) {
             setOnInit(false);
             setLoading(true);
             if (dataContent.length === 0) {
                 props.filterData(dataSearch);
             }
         }
-        if(props.role && !onInit) {
+        if (props.role && !onInit) {
             setLoading(false);
             switch (props.role.type) {
                 case GETROLE_PAGING_SUCCESS:
@@ -140,14 +150,14 @@ function SysRole(props) {
                     openNotification('error', 'Lỗi', message.createError);
                     break;
                 case GET_ROLE_PERMISSION_SUCCESS:
-                    if(props.role.data){
-                        props.role.data.forEach(function(item){
+                    if (props.role.data) {
+                        props.role.data.forEach(function (item) {
                             let resourceControl = JSON.parse(item.ortherControlsOfResource);
                             let perControl = JSON.parse(item.ortherControls);
                             let temp = {}
-                            if(perControl){
+                            if (perControl) {
                                 for (const [key, valuePermission] of Object.entries(perControl)) {
-                                    if(key in resourceControl){
+                                    if (key in resourceControl) {
                                         temp[key] = {
                                             title: resourceControl[key],
                                             value: valuePermission
@@ -155,7 +165,7 @@ function SysRole(props) {
                                     }
                                 }
                                 for (const [key, valueResource] of Object.entries(resourceControl)) {
-                                    if(!(key in perControl)){
+                                    if (!(key in perControl)) {
                                         temp[key] = {
                                             title: valueResource,
                                             value: 0
@@ -163,7 +173,7 @@ function SysRole(props) {
                                     }
                                 }
                             }
-                            else{
+                            else {
                                 for (const [key, valueResource] of Object.entries(resourceControl)) {
                                     temp[key] = {
                                         title: valueResource,
@@ -180,7 +190,7 @@ function SysRole(props) {
                     console.log('1');
                     break;
             }
-        
+
         }
     }, [props, dataSearch, dataContent, isError, onInit, setOnInit, setLstTarget]);
 
@@ -205,7 +215,7 @@ function SysRole(props) {
         setIsShowAdd(true);
     }
 
-    const handlerAddPer = (data) =>{
+    const handlerAddPer = (data) => {
         props.getRolePermission(data.code);
         setDataDetail(data);
         setIsShowAddPermission(true);
@@ -234,7 +244,7 @@ function SysRole(props) {
         }
     }
 
-    const onSavePermission = (data)=>{
+    const onSavePermission = (data) => {
         console.log('data', data);
         props.insertRolePermission(data);
     }
@@ -256,7 +266,7 @@ function SysRole(props) {
                 />
             </Card>
 
-            <PopupAddPermission isShowAddPermission={isShowAddPermission} dataDetail={dataDetail} closePopup={closePopup} lstTarget={lstTarget} onSave={onSavePermission}/>
+            <PopupAddPermission isShowAddPermission={isShowAddPermission} dataDetail={dataDetail} closePopup={closePopup} lstTarget={lstTarget} onSave={onSavePermission} />
             <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave} />
             <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange}></PopupInfo>
         </div>
