@@ -8,19 +8,25 @@ import 'primeicons/primeicons.css';
 import { useSelector, connect } from 'react-redux';
 import MenuComponent from '../components/MenuComponent';
 import { Redirect } from 'react-router-dom';
-import { openNotification, getCurrentUser, getPathMenu, hasMenu } from '../common';
+import { openNotification, getCurrentUser, getPathMenu, hasMenu, getListTopic, getListPermission } from '../common';
 import { useHistory } from "react-router-dom";
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { ScrollPanel } from 'primereact/scrollpanel';
+import SockJsClient from "react-stomp";
+import { environments_dev, url_services} from '../environment';
 
 const { Header, Sider, Content } = Layout;
 
 function App(props) {
 
   const [collapsed, setCollapsed] = useState(false);
+  const [clientConnected, setClientConnected] = useState(false);
+  const [client, setClient] = useState({});
+  const [updateMenu, setUpdateMenu] = useState(false);
 
   const Component = props.component;
   const route = props.route;
+  const topics = getListTopic();
 
   let history = useHistory();
   let data = useSelector(state => state.authReducer);
@@ -31,14 +37,51 @@ function App(props) {
     return <Redirect to='/login' />;
   }
 
-  if(props.currentUser){
-    if(!hasMenu(history.location.pathname.substring(1)) 
-    && props.currentUser.typeOfUser !== 1
-    && "/permission" !== history.location.pathname 
-    && "/" !== history.location.pathname){ //Loại bỏ dấu /
-    history.push("/permission");
+  const checker = ()=>{
+    if (props.currentUser) {
+      if (!hasMenu(history.location.pathname.substring(1))
+        && props.currentUser.typeOfUser !== 1
+        && "/permission" !== history.location.pathname
+        && "/" !== history.location.pathname) { //Loại bỏ dấu /
+        history.push("/permission");
+      }
+      console.log('topics', topics);
+    }else{
+      history.push("/login");
+    }
   }
+
+  checker();
+
+  const onMessageReceive = (msg, topic) => {
+    console.log('msg', msg);
+    let index = topics.indexOf(topic);
+    if(index >= 0){
+      console.log('msg', msg);
+      getListPermission();
+      setTimeout(function(){
+        setUpdateMenu(true);
+      }, 1000);
+      checker();
+    }
   }
+
+  if(clientConnected) {
+    console.log('client Connected', client.state);
+  }
+
+  // const sendMessage = (msg, selfMsg) => {
+  //   try {
+  //     client.sendMessage("/app/test", JSON.stringify(selfMsg));
+  //     return true;
+  //   } catch(e) {
+  //     return false;
+  //   }
+  // }
+
+  // if(clientConnected){
+  //   sendMessage("hello", "hello");
+  // }
 
   const toggle = () => {
     setCollapsed(!collapsed);
@@ -67,6 +110,11 @@ function App(props) {
 
   return (
     <Layout>
+      <SockJsClient url={`${environments_dev.URL_SERVICE}/${url_services.WEBSOCKET}`} topics={topics}
+        onMessage={onMessageReceive} ref={(client) => { setClient(client) }}
+        onConnect={() => { setClientConnected(true) }}
+        onDisconnect={() => { setClientConnected(false) }}
+        debug={false} />
       <Sider
         className="sider"
         width={240}
@@ -76,7 +124,7 @@ function App(props) {
             {/* <img src={process.env.PUBLIC_URL + '/logo.png'} alt={message.titleApp}/> */}
           </div>
         </div>
-        <MenuComponent pathUrl={route.location} />
+        <MenuComponent pathUrl={route.location} updateMenu={updateMenu} setUpdateMenu={setUpdateMenu}/>
       </Sider>
       <Layout>
         <Header style={{ background: '#fff', padding: 0 }}>
@@ -96,7 +144,7 @@ function App(props) {
             overflow: 'initial'
           }}
         >
-          <ScrollPanel style={{width: '100%'}} className="custom-content">
+          <ScrollPanel style={{ width: '100%' }} className="custom-content">
             <BreadCrumb model={getPathMenu(history.location.pathname)} home={home} />
             <Component route={route} />
           </ScrollPanel>

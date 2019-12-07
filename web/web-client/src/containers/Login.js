@@ -26,6 +26,17 @@ class Login extends React.Component {
         });
     };
 
+    componentDidMount(){
+        var currentUser = getCurrentUser();
+        if(currentUser !== null && currentUser !== undefined){
+            this.props.route.history.replace(homePage);
+        }
+    }
+
+    reload(){
+        window.location.reload();
+    }
+
     componentWillReceiveProps(newProps) {
         const { authRecieve } = newProps;
         if(authRecieve){
@@ -35,7 +46,6 @@ class Login extends React.Component {
                     openNotification('error', 'Thất bại', 'Đăng nhập không thành công!');
                 }else if(getCurrentUser()){
                     openNotification('success', 'Thành công', 'Đăng nhập thành công!');
-                    this.props.route.history.push(homePage);
                     this.props.route.history.replace(homePage);
                 }
             }

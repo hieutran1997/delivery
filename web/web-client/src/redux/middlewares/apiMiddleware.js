@@ -37,9 +37,12 @@ const apiMiddleware = store => next => action => {
       if(error.response && error.response.status === 401){
         return next({ error, type: UNAUTHORIZED });
       }
+      if(error.response && error.response.status === 403){
+        openNotification('error', 'Lỗi', 'Bạn không có quyền truy cập!');
+      }
       else if(!error.response){
          // network error
-         openNotification('error', 'Lỗi', 'Mất kết nối tới server!');
+         //openNotification('error', 'Lỗi', 'Mất kết nối tới server!');
       }else{
         openNotification('error', 'Lỗi', 'Xảy ra lỗi!');
       }

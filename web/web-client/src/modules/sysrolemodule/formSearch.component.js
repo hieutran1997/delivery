@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Icon } from 'antd';
 import useForm from 'react-hook-form';
+import { hasPermission, control, resourceCode } from '../../common';
 
 export function FormSearch(props) {
     const { register, handleSubmit, setValue } = useForm();
@@ -46,9 +47,10 @@ export function FormSearch(props) {
                         Tìm kiếm
                     </button>
                     &nbsp;&nbsp;
-                    <Button type="primary" icon="plus" onClick={onCreate}>
+                    {hasPermission(resourceCode.role, control.hasAdd) === 1? <Button type="primary" icon="plus" onClick={onCreate}>
                         Thêm mới
-                    </Button>
+                    </Button> : ""}
+                    
                 </div>
             </form>
         </div>

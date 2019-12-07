@@ -6,8 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.erp.model.UserModel;
+import com.erp.service.ServiceChecker;
 import com.erp.service.UserService;
 import com.erp.util.CommonUtil;
+import com.erp.util.Constants;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
 import com.erp.util.SearchRequestUtil;
@@ -28,6 +30,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private ServiceChecker serviceChecker;
        
     @RequestMapping(value="/getAll", method = RequestMethod.GET)
     public List<UserModel> listUser(){
@@ -36,31 +41,45 @@ public class UserController {
     
     @RequestMapping(value = "/postQuery", method = RequestMethod.POST)
     public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<UserModel> pageable){
+    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.USER, Constants.PERMISSION.VIEW)) {
+    		return new ResponseEntity<>("Bạn không có quyền truy cập", HttpStatus.FORBIDDEN);
+    	}
         return new ResponseEntity<PaginationUtil<UserModel>>(userService.getDataSearch(pageable), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public UserModel create(@RequestBody UserModel user){
+    public ResponseEntity<?> create(@RequestBody UserModel user){
+    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.USER, Constants.PERMISSION.ADD)) {
+    		return new ResponseEntity<>("Bạn không có quyền truy cập", HttpStatus.FORBIDDEN);
+    	}
         user.setPassword(passwordEncoder.encode(PASSWORD_DEFAULT));
-        return userService.save(user);
+        return new ResponseEntity<UserModel>(userService.save(user), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public UserModel update(@RequestBody UserModel user){
+    public ResponseEntity<?> update(@RequestBody UserModel user){
+    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.USER, Constants.PERMISSION.EDIT)) {
+    		return new ResponseEntity<>("Bạn không có quyền truy cập", HttpStatus.FORBIDDEN);
+    	}
     	UserModel instance = userService.findUser(user.getUsername());
     	if(instance != null) {
     		user.setPassword(instance.getPassword());
-    		return userService.save(user);
+    		return new ResponseEntity<UserModel>(userService.save(user), HttpStatus.OK);
     	}
-    	return userService.save(user);
+    	return new ResponseEntity<UserModel>(userService.save(user), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<ResponseUtil<String>> delete(@PathVariable(value = "id") Long id){
+    	ResponseUtil<String> result = new ResponseUtil<String>();
+    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.USER, Constants.PERMISSION.EDIT)) {
+    		result.setError(true);
+            result.setMessage("Bạn không có quyền truy cập");
+    		return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+    	}
         userService.delete(id);
-        ResponseUtil<String> result = new ResponseUtil<String>();
         result.setError(false);
-        result.setMessage("Th�nh c�ng!");
+        result.setMessage("Thành công!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

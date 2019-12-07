@@ -55,9 +55,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             } catch(MalformedJwtException ex){
                 logger.error("JWT Token invalid");
             }
-        } else {
+        } else if(!request.getRequestURI().contains("/ws")){
             logger.warn("JWT Token does not begin with Bearer String");
+        }else {
         }
+        
         // Once we get the token validate it.
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserModel userDetails = this.jwtUserDetailsService.findUser(username);

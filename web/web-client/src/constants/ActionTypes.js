@@ -139,3 +139,10 @@ export const DELETE_CONTROL_REQUEST_SUCCESS = 'DELETE_CONTROL_REQUEST_SUCCESS';
 export const DELETE_CONTROL_SUCCESS = 'DELETE_CONTROL_SUCCESS';
 export const DELETE_CONTROL_ERROR = 'DELETE_CONTROL_ERROR';
 //Event app
+
+
+//Event real time
+export const UPDATE_ROLE = 'UPDATE_ROLE';
+
+//Event real time
+

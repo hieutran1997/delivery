@@ -6,7 +6,6 @@
 package com.erp.dao;
 
 import com.erp.model.SysRoleModel;
-import com.erp.model.UserRoleModel;
 import com.erp.model.dto.RolePermissionDTO;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.model.dto.UserRoleDTO;
@@ -19,14 +18,18 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+
 import org.hibernate.SQLQuery;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.hibernate.Transaction;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author hieut
  */
-public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
+public interface SysRoleDAO extends CrudRepository<SysRoleModel, Long> {
 
     public default PaginationUtil<SysRoleModel> getDataPaging(SearchRequestUtil<SysRoleModel> pageable, VfData vfData) {
         PaginationUtil<SysRoleModel> results = new PaginationUtil<>();
@@ -77,6 +80,7 @@ public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
         return query.list();
     }
 
+    @Transactional
     public default void saveUserRole(VfData vfData, UserRoleDTO userRole) {
         //Xóa hết vai trò của username
         String sqlDelete = " delete from user_role where username = ? ";
@@ -93,6 +97,7 @@ public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
             query.setParameter(3, userRole.getUsername());
             query.executeUpdate();
         }
+        
     }
 
     public default List<SelectedFormDTO> getUserRole(VfData vfData, String username) {
@@ -103,6 +108,7 @@ public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
         return query.list();
     }
 
+    @Transactional
     public default void saveRolePermission(VfData vfData, RolePermissionForm rolePer) {
         //Xóa hết quyền của vai trò
         String sqlDelete = " delete from sys_role_permission where role_code = ? ";
@@ -143,6 +149,31 @@ public interface SysRoleDAO extends JpaRepository<SysRoleModel, Long> {
         SQLQuery query = vfData.createSQLQuery(sql);
         query.setParameter(0, userName);
         vfData.setResultTransformer(query, RolePermissionDTO.class);
+        return query.list();
+    }
+    
+    public default List<RolePermissionDTO> permissionChecker(VfData vfData, String userName, String resourceCode){
+        String sql = " select sre.code resourceCode, srp.has_view hasView, srp.has_add hasAdd, srp.has_edit hasEdit, srp.has_delete hasDelete, srp.has_approve hasApprove, srp.orther_control ortherControls "
+                    +" from sys_role_permission srp" 
+                    +" inner join sys_role sr on sr.code = srp.role_code" 
+                    +" inner join sys_resource sre on srp.resource_code = sre.code"
+                    +" where sr.code in (select ur.role_code from user_role ur where ur.username = ?) and sre.code = ? ";
+        SQLQuery query = vfData.createSQLQuery(sql);
+        query.setParameter(0, userName);
+        query.setParameter(1, resourceCode);
+        vfData.setResultTransformer(query, RolePermissionDTO.class);
+        return query.list();
+    }
+    
+    public default List<String> getListMenus(VfData vfData, String userName){
+        String sql = " select DISTINCT sre.resource_name "
+                    +" from sys_role_permission srp" 
+                    +" inner join sys_role sr on sr.code = srp.role_code" 
+                    +" inner join sys_resource sre on srp.resource_code = sre.code"
+                    +" where sr.code in (select ur.role_code from user_role ur where ur.username = ?)";
+        SQLQuery query = vfData.createSQLQuery(sql);
+        query.setParameter(0, userName);
+        vfData.setResultTransformer(query, String.class);
         return query.list();
     }
 }

@@ -28,5 +28,7 @@ public interface SysRoleService {
     UserRoleDTO getUserRole(String username);
     void saveRolePermission(RolePermissionForm rolePer);
     List<RolePermissionDTO> getRolePermission(String roleCode);
+    List<String> getListMenus(String userName);
+    List<RolePermissionDTO> getListPermission(String userName);
 }
 

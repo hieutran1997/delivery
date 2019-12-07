@@ -1,6 +1,7 @@
 package com.erp.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.model.UserModel;
 import com.erp.model.UserRoleModel;
@@ -66,6 +67,7 @@ public interface UserDao extends JpaRepository<UserModel, Long> {
         return results;
     }
     
+    @Transactional
     public default Long addRole(UserRoleModel data, VfData vfData){
         UserRoleModel instance = new UserRoleModel();
         StringBuilder sql = new StringBuilder("insert into user_role (created_by, created_date, role_code, username) ");

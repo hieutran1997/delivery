@@ -6,7 +6,6 @@
 package com.erp.service;
 
 import com.erp.model.ProductModel;
-import com.erp.redis.repository.RedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.erp.dao.ProductDAO;
@@ -20,9 +19,6 @@ public class ProductServiceImpl implements ProductService{
     
     @Autowired
     private ProductDAO productDao; 
-    
-    @Autowired
-    private RedisRepository redisRepository;
     
     @Override
     public ProductModel save(ProductModel instance) {

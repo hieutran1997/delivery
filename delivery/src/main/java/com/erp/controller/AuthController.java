@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.model.UserModel;
 import com.erp.model.dto.RolePermissionDTO;
+import com.erp.model.dto.SelectedFormDTO;
 import com.erp.service.UserService;
 import com.erp.util.ResponseUtil;
 import com.erp.util.VfData;
@@ -53,8 +54,9 @@ public class AuthController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
             final UserModel userDetails = userService.findUser(authenticationRequest.getUsername());
             final List<RolePermissionDTO> lstScope = sysRoleDAO.getListPermission(vfData, userDetails.getUsername());
+            final List<SelectedFormDTO> lstRole = sysRoleDAO.getUserRole(vfData, userDetails.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails);
-            return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userDetails.getFirstname(), userDetails.getLastname(), lstScope, userDetails.getTypeOfUser()));
+            return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(), userDetails.getFirstname(), userDetails.getLastname(), lstScope, userDetails.getTypeOfUser(), lstRole));
         }catch (DisabledException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tài khoản mật khẩu không chính xác!");
         } catch (BadCredentialsException e) {

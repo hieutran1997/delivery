@@ -50,7 +50,8 @@ public class ActionControlServiceImpl implements ActionControlService{
 
     @Override
     public void delete(Long id) {
-        actionsControlDao.delete(id);
+        ActionsControlModel model = actionsControlDao.getOne(id);
+        actionsControlDao.delete(model);
     }
     
     @Override

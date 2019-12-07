@@ -49,7 +49,8 @@ public class OrganizationServiceImpl implements OrganizationService{
 
     @Override
     public void delete(Long id) {
-        organizationDao.delete(id);
+        OrganizationModel model = organizationDao.getOne(id);
+        organizationDao.delete(model);
     }
     
     @Override

@@ -28,6 +28,17 @@ public class Constants {
         public static final String ORTHER = "ORTHER";
     }
     
+    public static class RESOURCE {
+        public static final String USER = "user";
+        public static final String ROLE = "role";
+        public static final String RESOURCE = "resource";
+        public static final String ORGANIZATION = "org";
+    }
+    
+    public interface CORS_FILTER {
+        public static final String ALLOW_METHODS = "POST, PUT, GET, OPTIONS, DELETE";
+        public static final String ALLOW_HEADERS = "X-CACHEABLE, Authorization, Content-Type, Current-Language, Current-Market, viettel-api-key, sso-two-factor-ticket";
+    }
     private static HttpServletRequest req;
     public static String SCHEMA_PAYROLL="vhcm_report";
     public static class RESPONSE_TYPE {

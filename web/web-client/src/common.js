@@ -1,5 +1,17 @@
 import { notification } from 'antd';
-import { menu } from './environment';
+import { menu, environments_dev, url_services } from './environment';
+import axios from 'axios';
+
+const _service = axios.create({
+    baseURL: environments_dev.URL_SERVICE,
+    timeout: 5000,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
+var currentInfo = {};
+
 
 export const openNotification = (type, message, description) => {
     const args = {
@@ -51,15 +63,16 @@ export const control = {
     hasAdd: "hasAdd",
     hasView: "hasView",
     hasApprove: "hasApprove",
-
     //other control
     addRole: "addRole",
-    addPerssion: "addPerssion"
+    addPermission: "addPermission",
+    addAction: "addAction"
 }
 
 export const resourceCode = {
     user: "user",
-    role: "role"
+    role: "role",
+    resource: "resource"
 }
 
 export function mappingDataChange(resource, destinnation) {
@@ -72,8 +85,35 @@ export const getCurrentUser = () => {
     var info = localStorage.getItem('deliveryApp');
     if (info) {
         info = JSON.parse(info);
+        currentInfo = info;
         return info;
+    }else{
+        return null;
     }
+}
+
+export const getListPermission = async () =>{
+    if(currentInfo === {}){
+        getCurrentUser();
+    }
+    if(currentInfo.typeOfUser !== 1){
+        _service.defaults.headers.Authorization = `Bearer ${currentInfo.token}`;
+        try {
+            const result = await _service.get(`${url_services.ROLE}/getPermission`);
+            if(result){
+                var profile = JSON.stringify(result.data);
+                localStorage.setItem('deliveryAppScope', profile);
+            }
+        } catch (error) {
+            if(error.response && error.response.status === 403){
+                openNotification('error', 'Lỗi', 'Bạn không có quyền truy cập!');
+            }
+            else{
+                openNotification('error', 'Lỗi', 'Xảy ra lỗi!');
+            }
+        }
+    }
+    
 }
 
 /**
@@ -161,5 +201,18 @@ export const getPathMenu = (pathUrl) =>{
             }
         }
     });
+    return result;
+}
+
+export const getListTopic = () =>{
+    if(currentInfo === {}){
+        getCurrentUser();
+    }
+    let result = [];
+    if(currentInfo.lstRole){
+        currentInfo.lstRole.forEach(function(item){
+            result.push(`/topic/permission/${item.value}`);
+        });
+    }
     return result;
 }

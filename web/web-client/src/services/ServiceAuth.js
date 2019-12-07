@@ -18,7 +18,6 @@ const signIn = async (username, password) => {
         const result = await _serviceLogin.post(url_services.LOGIN, data);
         if (result.status === 200) {
             //var token = result.data.token;
-            
             try {
                 var scope = result.data.scope;
                 var info = result.data;

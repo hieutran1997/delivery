@@ -79,7 +79,7 @@ public interface SysResourceDAO extends CrudRepository<SysResourceModel, Long> {
     public default List<RolePermissionDTO> getSelectedPermission(VfData vfData, String roleCode) {
         String sql = " SELECT res.code resourceCode, res.resource_name resourceName, per.has_view hasView, per.has_add hasAdd, per.has_edit hasEdit, per.has_delete hasDelete"
                 + " , per.has_approve hasApprove, res.orther_control ortherControlsOfResource, per.orther_control ortherControls "
-                + " FROM sys_resource res LEFT JOIN sys_role_permission per ON res.code = per.resource_code "
+                + " FROM sys_resource res LEFT JOIN sys_role_permission per ON res.code = per.resource_code AND per.role_code = :role_code"
                 + " WHERE per.role_code = :role_code OR per.role_code IS NULL ";
         SQLQuery query = vfData.createSQLQuery(sql);
         query.setParameter("role_code", roleCode);

@@ -12,22 +12,23 @@ import com.erp.realtime.model.ItemInMaps;
 
 @Controller
 public class MapsController {
-	private List<ItemInMaps> lstItem = new ArrayList<>();
-	
-	@MessageMapping("/maps.join")
+
+    private List<ItemInMaps> lstItem = new ArrayList<>();
+
+    @MessageMapping("/maps.join")
     @SendTo("/topic/maps/public/item")
     public ItemInMaps joinMaps(@Payload ItemInMaps item) {
-		ItemInMaps oldItem = lstItem.stream().filter(x->x.getUserName().equals(item.getUserName())).findAny().orElse(null);
-		if(oldItem != null) {
-			lstItem.remove(oldItem);
-			lstItem.add(item);
-			return item;
-		}
-		lstItem.add(item);
+        ItemInMaps oldItem = lstItem.stream().filter(x -> x.getUserName().equals(item.getUserName())).findAny().orElse(null);
+        if (oldItem != null) {
+            lstItem.remove(oldItem);
+            lstItem.add(item);
+            return item;
+        }
+        lstItem.add(item);
         return item;
     }
-	
-	@MessageMapping("/maps.getall")
+
+    @MessageMapping("/maps.getall")
     @SendTo("/topic/maps/public/all")
     public List<ItemInMaps> getAllMaps(@Payload String value) {
         return lstItem;

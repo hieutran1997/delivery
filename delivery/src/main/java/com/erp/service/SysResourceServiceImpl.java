@@ -48,12 +48,13 @@ public class SysResourceServiceImpl implements SysResourceService{
 
     @Override
     public void delete(Long id) {
-        sysResourceDao.delete(id);
+        SysResourceModel user = sysResourceDao.findById(id).orElse(null);
+        sysResourceDao.delete(user);
     }
     
     @Override
     public boolean saveOrUpdateOrtherControl(SysResourceModel data){
-        SysResourceModel source = sysResourceDao.findOne(data.getId());
+        SysResourceModel source = sysResourceDao.findById(data.getId()).orElse(null);
         if(source == null){
             return false;
         }else{

@@ -14,7 +14,8 @@ export const url_services = {
     RESOURCES: 'resources',
     ROLE: 'roles',
     ORGANIZATION: 'organizations',
-    CONTROL: 'actioncontrol'
+    CONTROL: 'actioncontrol',
+    WEBSOCKET: 'ws'
 }
 
 export default function environments() {

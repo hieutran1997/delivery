@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Card, Table, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 import { getDataPaging, insert, update, deleteData, insertControl } from '../../actions/ActionResource';
-import { dataPost, message, openNotification, mappingDataChange } from '../../common';
+import { dataPost, message, openNotification, mappingDataChange, hasPermission, control, resourceCode } from '../../common';
 import {
     GETRESOURCES_PAGING_SUCCESS,
     UPDATE_RESOURCES_SUCCESS,
@@ -70,18 +70,18 @@ function SysResource(props) {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <Icon
+                    {hasPermission(resourceCode.resource, control.addAction, 1) === 1 ? <Icon
                         title="Thêm mới control"
                         type="plus-circle"
                         onClick={event => {
                             event.stopPropagation();
                             addControl(record);
                         }}
-                    />
+                    /> : ""}
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" />
+                    {hasPermission(resourceCode.resource, control.hasEdit) === 1 ? <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" /> : ""}
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <Popconfirm
+                    {hasPermission(resourceCode.resource, control.hasDelete) === 1 ? <Popconfirm
                         title={message.messageConfirmDelete}
                         okText={message.okText}
                         cancelText={message.cancelText}
@@ -89,7 +89,7 @@ function SysResource(props) {
                         onConfirm={() => { handleDelete(record) }}
                     >
                         <Icon type="delete" className="icon-action" title="Xóa" />
-                    </Popconfirm>
+                    </Popconfirm> : ""}
                 </span>
             ),
             width: '20%'
@@ -200,7 +200,7 @@ function SysResource(props) {
         props.insert(instance);
     }
 
-    const onSaveControl = (data) =>{
+    const onSaveControl = (data) => {
         props.insertControl(data);
     }
 
@@ -227,9 +227,15 @@ function SysResource(props) {
                 />
             </Card>
 
-            <PopupAddControl isShowAddControl={isShowAddControl} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveControl} />
-            <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave} />
-            <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange} />
+            {
+                hasPermission(resourceCode.resource, control.addAction, 1) === 1 ? <PopupAddControl isShowAddControl={isShowAddControl} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveControl} /> : ""
+            }
+            {
+                hasPermission(resourceCode.resource, control.hasEdit) === 1 ? <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange} />: ""
+            }
+            {
+                hasPermission(resourceCode.resource, control.hasAdd) === 1 ?<PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave} /> : ""
+            }
         </div>
     );
 }

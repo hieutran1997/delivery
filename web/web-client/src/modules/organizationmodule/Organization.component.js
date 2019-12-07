@@ -43,7 +43,7 @@ const org = {
 function Organization() {
     const [organization] = useState(org.data);
     return (
-        <Card title="Title" >
+        <Card title="Cây đơn vị" >
             <div className="content-section implementation organizationchart-demo">
                 <OrganizationChart value={organization}></OrganizationChart>
             </div>
