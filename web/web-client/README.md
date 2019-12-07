@@ -1,3 +1,23 @@
+## Kiến trúc code
+  /src
+    /actions: Các hoạt động thay đổi state
+    /contants: Chưa các type của thay đổi trạng thái
+    /containers: Các trang bao ngoài cùng
+    /modules: Chứa các components page
+    /reducers: Định hướng các giá trị trả về đẩy ra props
+    /redux/middlewares: Định nghĩa những middleware của redux
+    /services: Định nghĩa những service không cần thông qua middleware
+    /template: Định nghĩa template và routing của app
+    
+
+
+## Gọi service.
+ Event trong component -> dispatch sang action (..\src\actions) -> middleware(..\src\redux\middlewares) -> api 
+ -> middleware(..\src\redux\middlewares) -> reducers (..\src\reducers) -> Trả về component thông qua props.
+ 
+ 
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
