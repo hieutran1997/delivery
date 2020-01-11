@@ -1,8 +1,7 @@
-import * as types from '../constants/ActionTypes';
-import { signIn } from '../services';
+import * as types from '../shared/constants/ActionTypes';
+import { signIn } from '../shared/services';
 
 const loginSuccess = item => ({ type: types.LOGIN_SUCCESS, payload: item });
-
 
 const loginError = err => {
   return { type: types.LOGIN_ERROR, payload: err };

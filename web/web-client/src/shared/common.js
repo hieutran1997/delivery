@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { menu, environments_dev, url_services } from './environment';
+import { menu, environments_dev, url_services } from '../environment';
 import axios from 'axios';
 
 const _service = axios.create({

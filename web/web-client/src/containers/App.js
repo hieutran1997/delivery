@@ -6,9 +6,9 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import { useSelector, connect } from 'react-redux';
-import MenuComponent from '../components/MenuComponent';
+import MenuComponent from '../shared/components/MenuComponent';
 import { Redirect } from 'react-router-dom';
-import { openNotification, getCurrentUser, getPathMenu, hasMenu, getListTopic, getListPermission } from '../common';
+import { openNotification, getCurrentUser, getPathMenu, hasMenu, getListTopic, getListPermission } from '../shared/common';
 import { useHistory } from "react-router-dom";
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { ScrollPanel } from 'primereact/scrollpanel';
@@ -37,6 +37,8 @@ function App(props) {
     return <Redirect to='/login' />;
   }
 
+  console.log('test dom', props);
+
   const checker = ()=>{
     if (props.currentUser) {
       if (!hasMenu(history.location.pathname.substring(1))
@@ -45,7 +47,6 @@ function App(props) {
         && "/" !== history.location.pathname) { //Loại bỏ dấu /
         history.push("/permission");
       }
-      console.log('topics', topics);
     }else{
       history.push("/login");
     }
@@ -54,10 +55,8 @@ function App(props) {
   checker();
 
   const onMessageReceive = (msg, topic) => {
-    console.log('msg', msg);
     let index = topics.indexOf(topic);
     if(index >= 0){
-      console.log('msg', msg);
       getListPermission();
       setTimeout(function(){
         setUpdateMenu(true);
@@ -69,19 +68,6 @@ function App(props) {
   if(clientConnected) {
     console.log('client Connected', client.state);
   }
-
-  // const sendMessage = (msg, selfMsg) => {
-  //   try {
-  //     client.sendMessage("/app/test", JSON.stringify(selfMsg));
-  //     return true;
-  //   } catch(e) {
-  //     return false;
-  //   }
-  // }
-
-  // if(clientConnected){
-  //   sendMessage("hello", "hello");
-  // }
 
   const toggle = () => {
     setCollapsed(!collapsed);

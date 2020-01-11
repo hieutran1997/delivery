@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Icon } from 'antd';
 import { Dropdown } from 'primereact/dropdown';
 import useForm from 'react-hook-form';
-import { hasPermission, control, resourceCode } from '../../common';
+import { hasPermission, control, resourceCode } from '../../../shared/common';
 
 export function FormSearch(props) {
     const { register, handleSubmit, setValue } = useForm();

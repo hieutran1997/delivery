@@ -4,7 +4,7 @@ import { Card, Row, Col, Form, Icon, Input, Button, Checkbox, Spin  } from 'antd
 import 'antd/dist/antd.css';
 import './Login.css';
 import { login } from '../actions';
-import { openNotification, getCurrentUser } from '../common';
+import { openNotification, getCurrentUser } from '../shared/common';
 
 const homePage = {
     pathname: '/',

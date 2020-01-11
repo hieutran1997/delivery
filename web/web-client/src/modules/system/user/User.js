@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getDataPaging, insert, update, deleteData } from '../../actions/ActionUser';
-import { getSelectedData as getSelectedDataOrg } from '../../actions/ActionOrganization';
-import { getSelectedData as getSelectedDataRole, insertUserRole, getUserRole } from '../../actions/ActionRole';
-import { dataPost, message, mappingDataChange, openNotification, hasPermission, control, resourceCode } from '../../common';
+import { getDataPaging, insert, update, deleteData } from '../../../actions/ActionUser';
+import { getSelectedData as getSelectedDataOrg } from '../../../actions/ActionOrganization';
+import { getSelectedData as getSelectedDataRole, insertUserRole, getUserRole } from '../../../actions/ActionRole';
+import { dataPost, message, mappingDataChange, openNotification, hasPermission, control, resourceCode } from '../../../shared/common';
 import {
   GETUSER_PAGING_SUCCESS,
   CREATE_USER_SUCCESS,
@@ -17,7 +17,7 @@ import {
   GET_USER_ROLE_SUCCESS,
   CREATE_USER_ROLE_SUCCESS,
   CREATE_USER_ROLE_ERROR
-} from '../../constants/ActionTypes';
+} from '../../../shared/constants/ActionTypes';
 import { Table, Icon, Popconfirm, Card } from 'antd';
 import { PopupInfo } from './popupInfo.component';
 import { PopupAdd } from './popupAdd.component';
@@ -92,7 +92,6 @@ function User(props) {
   ];
 
   useEffect(() => {
-
     if (onInit) {
       setLoading(true);
       props.filterData(dataSearch);

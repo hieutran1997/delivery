@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Icon } from 'antd';
 import useForm from 'react-hook-form';
-import { hasPermission, control, resourceCode } from '../../common';
+import { hasPermission, control, resourceCode } from '../../../shared/common';
 
 export function FormSearch(props) {
     const { register, handleSubmit, setValue } = useForm();
@@ -20,7 +20,7 @@ export function FormSearch(props) {
             setDataDetail(props.dataDetail);
             setTimeout(function () {
                 setValue("code", props.dataDetail.code);
-                setValue("resourceName", props.dataDetail.resourceName);
+                setValue("sysRoleName", props.dataDetail.sysRoleName);
             }, 100);
         }
     }, [props, dataDetail, setValue]);
@@ -36,7 +36,7 @@ export function FormSearch(props) {
                     <Col span={2}></Col>
                     <Col span={11}>
                         <span>Tên:</span>
-                        <input name="resourceName" className="ant-input" ref={register} />
+                        <input name="sysRoleName" className="ant-input" ref={register} />
                     </Col>
                 </Row>
 
@@ -47,9 +47,9 @@ export function FormSearch(props) {
                         Tìm kiếm
                     </button>
                     &nbsp;&nbsp;
-                    {hasPermission(resourceCode.resource, control.hasAdd) === 1?<Button type="primary" icon="plus" onClick={onCreate}>
+                    {hasPermission(resourceCode.role, control.hasAdd) === 1? <Button type="primary" icon="plus" onClick={onCreate}>
                         Thêm mới
-                    </Button>: ""}
+                    </Button> : ""}
                     
                 </div>
             </form>

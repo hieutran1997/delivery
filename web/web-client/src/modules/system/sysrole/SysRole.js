@@ -9,8 +9,8 @@ import {
     , deleteData
     , insertRolePermission
     , getRolePermission
-} from '../../actions/ActionRole';
-import { dataPost, message, openNotification, mappingDataChange, hasPermission, control, resourceCode } from '../../common';
+} from '../../../actions/ActionRole';
+import { dataPost, message, openNotification, mappingDataChange, hasPermission, control, resourceCode } from '../../../shared/common';
 import {
     GETROLE_PAGING_SUCCESS,
     UPDATE_ROLE_SUCCESS,
@@ -23,7 +23,7 @@ import {
     CREATE_ROLE_PERMISSION_ERROR,
     CREATE_ROLE_PERMISSION_SUCCESS,
     GET_ROLE_PERMISSION_SUCCESS
-} from '../../constants/ActionTypes';
+} from '../../../shared/constants/ActionTypes';
 import { PopupInfo } from './popupInfo.component';
 import { PopupAdd } from './popupAdd.component';
 import { FormSearch } from './formSearch.component';

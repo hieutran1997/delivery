@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import 'antd/dist/antd.css';
+import '../invalid/node_modules/antd/dist/antd.css';
 import { Card, Table, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
-import { getDataPaging, insert, update, deleteData, insertControl } from '../../actions/ActionResource';
-import { dataPost, message, openNotification, mappingDataChange, hasPermission, control, resourceCode } from '../../common';
+import { getDataPaging, insert, update, deleteData } from '../../../actions/ActionControl';
+import { dataPost, message, openNotification, mappingDataChange } from '../../../shared/common';
 import {
-    GETRESOURCES_PAGING_SUCCESS,
-    UPDATE_RESOURCES_SUCCESS,
-    UPDATE_RESOURCES_ERROR,
-    CREATE_RESOURCES_SUCCESS,
-    CREATE_RESOURCES_ERROR,
-    DELETE_RESOURCES_SUCCESS,
-    DELETE_RESOURCES_ERROR,
-    GETUSER_PAGING_ERROR,
-    CREATE_RESOURCES_CONTROL_SUCCESS,
-    CREATE_RESOURCES_CONTROL_ERROR
-} from '../../constants/ActionTypes';
+    GETCONTROL_PAGING_SUCCESS,
+    UPDATE_CONTROL_SUCCESS,
+    UPDATE_CONTROL_ERROR,
+    CREATE_CONTROL_SUCCESS,
+    CREATE_CONTROL_ERROR,
+    DELETE_CONTROL_SUCCESS,
+    DELETE_CONTROL_ERROR
+} from '../../../shared/constants/ActionTypes';
 import { PopupInfo } from './popupInfo.component';
 import { PopupAdd } from './popupAdd.component';
 import { FormSearch } from './formSearch.component';
-import { PopupAddControl } from './formAddControl.component';
 
-function SysResource(props) {
+function Control(props) {
 
     const [dataContent, setDataContent] = useState([]);
     const [pagination, setPagination] = useState({});
@@ -29,7 +25,6 @@ function SysResource(props) {
     const [dataSearch, setDataSearch] = useState(dataPost);
     const [isEdit, setIsEdit] = useState(false);
     const [isShowAdd, setIsShowAdd] = useState(false);
-    const [isShowAddControl, setIsShowAddControl] = useState(false);
     const [dataDetail, setDataDetail] = useState({});
     const [isError, setError] = useState(false);
 
@@ -43,45 +38,31 @@ function SysResource(props) {
             }
         },
         {
-            title: 'Mã resource',
+            title: 'Mã',
             dataIndex: 'code',
             width: '20%'
         },
         {
-            title: 'Tên resource',
-            dataIndex: 'resourceName',
+            title: 'Tên',
+            dataIndex: 'actionName',
             width: '20%'
         },
         {
-            title: 'Loại',
-            dataIndex: 'typeOfResource',
-            render: (text, record) => {
-                return record.typeOfResource === 0 ?
-                    <span>Menu</span> : <span>Controls</span>
+            title: 'Html',
+            dataIndex: 'textHtml',
+            render: (value, row, index) => {
+                return <div dangerouslySetInnerHTML={{ __html: value }}></div>;
             },
             width: '20%'
-        },
-        {
-            title: 'Mã cha',
-            dataIndex: 'parentCode'
         },
         {
             title: '#',
             key: 'action',
             render: (text, record) => (
                 <span>
-                    {hasPermission(resourceCode.resource, control.addAction, 1) === 1 ? <Icon
-                        title="Thêm mới control"
-                        type="plus-circle"
-                        onClick={event => {
-                            event.stopPropagation();
-                            addControl(record);
-                        }}
-                    /> : ""}
+                    <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" />
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    {hasPermission(resourceCode.resource, control.hasEdit) === 1 ? <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" /> : ""}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    {hasPermission(resourceCode.resource, control.hasDelete) === 1 ? <Popconfirm
+              <Popconfirm
                         title={message.messageConfirmDelete}
                         okText={message.okText}
                         cancelText={message.cancelText}
@@ -89,66 +70,55 @@ function SysResource(props) {
                         onConfirm={() => { handleDelete(record) }}
                     >
                         <Icon type="delete" className="icon-action" title="Xóa" />
-                    </Popconfirm> : ""}
+                    </Popconfirm>
                 </span>
             ),
             width: '20%'
         },
     ];
 
+
     useEffect(() => {
-        if (!props.resource && !isError) {
+        if (!props.control && !isError) {
             setLoading(true);
             if (dataContent.length === 0) {
                 props.filterData(dataSearch);
             }
         } else {
             setLoading(false);
-            switch (props.resource.type) {
-                case GETRESOURCES_PAGING_SUCCESS:
+            switch (props.control.type) {
+                case GETCONTROL_PAGING_SUCCESS:
                     setError(false);
-                    setDataContent(props.resource.data);
+                    setDataContent(props.control.data);
                     setPagination({
-                        current: props.resource.curPage + 1,
-                        pageSize: props.resource.perPage,
-                        total: props.resource.total,
+                        current: props.control.curPage + 1,
+                        pageSize: props.control.perPage,
+                        total: props.control.total,
                         size: 'small'
                     });
                     break;
-                case GETUSER_PAGING_ERROR:
-                    setDataContent([]);
-                    setError(true);
-                    break;
-                case UPDATE_RESOURCES_SUCCESS:
+                case UPDATE_CONTROL_SUCCESS:
                     openNotification('success', 'Thành công', message.updateSuccess);
                     props.filterData(dataSearch);
                     closePopup();
                     break;
-                case UPDATE_RESOURCES_ERROR:
+                case UPDATE_CONTROL_ERROR:
                     openNotification('error', 'Lỗi', message.updateSuccess);
                     break;
-                case CREATE_RESOURCES_SUCCESS:
+                case CREATE_CONTROL_SUCCESS:
                     openNotification('success', 'Thành công', message.createSuccess);
                     props.filterData(dataSearch);
                     closePopup();
                     break;
-                case CREATE_RESOURCES_ERROR:
+                case CREATE_CONTROL_ERROR:
                     openNotification('error', 'Lỗi', message.createError);
                     break;
-                case DELETE_RESOURCES_SUCCESS:
+                case DELETE_CONTROL_SUCCESS:
                     openNotification('success', 'Thành công', message.deleteSuccess);
                     props.filterData(dataSearch);
                     break;
-                case DELETE_RESOURCES_ERROR:
+                case DELETE_CONTROL_ERROR:
                     openNotification('error', 'Lỗi', message.deleteError);
-                    break;
-                case CREATE_RESOURCES_CONTROL_SUCCESS:
-                    openNotification('success', 'Thành công', message.createSuccess);
-                    props.filterData(dataSearch);
-                    closePopup();
-                    break;
-                case CREATE_RESOURCES_CONTROL_ERROR:
-                    openNotification('error', 'Lỗi', message.createError);
                     break;
                 default:
                     console.log('1');
@@ -178,15 +148,9 @@ function SysResource(props) {
         setIsShowAdd(true);
     }
 
-    const addControl = (item) => {
-        setDataDetail(item);
-        setIsShowAddControl(true);
-    }
-
     const closePopup = () => {
         setIsEdit(false);
         setIsShowAdd(false);
-        setIsShowAddControl(false);
     }
 
     const onSaveChange = (data) => {
@@ -198,10 +162,6 @@ function SysResource(props) {
     const onSave = (data) => {
         var instance = data;
         props.insert(instance);
-    }
-
-    const onSaveControl = (data) => {
-        props.insertControl(data);
     }
 
     const handleDelete = (data) => {
@@ -216,7 +176,7 @@ function SysResource(props) {
                 <FormSearch onCreate={handleAdd} onSearch={handlerSearch}></FormSearch>
             </Card>
             <br />
-            <Card title={message.titleFormResource}>
+            <Card title={message.titleFormControl}>
                 <Table
                     columns={columns}
                     rowKey={record => record.code}
@@ -227,21 +187,14 @@ function SysResource(props) {
                 />
             </Card>
 
-            {
-                hasPermission(resourceCode.resource, control.addAction, 1) === 1 ? <PopupAddControl isShowAddControl={isShowAddControl} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveControl} /> : ""
-            }
-            {
-                hasPermission(resourceCode.resource, control.hasEdit) === 1 ? <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange} />: ""
-            }
-            {
-                hasPermission(resourceCode.resource, control.hasAdd) === 1 ?<PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave} /> : ""
-            }
+            <PopupAdd isShowAdd={isShowAdd} dataDetail={dataDetail} closePopup={closePopup} onSave={onSave} />
+            <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange}></PopupInfo>
         </div>
     );
 }
 
 const mapStateToProps = state => ({
-    resource: state.resourceReducer
+    control: state.controlReducer
 });
 
 const mapDispatchToProps = dispatch => {
@@ -249,12 +202,11 @@ const mapDispatchToProps = dispatch => {
         filterData: (data) => dispatch(getDataPaging(data)),
         insert: (data) => dispatch(insert(data)),
         update: (data) => dispatch(update(data)),
-        deleteData: (data) => dispatch(deleteData(data)),
-        insertControl: (data => dispatch(insertControl(data)))
+        deleteData: (data) => dispatch(deleteData(data))
     }
 };
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(SysResource);
+)(Control);

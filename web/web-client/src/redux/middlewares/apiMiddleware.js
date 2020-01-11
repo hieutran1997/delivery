@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { environments_dev } from '../../environment';
-import { UNAUTHORIZED } from '../../constants/ActionTypes';
-import { openNotification } from '../../common';
+import { UNAUTHORIZED } from '../../shared/constants/ActionTypes';
+import { openNotification } from '../../shared/common';
 
 const apiMiddleware = store => next => action => {
   const { dispatch, getState } = store;

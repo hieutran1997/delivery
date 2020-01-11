@@ -1,4 +1,4 @@
-import * as types from '../constants/ActionTypes';
+import * as types from '../shared/constants/ActionTypes';
 import { url_services } from '../environment';
 
 const getAll = () => {

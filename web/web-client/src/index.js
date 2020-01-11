@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 //import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import reducer from './reducers';
+import reducer from './shared/reducers';
 import apiMiddleware from './redux/middlewares/apiMiddleware';
 import { composeWithDevTools } from 'redux-devtools-extension';
 

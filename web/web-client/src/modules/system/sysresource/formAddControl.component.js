@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Row, Col, Button, Table, Icon, Popconfirm, Divider } from 'antd';
 import useForm from 'react-hook-form';
-import { message, openNotification } from '../../common';
+import { message, openNotification } from '../../../shared/common';
 
 export function PopupAddControl(props) {
     const { register, handleSubmit, errors, setValue } = useForm();

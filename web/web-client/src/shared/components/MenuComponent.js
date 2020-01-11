@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { menu } from '../environment';
+import { menu } from '../../environment';
 import { Menu, Icon } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { hasMenu, getCurrentUser } from '../common';

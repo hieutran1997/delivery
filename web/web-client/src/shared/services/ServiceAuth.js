@@ -1,4 +1,4 @@
-import { environments_dev, url_services } from '../environment';
+import { environments_dev, url_services } from '../../environment';
 import axios from 'axios';
 
 const _serviceLogin = axios.create({
