@@ -21,5 +21,6 @@ public interface OrganizationService {
     List<OrganizationModel> findAll();
     void delete(Long id);
     List<SelectedFormDTO> getSeletedData();
+    List<OrganizationModel> getListChild(String parentCode);
 }
 

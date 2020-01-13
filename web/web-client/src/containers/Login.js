@@ -7,7 +7,7 @@ import { login } from '../actions';
 import { openNotification, getCurrentUser } from '../shared/common';
 
 const homePage = {
-    pathname: '/',
+    pathname: '/admin',
     state: { firstPage: true }
 }
 
@@ -29,7 +29,7 @@ class Login extends React.Component {
     componentDidMount(){
         var currentUser = getCurrentUser();
         if(currentUser !== null && currentUser !== undefined){
-            this.props.route.history.replace(homePage);
+            this.props.history.replace(homePage);
         }
     }
 
@@ -46,7 +46,7 @@ class Login extends React.Component {
                     openNotification('error', 'Thất bại', 'Đăng nhập không thành công!');
                 }else if(getCurrentUser()){
                     openNotification('success', 'Thành công', 'Đăng nhập thành công!');
-                    this.props.route.history.replace(homePage);
+                    this.props.history.replace(homePage);
                 }
             }
         }
@@ -118,12 +118,3 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps, mapDispatchToProps
 )(WrappedNormalLoginForm);
-
-
-export const AuthLayout = function(props){
-    const Component = props.component;
-    const route = props.route;
-    return (
-        <Component route={route}/>
-    );
-}

@@ -9,6 +9,15 @@ const getAll = () => {
     };
 };
 
+const getDataPaging = (data) => {
+    const url = `${url_services.ORGANIZATION}/postQuery`;
+    return {
+        types: [types.GET_ORG_PAGING_REQUEST_SUCCESS, types.GET_ORG_PAGING_SUCCESS, types.GET_ORG_PAGING_ERROR],
+        api: (axios) => axios.post(url, data)
+    };
+
+};
+
 const insert = (data) => {
     const url = `${url_services.ORGANIZATION}/`;
     return {
@@ -41,4 +50,4 @@ const getSelectedData = ()=>{
     };
 } 
 
-export { getAll, insert, update, deleteData, getSelectedData };
+export { getAll, insert, update, deleteData, getSelectedData, getDataPaging };

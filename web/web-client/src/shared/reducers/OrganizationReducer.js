@@ -13,7 +13,10 @@ import {
     DELETE_ORGANIZATION_ERROR,
     GET_SELETED_ORGANIZATION_REQUEST_SUCCESS,
     GET_SELETED_ORGANIZATION_SUCCESS,
-    GET_SELETED_ORGANIZATION_ERROR
+    GET_SELETED_ORGANIZATION_ERROR,
+    GET_ORG_PAGING_REQUEST_SUCCESS,
+    GET_ORG_PAGING_ERROR,
+    GET_ORG_PAGING_SUCCESS
 } from '../constants/ActionTypes';
 
 const organizationReducer = (state, action) => {
@@ -35,6 +38,22 @@ const organizationReducer = (state, action) => {
                 error: true,
                 type: GETALL_ORGANIZATION_ERROR
             };
+        case GET_ORG_PAGING_REQUEST_SUCCESS:
+            return {
+                ...action,
+                error: false
+            }
+        case GET_ORG_PAGING_SUCCESS:
+            return {
+                ...action.result.data,
+                error: false,
+                type: GET_ORG_PAGING_SUCCESS
+            }
+        case GET_ORG_PAGING_ERROR:
+            return {
+                ...action,
+                error: true
+            }
         case GET_SELETED_ORGANIZATION_REQUEST_SUCCESS:
             return {
                 ...action,

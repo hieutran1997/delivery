@@ -1,12 +1,9 @@
 import React, { Suspense } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
-import _ from 'lodash';
 import { createBrowserHistory } from "history";
-import publicRoutes from '../template/routers/publicRouters';
-import authRouters from '../template/routers/authRouters';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { AuthLayout } from '../containers/Login';
-import App from '../containers/App';
+import WrappedNormalLoginForm from '../containers/Login';
+import AdminLayout from '../containers/AdminLayout';
 
 export default function Template() {
     const history = createBrowserHistory();
@@ -15,7 +12,7 @@ export default function Template() {
             <Router history={history}>
                 <Suspense fallback={<ProgressSpinner style={{ position: 'fixed', top: '50%', left: '50%' }} />}>
                     <Switch>
-                        {_.map(publicRoutes, (route, key) => {
+                        {/* {_.map(publicRoutes, (route, key) => {
                             const { component, path } = route;
                             return (
                                 <Route
@@ -25,19 +22,9 @@ export default function Template() {
                                     render={(route) => <App component={component} route={route} />}
                                 />
                             )
-                        })}
-                        {/* <Route path="/" render={props => <App {...props} />} /> */}
-                        {_.map(authRouters, (route, key) => {
-                            const { component, path } = route;
-                            return (
-                                <Route
-                                    exact
-                                    path={path}
-                                    key={key}
-                                    render={(route) => <AuthLayout component={component} route={route} />}
-                                />
-                            )
-                        })}
+                        })} */}
+                        <Route path="/admin" render={props => <AdminLayout {...props} />} />
+                        <Route path='/login' component={WrappedNormalLoginForm} />
 
                         {/* <Route component={ NotFound } /> */}
                     </Switch>

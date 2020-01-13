@@ -5,12 +5,17 @@
  */
 package com.erp.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -18,12 +23,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "organization")
-public class OrganizationModel extends BaseModel{
+public class OrganizationModel{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column(name = "code", nullable = false, length = 10)
+    @Column(name = "code", nullable = false, length = 10, unique = true)
     private String code;
     
     @Column(name = "organization_path", nullable = false, length = 500)
@@ -34,10 +39,43 @@ public class OrganizationModel extends BaseModel{
     
     @Column(name = "parent_code", nullable = true, length = 10) 
     private String parentCode;
-
-    public Long getId() {
-        return id;
-    }
+    
+    @Column(name="address")
+    private String Address;
+    
+    @Column(name="effective_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date effectiveTime;
+    
+    @Column(name="expire_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date expireTime;
+    
+    @Column(name="created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    
+    @Column(name="created_by", length = 255)
+    private String createdBy;
+    
+    @Column(name="created_by_group", length = 255)
+    private String createdByGroup;
+    
+    @Column(name="updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
+    
+    @Column(name="updated_by")
+    private String updatedBy;
+    
+    @Transient
+    private int isLeaf;
+    
+    /**
+     * true = isUse, false = isDelete
+     */
+    @Column(name="status")
+    private boolean status; 
 
     public void setId(Long id) {
         this.id = id;
@@ -74,5 +112,89 @@ public class OrganizationModel extends BaseModel{
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode;
     }
+
+	public String getAddress() {
+		return Address;
+	}
+
+	public void setAddress(String address) {
+		Address = address;
+	}
+
+	public Date getEffectiveTime() {
+		return effectiveTime;
+	}
+
+	public void setEffectiveTime(Date effectiveTime) {
+		this.effectiveTime = effectiveTime;
+	}
+
+	public Date getExpireTime() {
+		return expireTime;
+	}
+
+	public void setExpireTime(Date expireTime) {
+		this.expireTime = expireTime;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getCreatedByGroup() {
+		return createdByGroup;
+	}
+
+	public void setCreatedByGroup(String createdByGroup) {
+		this.createdByGroup = createdByGroup;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public int getIsLeaf() {
+		return isLeaf;
+	}
+
+	public void setIsLeaf(int isLeaf) {
+		this.isLeaf = isLeaf;
+	}
     
 }

@@ -12,6 +12,7 @@ const _service = axios.create({
 
 var currentInfo = {};
 
+export const DateFormat = 'DD/MM/YYYY';
 
 export const openNotification = (type, message, description) => {
     const args = {
@@ -72,7 +73,8 @@ export const control = {
 export const resourceCode = {
     user: "user",
     role: "role",
-    resource: "resource"
+    resource: "resource",
+    organization: 'organization'
 }
 
 export function mappingDataChange(resource, destinnation) {

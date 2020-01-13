@@ -9,26 +9,32 @@ const HasNotPermission = lazy(() => import('../../modules/system/invalid/HasNotP
 export default{
     Home: {
         component: Home,
-        path: '/'
+        path: '/',
+        moduleUrl: ''
     },
     User: {
         component: User,
-        path: '/user'
+        path: '/user',
+        moduleUrl: '/admin/system'
     },
     SysResource: {
         component: SysResource,
-        path: '/resource'
+        path: '/resource',
+        moduleUrl: '/admin/system'
     },
     SysRole: {
         component: SysRole,
-        path: '/role'
+        path: '/role',
+        moduleUrl: '/admin/system'
     },
     Organization:{
         component: Organization,
-        path: '/org'
+        path: '/org',
+        moduleUrl: '/admin/system'
     },
     HasNotPermission: {
         component: HasNotPermission,
-        path: '/hpermission'
+        path: '/hpermission',
+        moduleUrl: '/admin/system'
     }
 }

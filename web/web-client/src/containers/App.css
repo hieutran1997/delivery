@@ -113,3 +113,11 @@
 .ant-card-head-title{
   font-weight: 500;
 }
+
+.ant-calendar-picker{
+  width: 100%;
+}
+
+.p-dropdown-filter-container{
+  width: 100%;
+}

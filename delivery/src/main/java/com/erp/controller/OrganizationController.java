@@ -55,12 +55,17 @@ public class OrganizationController {
         orgService.delete(id);
         ResponseUtil<String> result = new ResponseUtil<String>();
         result.setError(false);
-        result.setMessage("Thành công!");
+        result.setMessage("Thï¿½nh cï¿½ng!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/getSelectedData", method = RequestMethod.GET)
     public ResponseEntity<?> getSelectedData(){
         return new ResponseEntity<>(orgService.getSeletedData(), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/getChild/{parentCode}", method = RequestMethod.GET)
+    public ResponseEntity<?> getOrgChild(@PathVariable(value = "parentCode") String parentCode){
+        return new ResponseEntity<>(orgService.getListChild(parentCode), HttpStatus.OK);
     }
 }

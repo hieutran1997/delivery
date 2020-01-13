@@ -31,8 +31,20 @@ public class OrganizationServiceImpl implements OrganizationService{
     private VfData vfData;
 
     @Override
-    public OrganizationModel save(OrganizationModel user) {
-        return organizationDao.save(user);
+    public OrganizationModel save(OrganizationModel org) {
+    	String path = "";
+    	if(org.getParentCode() != null) {
+    		OrganizationModel parent = organizationDao.getOrgByCode(vfData, org.getParentCode());
+    		if(parent != null) {
+    			path = parent.getOrganizationPath() + org.getCode() + "/";
+    		}else {
+    			path = "/" + org.getCode() + "/";
+    		}
+    	}else {
+    		path = "/" + org.getCode() + "/";
+    	}
+    	org.setOrganizationPath(path);
+        return organizationDao.save(org);
     }
     
     @Override
@@ -56,5 +68,10 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     public List<SelectedFormDTO> getSeletedData(){
         return organizationDao.getSelectedData(vfData);
+    }
+    
+    @Override
+    public List<OrganizationModel> getListChild(String parentCode){
+    	return organizationDao.getListChild(vfData, parentCode);
     }
 }

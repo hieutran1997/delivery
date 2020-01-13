@@ -43,38 +43,31 @@ export const menu = [
         icon: 'branches',
         childs: [
             {
-                key: 'user',
+                key: 'admin/system/user',
                 title: 'Người dùng',
                 component: 'User',
-                url_hash: 'user',
+                url_hash: 'admin/system/user',
                 icon: 'user'
             },
             {
-                key: 'resource',
+                key: 'admin/system/resource',
                 title: 'Chức năng hệ thống',
                 component: 'SysResource',
-                url_hash: 'resource',
+                url_hash: 'admin/system/resource',
                 icon: 'solution'
             },
             {
-                key: 'role',
+                key: 'admin/system/role',
                 title: 'Vai trò hệ thống',
                 component: 'SysRole',
-                url_hash: 'role',
+                url_hash: 'admin/system/role',
                 icon: 'api'
             },
-            // {
-            //     key: '/control',
-            //     title: 'Hoạt động điều khiển',
-            //     component: 'Control',
-            //     url_hash: 'control',
-            //     icon: 'api'
-            // },
             {
-                key: 'org',
+                key: 'admin/system/org',
                 title: 'Đơn vị',
                 component: 'Organization',
-                url_hash: 'org',
+                url_hash: 'admin/system/org',
                 icon: 'database'
             }
         ]
