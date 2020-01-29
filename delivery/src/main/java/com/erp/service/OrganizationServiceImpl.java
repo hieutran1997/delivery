@@ -44,6 +44,7 @@ public class OrganizationServiceImpl implements OrganizationService{
     		path = "/" + org.getCode() + "/";
     	}
     	org.setOrganizationPath(path);
+    	org.setStatus(true);
         return organizationDao.save(org);
     }
     
@@ -73,5 +74,15 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     public List<OrganizationModel> getListChild(String parentCode){
     	return organizationDao.getListChild(vfData, parentCode);
+    }
+    
+    @Override
+    public OrganizationModel findOne(Long id) {
+    	OrganizationModel result = organizationDao.findById(id).orElse(null);
+    	if(result != null) {
+    		result.setEffectiveTimeNumber(result.getEffectiveTime().getTime());
+    		result.setExpireTimeNumber(result.getExpireTime().getTime());
+    	}
+    	return result;
     }
 }

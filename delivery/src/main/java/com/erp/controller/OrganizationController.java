@@ -55,8 +55,13 @@ public class OrganizationController {
         orgService.delete(id);
         ResponseUtil<String> result = new ResponseUtil<String>();
         result.setError(false);
-        result.setMessage("Th�nh c�ng!");
+        result.setMessage("Thành công!");
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> findOne(@PathVariable(value = "id") Long id){
+        return new ResponseEntity<>(orgService.findOne(id), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/getSelectedData", method = RequestMethod.GET)

@@ -53,6 +53,7 @@ export const message = {
     titleFormRole: 'Danh sách vai trò',
     titleFormControl: 'Danh sách hoạt động',
     missingNameControlError: 'Tên control chưa được chọn!',
+    messageError: 'Có lỗi xảy ra'
 }
 
 /**
@@ -89,33 +90,33 @@ export const getCurrentUser = () => {
         info = JSON.parse(info);
         currentInfo = info;
         return info;
-    }else{
+    } else {
         return null;
     }
 }
 
-export const getListPermission = async () =>{
-    if(currentInfo === {}){
+export const getListPermission = async () => {
+    if (currentInfo === {}) {
         getCurrentUser();
     }
-    if(currentInfo.typeOfUser !== 1){
+    if (currentInfo.typeOfUser !== 1) {
         _service.defaults.headers.Authorization = `Bearer ${currentInfo.token}`;
         try {
             const result = await _service.get(`${url_services.ROLE}/getPermission`);
-            if(result){
+            if (result) {
                 var profile = JSON.stringify(result.data);
                 localStorage.setItem('deliveryAppScope', profile);
             }
         } catch (error) {
-            if(error.response && error.response.status === 403){
+            if (error.response && error.response.status === 403) {
                 openNotification('error', 'Lỗi', 'Bạn không có quyền truy cập!');
             }
-            else{
+            else {
                 openNotification('error', 'Lỗi', 'Xảy ra lỗi!');
             }
         }
     }
-    
+
 }
 
 /**
@@ -126,7 +127,7 @@ export const getListPermission = async () =>{
  */
 export const hasPermission = (resourceCode, hasPermission, type) => {
     var currentUser = getCurrentUser();
-    if(currentUser && currentUser.typeOfUser === 1){ //Là quyền admin
+    if (currentUser && currentUser.typeOfUser === 1) { //Là quyền admin
         return 1;
     }
     var scope = localStorage.getItem('deliveryAppScope');
@@ -134,11 +135,11 @@ export const hasPermission = (resourceCode, hasPermission, type) => {
         scope = JSON.parse(scope);
         var result = 0;
         scope.forEach(element => {
-            if(element.resourceCode === resourceCode && !type){
+            if (element.resourceCode === resourceCode && !type) {
                 result = element[hasPermission] ? element[hasPermission] : 0;
             }
-            else if(element.resourceCode === resourceCode && type === 1){
-                if(element.ortherControls){
+            else if (element.resourceCode === resourceCode && type === 1) {
+                if (element.ortherControls) {
                     let json = JSON.parse(element.ortherControls);
                     result = json[hasPermission] ? json[hasPermission] : 0;
                 }
@@ -155,10 +156,10 @@ export const hasPermission = (resourceCode, hasPermission, type) => {
  */
 export const hasMenu = (keyMenu) => {
     var currentUser = getCurrentUser();
-    if(currentUser && currentUser.typeOfUser === 1){ //Là quyền admin
+    if (currentUser && currentUser.typeOfUser === 1) { //Là quyền admin
         return true;
     }
-    else if(!currentUser){
+    else if (!currentUser) {
         return false;
     }
     var scope = localStorage.getItem('deliveryAppScope');
@@ -166,7 +167,7 @@ export const hasMenu = (keyMenu) => {
         scope = JSON.parse(scope);
         var result = undefined;
         scope.forEach(element => {
-            if(element.resourceCode === keyMenu){
+            if (element.resourceCode === keyMenu) {
                 result = element;
             }
         });
@@ -175,23 +176,23 @@ export const hasMenu = (keyMenu) => {
     return false;
 }
 
-export const getPathMenu = (pathUrl) =>{
+export const getPathMenu = (pathUrl) => {
     let result = [];
-    menu.forEach(function(item){
-        if(`/${item.url_hash}` === pathUrl){
+    menu.forEach(function (item) {
+        if (`/${item.url_hash}` === pathUrl) {
             result.push({
                 url: `/${item.url_hash}`,
                 label: item.title
             });
         }
-        else if(item.childs.length > 0){
+        else if (item.childs.length > 0) {
             let check = undefined;
-            item.childs.forEach(function(subItem){
-                if(`/${subItem.url_hash}` === pathUrl){
+            item.childs.forEach(function (subItem) {
+                if (`/${subItem.url_hash}` === pathUrl) {
                     check = subItem;
                 }
             });
-            if(check !== undefined){
+            if (check !== undefined) {
                 result.push({
                     url: `/${item.url_hash}`,
                     label: item.title
@@ -206,13 +207,13 @@ export const getPathMenu = (pathUrl) =>{
     return result;
 }
 
-export const getListTopic = () =>{
-    if(currentInfo === {}){
+export const getListTopic = () => {
+    if (currentInfo === {}) {
         getCurrentUser();
     }
     let result = [];
-    if(currentInfo.lstRole){
-        currentInfo.lstRole.forEach(function(item){
+    if (currentInfo.lstRole) {
+        currentInfo.lstRole.forEach(function (item) {
             result.push(`/topic/permission/${item.value}`);
         });
     }

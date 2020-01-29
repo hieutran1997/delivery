@@ -16,7 +16,12 @@ import {
     GET_SELETED_ORGANIZATION_ERROR,
     GET_ORG_PAGING_REQUEST_SUCCESS,
     GET_ORG_PAGING_ERROR,
-    GET_ORG_PAGING_SUCCESS
+    GET_ORG_PAGING_SUCCESS,
+    GET_CHILD_ORGANIZATION_REQUEST_SUCCESS,
+    GET_CHILD_ORGANIZATION_ERROR,
+    GET_CHILD_ORGANIZATION_SUCCESS,
+    FIND_ONE_ORG_SUCCESS,
+    FIND_ONE_ORG_ERROR
 } from '../constants/ActionTypes';
 
 const organizationReducer = (state, action) => {
@@ -71,6 +76,23 @@ const organizationReducer = (state, action) => {
                 error: true,
                 type: GET_SELETED_ORGANIZATION_ERROR
             };
+        case GET_CHILD_ORGANIZATION_REQUEST_SUCCESS:
+            return {
+                ...action,
+                error: false
+            };
+        case GET_CHILD_ORGANIZATION_SUCCESS:
+            return {
+                ...action.result,
+                error: false,
+                type: GET_CHILD_ORGANIZATION_SUCCESS
+            };
+        case GET_CHILD_ORGANIZATION_ERROR:
+            return {
+                ...action,
+                error: true,
+                type: GET_CHILD_ORGANIZATION_ERROR
+            };
         case CREATE_ORGANIZATION_REQUEST_SUCCESS:
             return {
                 ...action,
@@ -119,6 +141,17 @@ const organizationReducer = (state, action) => {
                 ...action,
                 error: true
             };
+        case FIND_ONE_ORG_SUCCESS:
+            return {
+                ...action.result.data,
+                error: false,
+                type: FIND_ONE_ORG_SUCCESS
+            }
+        case FIND_ONE_ORG_ERROR:
+            return {
+                ...action,
+                error: true
+            }
         default:
             return null;
     }

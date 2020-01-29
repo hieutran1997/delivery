@@ -50,4 +50,20 @@ const getSelectedData = ()=>{
     };
 } 
 
-export { getAll, insert, update, deleteData, getSelectedData, getDataPaging };
+const getChild = (parentCode) => {
+    const url =  `${url_services.ORGANIZATION}/getChild/${parentCode}`;
+    return {
+        types: [types.GET_CHILD_ORGANIZATION_REQUEST_SUCCESS, types.GET_CHILD_ORGANIZATION_SUCCESS, types.GET_CHILD_ORGANIZATION_ERROR],
+        api: (axios) => axios.get(url)
+    };
+}
+
+const findOne = (id) => {
+    const url =  `${url_services.ORGANIZATION}/${id}`;
+    return {
+        types: [types.FIND_ONE_ORG_REQUEST_SUCCESS, types.FIND_ONE_ORG_SUCCESS, types.FIND_ONE_ORG_ERROR],
+        api: (axios) => axios.get(url)
+    };
+}
+
+export { getAll, insert, update, deleteData, getSelectedData, getDataPaging, getChild, findOne };

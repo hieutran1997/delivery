@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Card, Table, Icon, Popconfirm } from 'antd';
 import { dataPost, message, openNotification, mappingDataChange, hasPermission, control, resourceCode } from '../../../shared/common';
-import { getSelectedData, insert, update, deleteData, getDataPaging } from '../../../actions/ActionOrganization';
+import { getSelectedData, insert, update, deleteData, getDataPaging, getChild, findOne } from '../../../actions/ActionOrganization';
 import { FormSearch } from './formSearch.component';
 import { PopupAdd } from './popupAdd.component';
 import { PopupInfo } from './popupInfo.component';
@@ -15,6 +15,9 @@ import {
     , CREATE_ORGANIZATION_ERROR
     , DELETE_ORGANIZATION_SUCCESS
     , DELETE_ORGANIZATION_ERROR
+    , GET_CHILD_ORGANIZATION_SUCCESS
+    , FIND_ONE_ORG_SUCCESS
+    , FIND_ONE_ORG_ERROR
 } from '../../../shared/constants/ActionTypes';
 
 function Organization(props) {
@@ -27,7 +30,7 @@ function Organization(props) {
     const [dataDetail, setDataDetail] = useState({});
     const [onInit, setOnInit] = useState(true);
     const [lstOrg, setLstOrg] = useState([]);
-
+    const [parentCode, setParentCode] = useState(0);
 
     const columns = [
         {
@@ -73,11 +76,11 @@ function Organization(props) {
             setOnInit(false);
         }
         if (props.dataOrg) {
-            console.log('props.dataOrg', props.dataOrg);
             switch (props.dataOrg.type) {
                 case GET_ORG_PAGING_SUCCESS:
                     setLoading(false);
-                    prepareData(props.dataOrg.data);
+                    let temp = prepareData(props.dataOrg.data);
+                    setDataContent(temp);
                     setPagination({
                         current: props.dataOrg.curPage + 1,
                         pageSize: props.dataOrg.perPage,
@@ -111,90 +114,59 @@ function Organization(props) {
                 case GET_SELETED_ORGANIZATION_SUCCESS:
                     setLstOrg(props.dataOrg.data);
                     break;
+                case GET_CHILD_ORGANIZATION_SUCCESS:
+                    setLoading(false);
+                    let tmp = prepareData(props.dataOrg.data);
+                    pushData(tmp);
+                    break;
+                case FIND_ONE_ORG_SUCCESS:
+                    setDataDetail(props.dataOrg);
+                    break;
+                case FIND_ONE_ORG_ERROR:
+                    openNotification('error', 'Lỗi', message.messageError);
+                    break;
                 default:
                     console.log('1');
                     break;
             }
         }
-    }, [props, dataContent, dataSearch, onInit, setOnInit]);
+    }, [props, dataContent, dataSearch, onInit, setOnInit, setDataContent]);
 
     const prepareData = data => {
-        console.log('data', data);
         if (data && data.length > 0) {
             data.map((item) => {
-                if (item.isLeaf == 0) {
+                if (item.isLeaf === 0) {
                     item.children = [];
                 }
             });
-            setDataContent(data);
+            return data;
         }
-
     }
 
-    const data = [
-        {
-            key: 1,
-            name: 'John Brown sr.',
-            age: 60,
-            address: 'New York No. 1 Lake Park',
-            children: [
-                {
-                    key: 11,
-                    name: 'John Brown',
-                    age: 42,
-                    address: 'New York No. 2 Lake Park',
-                },
-                {
-                    key: 12,
-                    name: 'John Brown jr.',
-                    age: 30,
-                    address: 'New York No. 3 Lake Park',
-                    children: [
-                        {
-                            key: 121,
-                            name: 'Jimmy Brown',
-                            age: 16,
-                            address: 'New York No. 3 Lake Park',
-                        },
-                    ],
-                },
-                {
-                    key: 13,
-                    name: 'Jim Green sr.',
-                    age: 72,
-                    address: 'London No. 1 Lake Park',
-                    children: [
-                        {
-                            key: 131,
-                            name: 'Jim Green',
-                            age: 42,
-                            address: 'London No. 2 Lake Park',
-                            children: [
-                                {
-                                    key: 1311,
-                                    name: 'Jim Green jr.',
-                                    age: 25,
-                                    address: 'London No. 3 Lake Park',
-                                },
-                                {
-                                    key: 1312,
-                                    name: 'Jimmy Green sr.',
-                                    age: 18,
-                                    address: 'London No. 4 Lake Park',
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            key: 2,
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-        },
-    ];
+    const searchTree = (element, matchingCode) => {
+        if (element.code === matchingCode) {
+            return element;
+        } else if (element.children !== null) {
+            let i;
+            let result = null;
+            for (i = 0; result === null && i < element.children.length; i++) {
+                result = searchTree(element.children[i], matchingCode);
+            }
+            return result;
+        }
+        return null;
+    }
+
+    const pushData = data => {
+        let temp = dataContent;
+        if (data && data.length > 0) {
+            temp.map((item) => {
+                let dataTemp = searchTree(item, parentCode);
+                dataTemp.children = data;
+            });
+            setDataContent(temp);
+        }
+    }
 
     const handlerSearch = data => {
         dataPost.data = data;
@@ -208,7 +180,7 @@ function Organization(props) {
     }
 
     const handleEdit = (data) => {
-        setDataDetail(data);
+        props.findOne(data.id);
         setIsEdit(true);
     }
 
@@ -240,7 +212,11 @@ function Organization(props) {
     }
 
     const onExpand = function (expanded, record) {
-
+        if (record && record.children.length === 0) {
+            setLoading(true);
+            props.getChild(record.code);
+            setParentCode(record.code);
+        }
     }
 
     return (
@@ -249,7 +225,7 @@ function Organization(props) {
                 <FormSearch onCreate={handleAdd} onSearch={handlerSearch}></FormSearch>
             </Card>
             <Card title="Danh sách đơn vị" >
-                <Table rowKey={record => record.code} loading={isLoading} columns={columns} dataSource={dataContent} pagination={pagination} expandRowByClick={true} onExpand={onExpand} onChange={handleTableChange} />
+                <Table rowKey={record => record.code} loading={isLoading} columns={columns} dataSource={dataContent} pagination={pagination} onExpand={onExpand} onChange={handleTableChange} />
             </Card>
 
             {
@@ -272,7 +248,9 @@ const mapDispatchToProps = dispatch => {
         insert: (data) => dispatch(insert(data)),
         update: (data) => dispatch(update(data)),
         deleteData: (data) => dispatch(deleteData(data)),
-        getSelectedData: () => dispatch(getSelectedData())
+        getSelectedData: () => dispatch(getSelectedData()),
+        getChild: (parentCode) => dispatch(getChild(parentCode)),
+        findOne: (id) => dispatch(findOne(id))
     }
 };
 

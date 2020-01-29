@@ -41,13 +41,13 @@ public class OrganizationModel{
     private String parentCode;
     
     @Column(name="address")
-    private String Address;
+    private String address;
     
-    @Column(name="effective_time")
+    @Column(name="effective_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date effectiveTime;
     
-    @Column(name="expire_time")
+    @Column(name="expire_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date expireTime;
     
@@ -71,6 +71,11 @@ public class OrganizationModel{
     @Transient
     private int isLeaf;
     
+    @Transient
+    private Long effectiveTimeNumber;
+    
+    @Transient
+    private Long expireTimeNumber;
     /**
      * true = isUse, false = isDelete
      */
@@ -114,11 +119,11 @@ public class OrganizationModel{
     }
 
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
 
 	public Date getEffectiveTime() {
@@ -195,6 +200,22 @@ public class OrganizationModel{
 
 	public void setIsLeaf(int isLeaf) {
 		this.isLeaf = isLeaf;
+	}
+
+	public Long getEffectiveTimeNumber() {
+		return effectiveTimeNumber;
+	}
+
+	public void setEffectiveTimeNumber(Long effectiveTimeNumber) {
+		this.effectiveTimeNumber = effectiveTimeNumber;
+	}
+
+	public Long getExpireTimeNumber() {
+		return expireTimeNumber;
+	}
+
+	public void setExpireTimeNumber(Long expireTimeNumber) {
+		this.expireTimeNumber = expireTimeNumber;
 	}
     
 }

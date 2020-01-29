@@ -19,7 +19,6 @@ export function PopupAdd(props) {
     data.expireTime = expiredTime;
     data.effectiveTime = effectiveTime;
     data.parentCode = parentCode.value;
-    console.log('data', data);
     props.onSave(data);
   };
 
