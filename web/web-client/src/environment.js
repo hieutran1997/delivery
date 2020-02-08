@@ -79,7 +79,13 @@ export const menu = [
         url_hash: 'cat',
         icon: 'user',
         childs: [
-            
+            {
+                key: 'admin/cat/sys_cat',
+                title: 'Danh mục hệ thống',
+                component: 'SysCat',
+                url_hash: 'admin/cat/sys_cat',
+                icon: 'database'
+            }
         ]
     }
 ]

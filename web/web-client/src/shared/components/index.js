@@ -1,1 +1,2 @@
-export { AppDropdown } from './AppDropdown.component';
+export * from './AppDropdown.component';
+export * from './FormInput.component';

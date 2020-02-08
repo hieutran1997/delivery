@@ -35,6 +35,11 @@ export const dataPost = {
     data: {}
 };
 
+export const typeOfDynamicInput = {
+    INPUT: 'INPUT',
+    TEXT_AREA: 'TEXT_AREA'
+}
+
 export const message = {
     messageConfirmDelete: 'Bạn có chắc chắn muốn xóa?',
     createSuccess: 'Thêm mới thành công',

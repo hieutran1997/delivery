@@ -3,6 +3,7 @@ import { Row, Col, Button, Icon } from 'antd';
 import { Dropdown } from 'primereact/dropdown';
 import useForm from 'react-hook-form';
 import { hasPermission, control, resourceCode } from '../../../shared/common';
+import { FormInputComponent } from '../../../shared/components';
 
 export function FormSearch(props) {
     const { register, handleSubmit, setValue } = useForm();
@@ -44,8 +45,9 @@ export function FormSearch(props) {
             <form onSubmit={handleSubmit(onSearch)}>
                 <Row type="flex" justify="space-around">
                     <Col span={11}>
-                        <span>Họ:</span>
-                        <input name="firstname" className="ant-input" ref={register} />
+                        {/* <span>Họ:</span>
+                        <input name="firstname" className="ant-input" ref={register} /> */}
+                        <FormInputComponent valueName="firstname" labelName="Họ:" inputClassName="ant-input" ref={register({ required: true, maxlength: 20 })} />
                     </Col>
                     <Col span={2}></Col>
                     <Col span={11}>
