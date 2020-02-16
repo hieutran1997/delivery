@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Card, Table, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
-import { getDataPaging, insert, update, deleteData, insertControl } from '../../../actions/ActionResource';
+import { getDataPaging, insert, update, deleteData, insertControl } from '../../../shared/actions/system/ActionResource';
 import { dataPost, message, openNotification, mappingDataChange, hasPermission, control, resourceCode } from '../../../shared/common';
 import {
     GETRESOURCES_PAGING_SUCCESS,

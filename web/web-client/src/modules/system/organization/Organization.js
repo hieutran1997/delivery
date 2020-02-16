@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Card, Table, Icon, Popconfirm } from 'antd';
 import { dataPost, message, openNotification, mappingDataChange, hasPermission, control, resourceCode } from '../../../shared/common';
-import { getSelectedData, insert, update, deleteData, getDataPaging, getChild, findOne } from '../../../actions/ActionOrganization';
+import { getSelectedData, insert, update, deleteData, getDataPaging, getChild, findOne } from '../../../shared/actions/system/ActionOrganization';
 import { FormSearch } from './formSearch.component';
 import { PopupAdd } from './popupAdd.component';
 import { PopupInfo } from './popupInfo.component';
@@ -126,14 +126,14 @@ function Organization(props) {
                     openNotification('error', 'Lỗi', message.messageError);
                     break;
                 default:
-                    console.log('1');
                     break;
             }
         }
-    }, [props, dataContent, dataSearch, onInit, setOnInit, setDataContent]);
+    }, [props, dataContent, dataSearch, onInit]);
 
     const prepareData = data => {
         if (data && data.length > 0) {
+            // eslint-disable-next-line
             data.map((item) => {
                 if (item.isLeaf === 0) {
                     item.children = [];
@@ -146,7 +146,7 @@ function Organization(props) {
     const searchTree = (element, matchingCode) => {
         if (element.code === matchingCode) {
             return element;
-        } else if (element.children !== null) {
+        } else if (element.children && element.children !== null ) {
             let i;
             let result = null;
             for (i = 0; result === null && i < element.children.length; i++) {
@@ -160,9 +160,13 @@ function Organization(props) {
     const pushData = data => {
         let temp = dataContent;
         if (data && data.length > 0) {
+            // eslint-disable-next-line
             temp.map((item) => {
                 let dataTemp = searchTree(item, parentCode);
-                dataTemp.children = data;
+                if(dataTemp){
+                    dataTemp.children = [];
+                    dataTemp.children = data;
+                }
             });
             setDataContent(temp);
         }

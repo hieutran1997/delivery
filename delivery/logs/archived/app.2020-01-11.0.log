@@ -1,0 +1,278 @@
+2020-01-11 14:32:44,275 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-NFG3D50 with PID 9604 (D:\Java\WorkSpaces\DeliveryERP\delivery\delivery\target\classes started by hieut in D:\Java\WorkSpaces\DeliveryERP\delivery\delivery)
+2020-01-11 14:32:44,289 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-01-11 14:32:44,292 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-01-11 14:32:53,389 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-01-11 14:32:53,390 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-01-11 14:33:00,332 INFO com.erp.ErpApplication [main] Started ErpApplication in 16.573 seconds (JVM running for 18.889)
+2020-01-11 14:33:01,641 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-01-11 14:33:01,642 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-2] Received a new web socket connection
+2020-01-11 14:33:55,450 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-5] Received a new web socket connection
+2020-01-11 14:33:56,475 ERROR com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] JWT Token has expired
+2020-01-11 14:34:01,437 WARN com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] JWT Token does not begin with Bearer String
+2020-01-11 14:34:02,256 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-8] Received a new web socket connection
+2020-01-11 14:34:03,553 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:34:03,592 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-3] Received a new web socket connection
+2020-01-11 14:34:05,753 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-6] Received a new web socket connection
+2020-01-11 14:34:06,187 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:34:06,188 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:34:07,048 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:34:07,282 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-9] Received a new web socket connection
+2020-01-11 14:34:07,884 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-5] Received a new web socket connection
+2020-01-11 14:34:08,694 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:34:08,871 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-8] Received a new web socket connection
+2020-01-11 14:34:09,290 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:34:09,494 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-10] Received a new web socket connection
+2020-01-11 14:34:09,843 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:34:09,845 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:34:10,107 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-4] Received a new web socket connection
+2020-01-11 14:34:12,148 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /roles/getUserRole/testpq
+2020-01-11 14:34:15,081 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /roles/getUserRole/admin
+2020-01-11 14:34:17,383 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /roles/getUserRole/hieutv
+2020-01-11 14:34:27,358 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:34:27,588 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-7] Received a new web socket connection
+2020-01-11 14:34:28,382 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:34:28,587 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-3] Received a new web socket connection
+2020-01-11 14:34:29,015 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:34:29,015 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:34:29,296 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-6] Received a new web socket connection
+2020-01-11 14:34:30,212 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-9] Received a new web socket connection
+2020-01-11 14:34:42,836 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-5] Received a new web socket connection
+2020-01-11 14:34:47,323 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:34:47,557 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-8] Received a new web socket connection
+2020-01-11 14:34:48,416 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:34:48,629 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-10] Received a new web socket connection
+2020-01-11 14:35:03,203 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-4] Received a new web socket connection
+2020-01-11 14:35:03,923 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:35:04,172 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-7] Received a new web socket connection
+2020-01-11 14:35:04,974 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:35:05,164 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-3] Received a new web socket connection
+2020-01-11 14:35:05,663 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-8] Received a new web socket connection
+2020-01-11 14:35:06,035 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:35:06,037 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:35:24,741 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:35:27,278 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:35:29,965 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:35:30,130 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-9] Received a new web socket connection
+2020-01-11 14:35:44,922 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:35:58,451 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:35:58,777 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-5] Received a new web socket connection
+2020-01-11 14:36:03,983 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:36:03,984 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:36:04,222 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-6] Received a new web socket connection
+2020-01-11 14:38:54,269 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:38:54,271 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:38:55,134 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-12] Received a new web socket connection
+2020-01-11 14:48:35,169 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:48:35,170 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:48:35,736 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-14] Received a new web socket connection
+2020-01-11 14:53:05,596 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:53:06,966 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:53:08,861 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:53:08,861 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:53:21,751 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:54:21,380 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:54:21,872 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-16] Received a new web socket connection
+2020-01-11 14:54:58,975 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-17] Received a new web socket connection
+2020-01-11 14:55:01,728 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:55:01,928 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-20] Received a new web socket connection
+2020-01-11 14:55:03,808 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:55:03,985 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-23] Received a new web socket connection
+2020-01-11 14:55:05,061 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-18] Received a new web socket connection
+2020-01-11 14:55:05,070 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:55:05,076 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:55:05,863 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:55:06,025 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-21] Received a new web socket connection
+2020-01-11 14:55:06,540 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:55:06,725 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-16] Received a new web socket connection
+2020-01-11 14:55:07,009 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:55:07,009 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:55:07,338 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-19] Received a new web socket connection
+2020-01-11 14:55:07,832 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:55:07,981 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-22] Received a new web socket connection
+2020-01-11 14:55:08,718 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:55:08,951 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-17] Received a new web socket connection
+2020-01-11 14:55:09,340 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 14:55:09,340 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 14:55:09,777 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-20] Received a new web socket connection
+2020-01-11 14:55:10,215 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 14:55:10,428 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-23] Received a new web socket connection
+2020-01-11 14:55:10,731 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 14:55:10,909 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-18] Received a new web socket connection
+2020-01-11 15:09:29,396 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 15:09:29,741 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-26] Received a new web socket connection
+2020-01-11 16:07:15,148 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:07:15,188 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:13:24,232 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:13:24,233 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:13:24,733 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-28] Received a new web socket connection
+2020-01-11 16:13:29,844 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:13:32,663 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:13:44,498 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:13:45,435 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:13:47,271 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:13:47,759 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:13:48,165 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:13:48,165 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:13:48,744 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:13:49,636 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:13:51,100 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:13:51,908 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:13:51,908 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:13:53,011 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:15:59,948 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:16:00,266 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-30] Received a new web socket connection
+2020-01-11 16:16:09,520 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:16:09,852 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-32] Received a new web socket connection
+2020-01-11 16:16:13,187 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:16:17,458 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:16:18,321 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:16:19,077 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:16:19,079 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:16:20,948 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:16:21,769 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:16:22,523 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:16:23,207 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:16:23,207 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:16:25,344 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:16:25,985 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:16:26,674 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:16:26,681 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:16:27,626 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:16:28,385 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:16:29,210 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:16:29,210 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:16:30,260 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:16:31,119 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:17:16,616 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:17:16,617 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:17:17,680 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:17:18,424 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:17:19,815 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:17:20,832 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:17:20,834 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:17:21,647 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:17:22,609 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:17:24,011 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:17:24,956 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:17:24,960 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:18:25,491 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:18:26,282 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:18:26,869 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:18:26,872 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:18:27,440 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:18:28,288 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:18:34,206 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:19:12,399 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:19:13,132 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-35] Received a new web socket connection
+2020-01-11 16:19:24,081 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:19:24,458 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-36] Received a new web socket connection
+2020-01-11 16:19:31,565 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:19:31,896 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-38] Received a new web socket connection
+2020-01-11 16:19:50,728 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:19:50,842 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-40] Received a new web socket connection
+2020-01-11 16:19:58,632 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:24:57,262 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-42] Received a new web socket connection
+2020-01-11 16:25:08,299 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:25:08,314 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-45] Received a new web socket connection
+2020-01-11 16:25:09,929 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:25:10,145 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-48] Received a new web socket connection
+2020-01-11 16:25:10,900 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-43] Received a new web socket connection
+2020-01-11 16:25:10,902 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:25:10,910 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:25:11,454 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:25:11,679 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-46] Received a new web socket connection
+2020-01-11 16:25:12,102 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:25:12,325 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-49] Received a new web socket connection
+2020-01-11 16:25:12,707 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:25:12,708 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:25:13,287 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:25:13,523 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-45] Received a new web socket connection
+2020-01-11 16:25:13,531 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-44] Received a new web socket connection
+2020-01-11 16:25:13,860 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:25:14,063 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-48] Received a new web socket connection
+2020-01-11 16:25:16,778 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:25:16,987 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-43] Received a new web socket connection
+2020-01-11 16:26:06,450 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:26:06,894 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-46] Received a new web socket connection
+2020-01-11 16:26:14,102 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:26:14,766 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-50] Received a new web socket connection
+2020-01-11 16:26:19,826 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:26:19,830 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:26:20,303 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-53] Received a new web socket connection
+2020-01-11 16:26:23,785 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:26:24,007 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-46] Received a new web socket connection
+2020-01-11 16:26:34,680 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:26:34,957 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-50] Received a new web socket connection
+2020-01-11 16:30:28,079 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-55] Received a new web socket connection
+2020-01-11 16:31:02,144 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-57] Received a new web socket connection
+2020-01-11 16:31:07,063 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-59] Received a new web socket connection
+2020-01-11 16:31:31,578 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-61] Received a new web socket connection
+2020-01-11 16:31:48,524 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-63] Received a new web socket connection
+2020-01-11 16:31:59,544 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-57] Received a new web socket connection
+2020-01-11 16:32:04,879 WARN com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] JWT Token does not begin with Bearer String
+2020-01-11 16:32:09,626 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-65] Received a new web socket connection
+2020-01-11 16:39:15,483 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-67] Received a new web socket connection
+2020-01-11 16:39:40,360 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-69] Received a new web socket connection
+2020-01-11 16:40:32,985 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-71] Received a new web socket connection
+2020-01-11 16:40:43,211 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-73] Received a new web socket connection
+2020-01-11 16:40:53,100 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-75] Received a new web socket connection
+2020-01-11 16:40:57,628 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:40:57,909 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-77] Received a new web socket connection
+2020-01-11 16:41:07,608 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:41:07,647 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:41:07,787 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-71] Received a new web socket connection
+2020-01-11 16:41:11,090 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /roles/getUserRole/testpq
+2020-01-11 16:43:04,400 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:43:04,400 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:43:05,958 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:43:06,981 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:43:07,959 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:43:07,960 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:43:08,849 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:43:11,672 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:43:11,672 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:43:56,703 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:43:56,704 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:43:57,117 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-79] Received a new web socket connection
+2020-01-11 16:46:32,823 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:46:32,823 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:46:46,708 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:46:46,708 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:46:47,081 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-81] Received a new web socket connection
+2020-01-11 16:46:56,281 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-84] Received a new web socket connection
+2020-01-11 16:46:56,610 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:47:03,145 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:47:03,147 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:47:03,543 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-87] Received a new web socket connection
+2020-01-11 16:47:04,224 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-82] Received a new web socket connection
+2020-01-11 16:47:04,540 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:47:05,155 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:47:05,344 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-85] Received a new web socket connection
+2020-01-11 16:47:05,882 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:47:05,885 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:47:06,180 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-81] Received a new web socket connection
+2020-01-11 16:47:06,548 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:47:06,758 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-83] Received a new web socket connection
+2020-01-11 16:47:07,135 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:47:07,136 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:47:07,463 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-87] Received a new web socket connection
+2020-01-11 16:47:07,709 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:47:07,898 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-82] Received a new web socket connection
+2020-01-11 16:49:03,077 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:49:03,228 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-90] Received a new web socket connection
+2020-01-11 16:49:04,777 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:49:04,988 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-93] Received a new web socket connection
+2020-01-11 16:49:05,656 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-11 16:49:05,658 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-11 16:49:05,901 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-88] Received a new web socket connection
+2020-01-11 16:49:06,391 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:49:06,628 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-91] Received a new web socket connection
+2020-01-11 16:49:06,996 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:49:07,376 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-94] Received a new web socket connection
+2020-01-11 16:49:24,123 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:49:25,234 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:49:25,448 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-90] Received a new web socket connection
+2020-01-11 16:49:27,509 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:49:32,079 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-11 16:50:24,545 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-11 16:50:24,731 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-98] Received a new web socket connection

@@ -33,6 +33,7 @@ public class Constants {
         public static final String ROLE = "role";
         public static final String RESOURCE = "resource";
         public static final String ORGANIZATION = "org";
+        public static final String CAT_MERCHANDISE_GROUP = "group_merchandise";
     }
     
     public interface CORS_FILTER {

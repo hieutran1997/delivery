@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getDataPaging, insert, update, deleteData } from '../../../actions/ActionUser';
-import { getSelectedData as getSelectedDataOrg } from '../../../actions/ActionOrganization';
-import { getSelectedData as getSelectedDataRole, insertUserRole, getUserRole } from '../../../actions/ActionRole';
+import { getDataPaging, insert, update, deleteData } from '../../../shared/actions/system/ActionUser';
+import { getSelectedData as getSelectedDataOrg } from '../../../shared/actions/system/ActionOrganization';
+import { getSelectedData as getSelectedDataRole, insertUserRole, getUserRole } from '../../../shared/actions/system/ActionRole';
 import { dataPost, message, mappingDataChange, openNotification, hasPermission, control, resourceCode } from '../../../shared/common';
 import {
   GETUSER_PAGING_SUCCESS,
@@ -134,7 +134,6 @@ function User(props) {
           openNotification('error', 'Lỗi', message.deleteError);
           break;
         default:
-          console.log('1');
           break;
       }
     }
@@ -156,7 +155,7 @@ function User(props) {
         openNotification('error', 'Thất bại', 'Xảy ra lỗi!');
       }
     }
-  }, [props, dataContent, dataSearch, onInit, setOnInit, setLstRoleResource, setLstRoleTarget]);
+  }, [props, dataContent, dataSearch, onInit]);
 
   const handlerSearch = data => {
     dataPost.data = data;

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Row, Col, Button, DatePicker } from 'antd';
+import { Modal, Row, Col, Button } from 'antd';
 import useForm from 'react-hook-form';
-import moment from 'moment';
-import { DateFormat } from '../../../shared/common';
-import { Dropdown } from 'primereact/dropdown';
+import { typeOfDynamicInput } from '../../../shared/common';
+import { FormInput, FormAutoComplete } from '../../../shared/components';
 
 const toDay = new Date();
 
@@ -11,14 +10,8 @@ export function PopupInfo(props) {
   const { register, handleSubmit, errors, setValue } = useForm();
   const [isEdit, setIsEdit] = useState(false);
   const [dataDetail, setDataDetail] = useState(props);
-  const [effectiveTime, setEffectiveTime] = useState(moment(toDay, DateFormat));
-  const [expiredTime, setExpiredTime] = useState(moment(toDay, DateFormat));
   const [lstOrg, setLstOrg] = useState([]);
-  const [parentCode, setParentCode] = useState('');
   const onSaveEdit = data => {
-    data.expireTime = expiredTime.toDate();
-    data.effectiveTime = effectiveTime.toDate();
-    data.parentCode = parentCode.value;
     props.onSave(data);
   };
 
@@ -33,29 +26,13 @@ export function PopupInfo(props) {
         setValue("parentCode", props.dataDetail.parentCode);
         setValue("organizationName", props.dataDetail.organizationName);
         setValue("address", props.dataDetail.address);
-        setValue("effectiveTime", props.dataDetail.effectiveTime);
-        setValue("expireTime", props.dataDetail.expireTime);
-        setParentCode({'value': props.dataDetail.parentCode});
+        setValue("effectiveTime", props.dataDetail.effectiveTimeNumber);
+        setValue("expireTime", props.dataDetail.expireTimeNumber);
       }, 100);
-      let effTime = moment(new Date(props.dataDetail.effectiveTimeNumber), DateFormat);
-      let expTime = moment(new Date(props.dataDetail.expireTimeNumber), DateFormat);
-      setEffectiveTime(effTime);
-      setExpiredTime(expTime);
     }
     setIsEdit(props.isEdit);
-  }, [props, dataDetail, setValue, lstOrg, setEffectiveTime, setExpiredTime, setParentCode]);
+  }, [props.dataDetail, props.lstOrg, props.isEdit, setValue, dataDetail, lstOrg]);
 
-  const changeEffectiveTime = (value, dateString) => {
-    setEffectiveTime(value);
-  }
-
-  const changeExpiredTime = (value, dateString) => {
-    setExpiredTime(value);
-  }
-
-  const changeOrg = (e) => {
-    setParentCode(e.value);
-  }
 
   return (
     <Modal
@@ -86,32 +63,31 @@ export function PopupInfo(props) {
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <span>Đơn vị cha:</span>
-            <Dropdown 
-              className="custom-input-as-ant-input"
-              value={parentCode}
+            <FormAutoComplete inputClassName="custom-input-as-ant-input"
+              labelName="Đơn vị cha"
+              valueName="parentCode"
               dataKey="value"
               options={lstOrg}
               optionLabel="name"
-              onChange={changeOrg}
               filter={true}
               filterPlaceholder='Chọn đơn vị cha'
               filterBy="name"
-              showClear={true} 
-              width="100%"
-              />
+              register={register}
+              setValue={setValue}
+              errors={errors}
+              showClear={true} />
           </Col>
         </Row>
         <br />
         <Row type="flex" justify="space-around">
           <Col span={11}>
-            <span>Ngày hiệu lực:</span><br/>
-            <DatePicker value={effectiveTime} onChange={changeEffectiveTime} defaultValue={effectiveTime} format={DateFormat} />
+            <FormInput valueName="effectiveTime" value={toDay} labelName="Ngày hiệu lực"
+              register={register} validation={{ required: true }} setValue={setValue} errors={errors} type={typeOfDynamicInput.DATE_TIME} />
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <span>Ngày hết hiệu lực:</span><br/>
-            <DatePicker value={expiredTime} onChange={changeExpiredTime} defaultValue={expiredTime} format={DateFormat} />
+            <FormInput valueName="expireTime" value={toDay} labelName="Ngày hết hiệu lực"
+              register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.DATE_TIME} />
           </Col>
         </Row>
         <div className="footer-modal">

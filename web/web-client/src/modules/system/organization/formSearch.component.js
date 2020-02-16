@@ -23,7 +23,7 @@ export function FormSearch(props) {
                 setValue("name", props.dataDetail.resourceName);
             }, 100);
         }
-    }, [props, dataDetail, setValue]);
+    }, [props.dataDetail, dataDetail, setValue]);
 
     return (
         <div className="from-search">

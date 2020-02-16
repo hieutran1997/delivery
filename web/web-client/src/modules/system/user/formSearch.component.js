@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Icon } from 'antd';
-import { Dropdown } from 'primereact/dropdown';
 import useForm from 'react-hook-form';
 import { hasPermission, control, resourceCode } from '../../../shared/common';
-import { FormInputComponent } from '../../../shared/components';
+import { FormInput, FormAutoComplete } from '../../../shared/components';
 
 export function FormSearch(props) {
-    const { register, handleSubmit, setValue } = useForm();
+    const { register, handleSubmit, errors, setValue } = useForm();
     const [dataDetail, setDataDetail] = useState({});
     const [lstOrg, setLstOrg] = useState([]);
-    const [orgCode, setOrgCode] = useState({});
 
     const onSearch = data => {
-        if (orgCode) {
-            data.organizationCode = orgCode.value;
-        }
         props.onSearch(data);
     };
 
@@ -28,50 +23,39 @@ export function FormSearch(props) {
         }
         if (props.dataDetail) {
             setDataDetail(props.dataDetail);
-            setTimeout(function () {
-                setValue("firstname", props.dataDetail.firstname);
-                setValue("lastname", props.dataDetail.lastname);
-                setValue("organizationCode", props.dataDetail.organizationCode);
-            }, 100);
         }
     }, [props, dataDetail, lstOrg, setValue, setLstOrg]);
-
-    const changeOrg = (e) => {
-        setOrgCode(e.value);
-    }
 
     return (
         <div className="from-search">
             <form onSubmit={handleSubmit(onSearch)}>
                 <Row type="flex" justify="space-around">
                     <Col span={11}>
-                        {/* <span>Họ:</span>
-                        <input name="firstname" className="ant-input" ref={register} /> */}
-                        <FormInputComponent valueName="firstname" labelName="Họ:" inputClassName="ant-input" ref={register({ required: true, maxlength: 20 })} />
+                        <FormInput valueName="firstname" value="" labelName="Họ" inputClassName="ant-input"
+                            register={register} setValue={setValue} errors={errors} />
                     </Col>
                     <Col span={2}></Col>
                     <Col span={11}>
-                        <span>Tên:</span>
-                        <input name="lastname" className="ant-input" ref={register} />
+                        <FormInput valueName="lastname" value="" labelName="Tên" inputClassName="ant-input"
+                            register={register} setValue={setValue} errors={errors} />
                     </Col>
                 </Row>
                 <br />
                 <Row type="flex" >
                     <Col span={11}>
-                        <span>Đơn vị:</span>
-                        <Dropdown 
-                            className="custom-input-as-ant-input"
-                            value={orgCode}
+                        <FormAutoComplete inputClassName="custom-input-as-ant-input"
+                            labelName="Đơn vị"
+                            valueName="organizationCode"
                             dataKey="value"
                             options={lstOrg}
                             optionLabel="name"
-                            onChange={changeOrg}
                             filter={true}
                             filterPlaceholder='Chọn đơn vị'
                             filterBy="name"
-                            showClear={true} 
-                            width="100%"
-                            />
+                            register={register} 
+                            setValue={setValue} 
+                            errors={errors} 
+                            showClear={true}/>
                     </Col>
                 </Row>
 
@@ -82,10 +66,10 @@ export function FormSearch(props) {
                         Tìm kiếm
                     </button>
                     &nbsp;&nbsp;
-                    {hasPermission(resourceCode.user, control.hasAdd) ===1 ? <Button type="primary" icon="plus" onClick={onCreate}>
+                    {hasPermission(resourceCode.user, control.hasAdd) === 1 ? <Button type="primary" icon="plus" onClick={onCreate}>
                         Thêm mới
                     </Button> : ""}
-                    
+
                 </div>
             </form>
         </div>

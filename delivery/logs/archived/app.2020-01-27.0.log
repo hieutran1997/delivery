@@ -1,0 +1,99 @@
+2020-01-27 19:54:54,887 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-NFG3D50 with PID 10744 (D:\Java\WorkSpaces\DeliveryERP\delivery\delivery\target\classes started by hieut in D:\Java\WorkSpaces\DeliveryERP\delivery\delivery)
+2020-01-27 19:54:54,897 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-01-27 19:54:54,900 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-01-27 19:55:02,033 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-01-27 19:55:02,034 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-01-27 19:55:10,747 INFO com.erp.ErpApplication [main] Started ErpApplication in 16.272 seconds (JVM running for 18.001)
+2020-01-27 19:59:17,732 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-01-27 19:59:18,164 ERROR com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] JWT Token has expired
+2020-01-27 19:59:18,164 ERROR com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] JWT Token has expired
+2020-01-27 19:59:26,040 WARN com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] JWT Token does not begin with Bearer String
+2020-01-27 19:59:26,781 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-4] Received a new web socket connection
+2020-01-27 19:59:31,850 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-27 19:59:35,074 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-27 19:59:35,079 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:00:11,094 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-27 20:00:21,065 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-27 20:00:21,068 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:00:24,580 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-27 20:00:26,998 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:00:27,126 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:00:27,133 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-6] address is not defined
+2020-01-27 20:00:28,027 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /users/postQuery
+2020-01-27 20:00:28,029 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:00:31,353 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:00:31,359 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:00:31,361 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-10] address is not defined
+2020-01-27 20:00:55,141 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-6] Received a new web socket connection
+2020-01-27 20:00:58,292 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-8] Received a new web socket connection
+2020-01-27 20:01:08,301 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-10] Received a new web socket connection
+2020-01-27 20:01:09,579 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery
+2020-01-27 20:01:10,428 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery
+2020-01-27 20:03:42,901 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:03:42,908 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:03:42,911 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-1] address is not defined
+2020-01-27 20:07:57,310 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:07:57,311 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:07:57,312 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-2] address is not defined
+2020-01-27 20:07:58,042 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-12] Received a new web socket connection
+2020-01-27 20:08:30,378 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:08:30,379 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:08:30,381 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-6] address is not defined
+2020-01-27 20:08:30,910 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-14] Received a new web socket connection
+2020-01-27 20:14:35,214 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:14:35,214 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:14:35,218 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-6] address is not defined
+2020-01-27 20:14:35,763 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-16] Received a new web socket connection
+2020-01-27 20:15:02,798 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:15:02,806 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:15:02,809 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-7] address is not defined
+2020-01-27 20:15:03,359 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-18] Received a new web socket connection
+2020-01-27 20:15:11,688 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:15:11,689 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:15:11,693 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-10] address is not defined
+2020-01-27 20:15:11,887 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-20] Received a new web socket connection
+2020-01-27 20:16:45,294 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:16:45,296 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:16:45,299 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-10] address is not defined
+2020-01-27 20:16:45,466 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-22] Received a new web socket connection
+2020-01-27 20:26:33,749 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:26:33,752 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:26:33,754 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-10] address is not defined
+2020-01-27 20:26:33,892 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-24] Received a new web socket connection
+2020-01-27 20:26:42,008 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:26:42,019 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-5] address is not defined
+2020-01-27 20:48:11,217 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:48:11,233 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:48:11,237 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-1] address is not defined
+2020-01-27 20:48:11,717 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-26] Received a new web socket connection
+2020-01-27 20:48:36,881 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:48:36,882 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData
+2020-01-27 20:48:36,884 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-4] address is not defined
+2020-01-27 20:48:37,312 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-28] Received a new web socket connection
+2020-01-27 20:48:42,027 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:48:42,030 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-1] address is not defined
+2020-01-27 20:48:47,093 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:48:47,097 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-7] address is not defined
+2020-01-27 20:48:48,190 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:48:48,193 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-5] address is not defined
+2020-01-27 20:48:49,289 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:48:49,292 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-8] address is not defined
+2020-01-27 20:48:49,944 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:48:49,947 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-6] address is not defined
+2020-01-27 20:48:52,809 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:48:52,812 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-9] address is not defined
+2020-01-27 20:48:53,492 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:48:53,495 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-2] address is not defined
+2020-01-27 20:48:55,624 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:48:55,627 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-4] address is not defined
+2020-01-27 20:48:56,238 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:48:56,241 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-10] address is not defined
+2020-01-27 20:49:15,092 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 0:0:0:0:0:0:0:1 - /organizations/
+2020-01-27 20:49:15,485 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery
+2020-01-27 20:49:15,489 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-7] address is not defined
+2020-01-27 20:49:17,719 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:49:17,722 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-5] address is not defined
+2020-01-27 20:49:18,455 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv1
+2020-01-27 20:49:18,457 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-8] address is not defined
+2020-01-27 20:49:20,295 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /organizations/getChild/dv2
+2020-01-27 20:49:20,301 DEBUG com.erp.util.VfDataImpl [http-nio-8080-exec-9] address is not defined

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Card, Row, Col, Form, Icon, Input, Button, Checkbox, Spin  } from 'antd';
 import 'antd/dist/antd.css';
 import './Login.css';
-import { login } from '../actions';
+import { login } from '../shared/actions/system/ActionAuth';
 import { openNotification, getCurrentUser } from '../shared/common';
 
 const homePage = {

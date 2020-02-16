@@ -36,3 +36,11 @@ code {
 .ant-layout{
   height: 100% !important;
 }
+
+.label-required {
+  color: red;
+}
+
+.label-error {
+  color: red;
+}

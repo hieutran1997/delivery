@@ -42,7 +42,7 @@ const apiMiddleware = store => next => action => {
       }
       else if(!error.response){
          // network error
-         //openNotification('error', 'Lỗi', 'Mất kết nối tới server!');
+         openNotification('error', 'Lỗi', 'Mất kết nối tới server!');
       }else{
         openNotification('error', 'Lỗi', 'Xảy ra lỗi!');
       }
@@ -51,7 +51,7 @@ const apiMiddleware = store => next => action => {
   ).catch((error) => {
     if (!error.response) {
       // network error
-      openNotification('error', 'Lỗi', 'Mất kết nối tới server!');
+      //openNotification('error', 'Lỗi', 'Mất kết nối tới server!');
     } else {
       next({ error, type: FAILURE });
     }

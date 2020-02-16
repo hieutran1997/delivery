@@ -36,8 +36,9 @@ export const dataPost = {
 };
 
 export const typeOfDynamicInput = {
-    INPUT: 'INPUT',
-    TEXT_AREA: 'TEXT_AREA'
+    INPUT: 'input',
+    TEXT_AREA: 'textarea',
+    DATE_TIME: 'date'
 }
 
 export const message = {

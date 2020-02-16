@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Row, Col, Button, DatePicker } from 'antd';
+import { Modal, Row, Col, Button } from 'antd';
 import useForm from 'react-hook-form';
-import moment from 'moment';
-import { DateFormat } from '../../../shared/common';
-import { Dropdown } from 'primereact/dropdown';
+import { typeOfDynamicInput } from '../../../shared/common';
+import { FormInput, FormAutoComplete } from '../../../shared/components';
 
 const toDay = new Date();
 
@@ -11,14 +10,8 @@ export function PopupAdd(props) {
   const { register, handleSubmit, errors, setValue } = useForm();
   const [isShowAdd, setIsShowAdd] = useState(false);
   const [dataDetail, setDataDetail] = useState(props);
-  const [effectiveTime, setEffectiveTime] = useState(toDay);
-  const [expiredTime, setExpiredTime] = useState(toDay);
   const [lstOrg, setLstOrg] = useState([]);
-  const [parentCode, setParentCode] = useState('');
   const onSaveEdit = data => {
-    data.expireTime = expiredTime;
-    data.effectiveTime = effectiveTime;
-    data.parentCode = parentCode.value;
     props.onSave(data);
   };
 
@@ -38,19 +31,7 @@ export function PopupAdd(props) {
       }, 100);
     }
     setIsShowAdd(props.isShowAdd);
-  }, [props, dataDetail, setValue, lstOrg]);
-
-  const changeEffectiveTime = (value, dateString) => {
-    setEffectiveTime(value.toDate());
-  }
-
-  const changeExpiredTime = (value, dateString) => {
-    setExpiredTime(value.toDate());
-  }
-
-  const changeOrg = (e) => {
-    setParentCode(e.value);
-  }
+  }, [props.dataDetail, props.lstOrg, props.isShowAdd, dataDetail, setValue, lstOrg]);
 
   return (
     <Modal
@@ -81,32 +62,31 @@ export function PopupAdd(props) {
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <span>Đơn vị cha:</span>
-            <Dropdown 
-              className="custom-input-as-ant-input"
-              value={parentCode}
+            <FormAutoComplete inputClassName="custom-input-as-ant-input"
+              labelName="Đơn vị cha"
+              valueName="parentCode"
               dataKey="value"
               options={lstOrg}
               optionLabel="name"
-              onChange={changeOrg}
               filter={true}
               filterPlaceholder='Chọn đơn vị cha'
               filterBy="name"
-              showClear={true} 
-              width="100%"
-              />
+              register={register}
+              setValue={setValue}
+              errors={errors}
+              showClear={true} />
           </Col>
         </Row>
         <br />
         <Row type="flex" justify="space-around">
           <Col span={11}>
-            <span>Ngày hiệu lực:</span><br/>
-            <DatePicker onChange={changeEffectiveTime} defaultValue={moment(toDay, DateFormat)} format={DateFormat} />
+            <FormInput valueName="effectiveTime" value={toDay} labelName="Ngày hiệu lực"
+              register={register} validation={{ required: true }} setValue={setValue} errors={errors} type={typeOfDynamicInput.DATE_TIME} />
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <span>Ngày hết hiệu lực:</span><br/>
-            <DatePicker onChange={changeExpiredTime} defaultValue={moment(toDay, DateFormat)} format={DateFormat} />
+            <FormInput valueName="expireTime" value={toDay} labelName="Ngày hết hiệu lực"
+              register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.DATE_TIME} />
           </Col>
         </Row>
         <div className="footer-modal">

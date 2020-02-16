@@ -9,7 +9,6 @@ function HasNotPermission(props) {
         console.log('Bạn không có quyền truy cập!')
     });
 
-
     return (
         <div>
             <Card>

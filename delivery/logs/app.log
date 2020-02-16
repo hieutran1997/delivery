@@ -1,0 +1,7 @@
+2020-02-16 22:21:32,881 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-NFG3D50 with PID 3972 (D:\Java\WorkSpaces\DeliveryERP\delivery\delivery\target\classes started by hieut in D:\Java\WorkSpaces\DeliveryERP\delivery\delivery)
+2020-02-16 22:21:32,892 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-02-16 22:21:32,895 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-02-16 22:21:40,837 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-02-16 22:21:40,838 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-02-16 22:21:46,808 INFO com.erp.ErpApplication [main] Started ErpApplication in 14.332 seconds (JVM running for 18.419)
+2020-02-16 22:22:58,429 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection

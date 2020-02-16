@@ -9,7 +9,7 @@ import {
     , deleteData
     , insertRolePermission
     , getRolePermission
-} from '../../../actions/ActionRole';
+} from '../../../shared/actions/system/ActionRole';
 import { dataPost, message, openNotification, mappingDataChange, hasPermission, control, resourceCode } from '../../../shared/common';
 import {
     GETROLE_PAGING_SUCCESS,
