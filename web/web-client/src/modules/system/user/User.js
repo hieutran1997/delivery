@@ -104,7 +104,7 @@ function User(props) {
         case GETUSER_PAGING_SUCCESS:
           setDataContent(props.dataUser.data);
           setPagination({
-            current: props.dataUser.curPage + 1,
+            current: props.dataUser.curPage,
             pageSize: props.dataUser.perPage,
             total: props.dataUser.total,
             size: 'small'
@@ -160,10 +160,11 @@ function User(props) {
   const handlerSearch = data => {
     dataPost.data = data;
     setDataSearch(dataPost);
-    props.filterData(dataSearch);
+    props.filterData(dataPost);
   }
 
   const handleTableChange = (pagination) => {
+    pagination.data = dataSearch
     setDataSearch(pagination);
     props.filterData(pagination);
   }

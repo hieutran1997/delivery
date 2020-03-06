@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-//import { createLogger } from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducer from './shared/reducers';
 import apiMiddleware from './redux/middlewares/apiMiddleware';
@@ -13,7 +13,7 @@ import Template from './template';
 
 const middleware = [thunk];
 if (process.env.NODE_ENV !== 'production') {
-  //middleware.push(createLogger());
+  middleware.push(createLogger());
 }
 
 const store = createStore(

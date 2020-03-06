@@ -59,7 +59,8 @@ export const message = {
     titleFormRole: 'Danh sách vai trò',
     titleFormControl: 'Danh sách hoạt động',
     missingNameControlError: 'Tên control chưa được chọn!',
-    messageError: 'Có lỗi xảy ra'
+    messageError: 'Có lỗi xảy ra',
+    titleFormListGroupMerchandise: "Danh sách nhóm hàng"
 }
 
 /**
@@ -81,7 +82,12 @@ export const resourceCode = {
     user: "user",
     role: "role",
     resource: "resource",
-    organization: 'organization'
+    organization: 'organization',
+    groupMerchandise: 'groupMerchandise'
+}
+
+export const ACTION_MODULE = {
+    CAT_GROUP_MER: "CAT_GROUP_MER"
 }
 
 export function mappingDataChange(resource, destinnation) {

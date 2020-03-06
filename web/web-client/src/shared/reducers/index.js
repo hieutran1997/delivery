@@ -5,6 +5,7 @@ import resourceReducer from './ResourceReducer';
 import roleReducer from './RoleReducer';
 import organizationReducer from './OrganizationReducer';
 import controlReducer from './ControlReducer';
+import groupMerchandiseReducer from './categories/GroupMerchandiseReducer';
 
 export default combineReducers({
   authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   resourceReducer,
   roleReducer,
   organizationReducer,
-  controlReducer
+  controlReducer,
+  groupMerchandiseReducer
 })

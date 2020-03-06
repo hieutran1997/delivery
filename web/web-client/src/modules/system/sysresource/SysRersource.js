@@ -109,7 +109,7 @@ function SysResource(props) {
                     setError(false);
                     setDataContent(props.resource.data);
                     setPagination({
-                        current: props.resource.curPage + 1,
+                        current: props.resource.curPage,
                         pageSize: props.resource.perPage,
                         total: props.resource.total,
                         size: 'small'

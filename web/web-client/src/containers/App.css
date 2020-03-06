@@ -121,3 +121,11 @@
 .p-dropdown-filter-container{
   width: 100%;
 }
+
+.ant-table-thead {
+  background-color: #79b4e9 !important;
+}
+
+.ant-table-thead > tr > th {
+  background-color: transparent;
+}

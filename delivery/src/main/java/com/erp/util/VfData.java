@@ -383,4 +383,5 @@ public interface VfData {
      * @return
      */
     public DataTableResults findPaginationQueryMap(String countQuery, String selectQuery, String orderBy, List<Object> paramList, int limit);
+    
 }

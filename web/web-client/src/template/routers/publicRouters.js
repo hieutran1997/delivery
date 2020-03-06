@@ -5,6 +5,7 @@ const SysResource = lazy(() => import('../../modules/system/sysresource/SysRerso
 const SysRole = lazy(() => import('../../modules/system/sysrole/SysRole'));
 const Organization = lazy(() => import('../../modules/system/organization/Organization'));
 const HasNotPermission = lazy(() => import('../../modules/system/invalid/HasNotPermission'));
+const GroupMerchandise = lazy(() => import('../../modules/categories/groupmerchandise/Groupmerchandise'));
 
 export default{
     Home: {
@@ -36,5 +37,10 @@ export default{
         component: HasNotPermission,
         path: '/hpermission',
         moduleUrl: '/admin/system'
-    }
+    },
+    GroupMerchandise:{
+        component: GroupMerchandise,
+        path: '/group-merchandise',
+        moduleUrl: '/admin/cat'
+    },
 }

@@ -13,6 +13,8 @@ import com.erp.categories.dao.CatGroupMerchandiseDAO;
 import com.erp.categories.dto.CatGroupMerchandiseDTO;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.util.DataTableResults;
+import com.erp.util.PaginationUtil;
+import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
 
 @Service
@@ -43,8 +45,8 @@ public class CatGroupMerchandiseService {
      * @param form
      * @return
      */
-    public DataTableResults<CatGroupMerchandiseDTO> processSearch(CatGroupMerchandiseDTO form, HttpServletRequest req) {
-        return dao.processSearch(vfData, form, req);
+    public PaginationUtil<CatGroupMerchandiseDTO> processSearch(SearchRequestUtil<CatGroupMerchandiseDTO> pageable) {
+        return dao.getDataPaging(pageable, vfData);
     }
     
     public List<SelectedFormDTO> getSelectedData(){

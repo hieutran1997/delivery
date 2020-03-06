@@ -82,7 +82,7 @@ function Organization(props) {
                     let temp = prepareData(props.dataOrg.data);
                     setDataContent(temp);
                     setPagination({
-                        current: props.dataOrg.curPage + 1,
+                        current: props.dataOrg.curPage,
                         pageSize: props.dataOrg.perPage,
                         total: props.dataOrg.total,
                         size: 'small'

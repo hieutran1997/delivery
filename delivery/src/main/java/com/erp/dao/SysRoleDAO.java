@@ -36,7 +36,6 @@ public interface SysRoleDAO extends CrudRepository<SysRoleModel, Long> {
         int start = (pageable.getCurrent() - 1) * pageable.getPageSize();
         int end = start + pageable.getPageSize();
 
-        String limit = " Limit ?, ?";
         StringBuilder strCondition = new StringBuilder(" Where 1 = 1");
         List<Object> paramList = new ArrayList<Object>();
         StringBuilder sql = new StringBuilder("  SELECT syr.id, syr.code, syr.sys_role_name sysRoleName FROM sys_role syr ");
@@ -53,10 +52,9 @@ public interface SysRoleDAO extends CrudRepository<SysRoleModel, Long> {
         sqlCount.append(sql.toString());
         sqlCount.append(") r ");
         SQLQuery queryCount = vfData.createSQLQuery(sqlCount.toString());
-        sql.append(limit);
         SQLQuery query = vfData.createSQLQuery(sql.toString());
-        paramList.add(start);
-        paramList.add(end);
+        query.setFirstResult(CommonUtil.NVL(start));
+		query.setMaxResults(CommonUtil.NVL(pageable.getPageSize(), 10));
         for (int i = 0; i < paramList.size(); i++) {
             query.setParameter(i, paramList.get(i));
             if (paramList.size() > 2) {

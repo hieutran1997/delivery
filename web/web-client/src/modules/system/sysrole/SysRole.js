@@ -109,7 +109,7 @@ function SysRole(props) {
                     setError(false);
                     setDataContent(props.role.data);
                     setPagination({
-                        current: props.role.curPage + 1,
+                        current: props.role.curPage,
                         pageSize: props.role.perPage,
                         total: props.role.total,
                         size: 'small'

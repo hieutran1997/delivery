@@ -15,7 +15,8 @@ export const url_services = {
     ROLE: 'roles',
     ORGANIZATION: 'organizations',
     CONTROL: 'actioncontrol',
-    WEBSOCKET: 'ws'
+    WEBSOCKET: 'ws',
+    CAT_GROUP_MER: '/cat/group-merchandise'
 }
 
 export default function environments() {
@@ -84,6 +85,13 @@ export const menu = [
                 title: 'Danh mục hệ thống',
                 component: 'SysCat',
                 url_hash: 'admin/cat/sys_cat',
+                icon: 'database'
+            },
+            {
+                key: 'admin/cat/group-merchandise',
+                title: 'Danh mục nhóm hàng',
+                component: 'GroupMerchandise',
+                url_hash: 'admin/cat/group-merchandise',
                 icon: 'database'
             }
         ]
