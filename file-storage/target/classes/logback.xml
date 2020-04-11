@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL -->
+
+<configuration debug="false">
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+
+	<!-- Method 2 -->
+	<appender name="JSON" class="ch.qos.logback.core.FileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+			<pattern>${FILE_LOG_PATTERN}</pattern>
+		</encoder>
+        <file>${LOG_FILE}.json</file>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeCallerInfo>true</includeCallerInfo>
+            <customFields>{"appname":"hr-file","version":"1.0"}</customFields>
+        </encoder>
+    </appender>
+    <appender name="FILE"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/hr-file.log</file>
+        <encoder
+            class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${FILE_LOG_PATTERN}</Pattern>
+        </encoder>
+ 
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>./logs/hr-file-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>300MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <!-- Method 3 -->
+    <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+      <destination>localhost:8000</destination>
+      <!-- encoder is required -->
+      <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeCallerInfo>true</includeCallerInfo>
+            <customFields>{"appname":"hr-file","version":"1.0"}</customFields>
+        </encoder>
+  	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+		<!-- Method 1-->
+		<appender-ref ref="FILE" />
+		<!-- Method 2 -->
+		<appender-ref ref="JSON" />
+	</root>
+
+    <logger name="com.viettel" level="DEBUG">
+    	 <appender-ref ref="STASH"/>
+    </logger>
+    <logger name="org.hibernate" level="ERROR" />
+	<logger name="org.springframework" level="ERROR" />
+
+</configuration>

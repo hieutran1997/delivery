@@ -794,3 +794,228 @@ org.hibernate.QueryException: Expected positional parameter count: 1, actually d
 2020-03-23 19:57:00,885 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /users/postQuery - null - org.apache.catalina.util.ParameterMap@57ce842b
 2020-03-23 19:57:00,895 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData - null - org.apache.catalina.util.ParameterMap@40914222
 2020-03-23 19:57:01,702 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-18] Received a new web socket connection
+2020-04-11 16:05:57,017 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 15848 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 16:05:57,019 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 16:05:57,020 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 16:06:01,867 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 16:06:01,867 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 16:06:06,225 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.453 seconds (JVM running for 10.454)
+2020-04-11 16:06:09,111 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 16:06:11,195 WARN com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] JWT Token does not begin with Bearer String
+2020-04-11 16:06:24,544 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 127.0.0.1 - /users/postQuery - null - org.apache.catalina.util.ParameterMap@9dce74d
+2020-04-11 16:06:36,086 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 127.0.0.1 - /users/postQuery - null - org.apache.catalina.util.ParameterMap@9dce74d
+2020-04-11 16:06:36,110 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 127.0.0.1 - /organizations/getSelectedData - null - org.apache.catalina.util.ParameterMap@9dce74d
+2020-04-11 16:06:36,394 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-3] Received a new web socket connection
+2020-04-11 16:06:38,599 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 127.0.0.1 - /users/postQuery - null - org.apache.catalina.util.ParameterMap@9dce74d
+2020-04-11 16:06:40,985 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 127.0.0.1 - /organizations/postQuery - null - org.apache.catalina.util.ParameterMap@9dce74d
+2020-04-11 16:06:40,988 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-7] Request : 127.0.0.1 - /organizations/getSelectedData - null - org.apache.catalina.util.ParameterMap@406244fc
+2020-04-11 16:06:42,179 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 127.0.0.1 - /organizations/getChild/dv1 - null - org.apache.catalina.util.ParameterMap@9dce74d
+2020-04-11 16:07:15,409 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 127.0.0.1 - /cat/group-merchandise/postQuery - null - org.apache.catalina.util.ParameterMap@9dce74d
+2020-04-11 16:13:22,865 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 127.0.0.1 - /cat/group-merchandise/postQuery - null - org.apache.catalina.util.ParameterMap@9dce74d
+2020-04-11 16:13:23,061 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-5] Received a new web socket connection
+2020-04-11 16:14:08,807 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 127.0.0.1 - /roles/postQuery - null - org.apache.catalina.util.ParameterMap@406244fc
+2020-04-11 16:14:09,796 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-1] Request : 127.0.0.1 - /resources/postQuery - null - org.apache.catalina.util.ParameterMap@406244fc
+2020-04-11 16:30:24,926 ERROR org.springframework.boot.SpringApplication [main] Application run failed
+java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderAction - Could not create an Appender of type [net.logstash.logback.appender.LogstashAccessTcpSocketAppender]. ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashAccessTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@15:73 - ActionException in Action for tag [appender] ch.qos.logback.core.joran.spi.ActionException: ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashAccessTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@22:30 - no applicable action for [appender-ref], current ElementPath  is [[configuration][appender-ref]]
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:166)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reinitialize(LogbackLoggingSystem.java:212)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:75)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:114)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:264)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:237)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:200)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:74)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:351)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:317)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1234)
+	at com.erp.ErpApplication.main(ErpApplication.java:9)
+2020-04-11 16:31:07,253 ERROR org.springframework.boot.SpringApplication [main] Application run failed
+java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderAction - Could not create an Appender of type [net.logstash.logback.appender.LogstashAccessTcpSocketAppender]. ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashAccessTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@15:73 - ActionException in Action for tag [appender] ch.qos.logback.core.joran.spi.ActionException: ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashAccessTcpSocketAppender
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:166)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reinitialize(LogbackLoggingSystem.java:212)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:75)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:114)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:264)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:237)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:200)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:74)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:351)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:317)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1234)
+	at com.erp.ErpApplication.main(ErpApplication.java:9)
+2020-04-11 16:32:19,631 ERROR org.springframework.boot.SpringApplication [main] Application run failed
+java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderAction - Could not create an Appender of type [net.logstash.logback.appender.LogstashTcpSocketAppender]. ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@15:67 - ActionException in Action for tag [appender] ch.qos.logback.core.joran.spi.ActionException: ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [stash]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:166)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reinitialize(LogbackLoggingSystem.java:212)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:75)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:114)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:264)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:237)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:200)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:74)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:351)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:317)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1234)
+	at com.erp.ErpApplication.main(ErpApplication.java:9)
+2020-04-11 16:34:56,405 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 9212 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 16:34:56,408 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 16:34:56,410 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 16:35:01,100 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 16:35:01,101 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 16:35:05,238 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.901 seconds (JVM running for 11.073)
+2020-04-11 16:35:14,141 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 16:36:11,149 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 1640 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 16:36:11,154 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 16:36:11,156 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 16:36:15,934 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 16:36:15,934 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 16:36:20,489 INFO com.erp.ErpApplication [main] Started ErpApplication in 10.379 seconds (JVM running for 11.463)
+2020-04-11 16:36:26,141 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 19:50:00,826 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 17044 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 19:50:00,829 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 19:50:00,830 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 19:50:05,960 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 19:50:05,960 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 19:50:10,035 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.526 seconds (JVM running for 10.882)
+2020-04-11 20:03:07,587 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 4000 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:03:07,590 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:03:07,592 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:03:12,782 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:03:12,783 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:03:17,201 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.89 seconds (JVM running for 12.47)
+2020-04-11 20:04:09,650 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 16496 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:04:09,654 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:04:09,655 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:04:14,372 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:04:14,372 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:04:18,803 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.434 seconds (JVM running for 10.685)
+2020-04-11 20:07:10,071 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:07:11,613 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery - null - org.apache.catalina.util.ParameterMap@500d947f
+2020-04-11 20:08:25,283 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 12412 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:08:25,286 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:08:25,287 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:08:30,244 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:08:30,244 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:08:34,596 INFO com.erp.ErpApplication [main] Started ErpApplication in 10.306 seconds (JVM running for 11.526)
+2020-04-11 20:08:38,992 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:13:07,060 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 9476 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:13:07,066 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:13:07,068 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:13:11,719 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:13:11,719 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:13:16,054 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.971 seconds (JVM running for 11.181)
+2020-04-11 20:13:16,323 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:13:22,764 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery - null - org.apache.catalina.util.ParameterMap@7a491519
+2020-04-11 20:13:24,526 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery - null - org.apache.catalina.util.ParameterMap@7a491519
+2020-04-11 20:13:45,116 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData - null - org.apache.catalina.util.ParameterMap@7a491519
+2020-04-11 20:13:45,117 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery - null - org.apache.catalina.util.ParameterMap@309d9c4c
+2020-04-11 20:14:06,713 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 15448 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:14:06,716 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:14:06,717 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:14:11,586 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:14:11,586 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:14:15,865 INFO com.erp.ErpApplication [main] Started ErpApplication in 10.213 seconds (JVM running for 11.325)
+2020-04-11 20:14:16,272 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:22:57,086 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 10696 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:22:57,089 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:22:57,090 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:23:01,917 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:23:01,918 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:23:06,228 INFO com.erp.ErpApplication [main] Started ErpApplication in 10.167 seconds (JVM running for 11.293)
+2020-04-11 20:23:15,008 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:35:41,931 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 10260 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:35:41,934 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:35:41,935 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:35:46,891 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:35:46,892 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:35:51,219 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.55 seconds (JVM running for 10.773)
+2020-04-11 20:35:56,106 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:44:49,920 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 8780 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:44:49,920 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 8780 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:44:49,923 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:44:49,923 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:44:49,924 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:44:49,924 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:44:54,723 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:44:54,723 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:44:54,723 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:44:54,723 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:44:59,336 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.662 seconds (JVM running for 10.869)
+2020-04-11 20:44:59,336 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.662 seconds (JVM running for 10.869)
+2020-04-11 20:45:03,976 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:45:03,976 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:45:34,104 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 9280 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:45:34,107 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:45:34,108 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:45:38,799 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:45:38,799 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:45:43,157 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.327 seconds (JVM running for 10.499)
+2020-04-11 20:45:43,501 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:47:54,523 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 16040 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:47:54,527 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:47:54,530 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:47:59,429 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:47:59,429 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:48:03,744 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.485 seconds (JVM running for 10.604)
+2020-04-11 20:48:03,984 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:53:39,837 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 16188 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 20:53:39,841 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 20:53:39,842 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 20:53:45,024 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 20:53:45,024 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 20:53:49,329 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.751 seconds (JVM running for 10.89)
+2020-04-11 20:54:05,997 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 20:56:37,914 ERROR com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] JWT Token has expired
+2020-04-11 20:56:44,211 WARN com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] JWT Token does not begin with Bearer String
+2020-04-11 20:56:44,645 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-4] Received a new web socket connection
+2020-04-11 20:56:45,996 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-3] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery - null - org.apache.catalina.util.ParameterMap@6b83598e
+2020-04-11 20:58:39,563 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-8] Request : 0:0:0:0:0:0:0:1 - /users/postQuery - null - org.apache.catalina.util.ParameterMap@6b83598e
+2020-04-11 20:58:39,564 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData - null - org.apache.catalina.util.ParameterMap@1e628102
+2020-04-11 20:58:56,456 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-9] Request : 0:0:0:0:0:0:0:1 - /organizations/postQuery - null - org.apache.catalina.util.ParameterMap@6b83598e
+2020-04-11 20:58:56,457 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /organizations/getSelectedData - null - org.apache.catalina.util.ParameterMap@1e628102
+2020-04-11 21:19:36,090 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery - null - org.apache.catalina.util.ParameterMap@6b83598e
+2020-04-11 21:19:37,698 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-5] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery - null - org.apache.catalina.util.ParameterMap@6b83598e
+2020-04-11 22:13:13,206 INFO com.erp.ErpApplication [main] Starting ErpApplication on DESKTOP-8DDTA21 with PID 15700 (D:\DoAn\delivery\delivery\target\classes started by NguyenCongPC in D:\DoAn\delivery\delivery)
+2020-04-11 22:13:13,209 DEBUG com.erp.ErpApplication [main] Running with Spring Boot v2.0.0.RELEASE, Spring v5.0.4.RELEASE
+2020-04-11 22:13:13,211 INFO com.erp.ErpApplication [main] No active profile set, falling back to default profiles: default
+2020-04-11 22:13:17,719 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Initializing filter 'jwtRequestFilter'
+2020-04-11 22:13:17,720 DEBUG com.erp.config.JwtRequestFilter [localhost-startStop-1] Filter 'jwtRequestFilter' configured successfully
+2020-04-11 22:13:22,091 INFO com.erp.ErpApplication [main] Started ErpApplication in 9.108 seconds (JVM running for 10.206)
+2020-04-11 22:13:41,979 INFO com.erp.config.realtime.WebSocketEventListener [clientOutboundChannel-1] Received a new web socket connection
+2020-04-11 22:14:08,909 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-4] Request : 0:0:0:0:0:0:0:1 - /roles/postQuery - null - org.apache.catalina.util.ParameterMap@53f0f8b6
+2020-04-11 22:22:39,022 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-6] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery - null - org.apache.catalina.util.ParameterMap@53f0f8b6
+2020-04-11 22:28:30,608 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-10] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery - null - org.apache.catalina.util.ParameterMap@53f0f8b6
+2020-04-11 22:38:04,781 INFO com.erp.config.JwtRequestFilter [http-nio-8080-exec-2] Request : 0:0:0:0:0:0:0:1 - /resources/postQuery - null - org.apache.catalina.util.ParameterMap@53f0f8b6
