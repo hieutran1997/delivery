@@ -19,12 +19,19 @@ const BindingError = (props) => {
 }
 
 export const FormAutoComplete = forwardRef((props, ref) => {
-    const [value, setValue] = useState(props.value);
+    const [value, setValue] = useState({});
 
     React.useEffect(() => {
         props.register({ name: `${props.valueName}` }, props.validation || null); // custom register react-select 
-    }, [props]);
+    }, [props.register, props.valueName, props.validation]);
 
+    React.useEffect(() => {
+        if(props.value !== null){
+            let dataSelected = props.options.find(x=>x[props.dataKey] === props.value);
+            setValue(dataSelected);
+        }
+    }, [props.value, props.options, props.dataKey, setValue]);
+    
     const changeValue = (ev) => {
         setValue(ev.value);
         if (props.onChange) {

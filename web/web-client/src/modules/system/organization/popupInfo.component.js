@@ -9,15 +9,22 @@ const toDay = new Date();
 export function PopupInfo(props) {
   const { register, handleSubmit, errors, setValue } = useForm();
   const [isEdit, setIsEdit] = useState(false);
-  const [dataDetail, setDataDetail] = useState(props);
+  const [dataDetail, setDataDetail] = useState(props.dataDetail);
   const [lstOrg, setLstOrg] = useState([]);
   const onSaveEdit = data => {
     props.onSave(data);
   };
 
   useEffect(() => {
-    if (lstOrg.length === 0 && props.lstOrg.length > 0) {
-      setLstOrg(props.lstOrg);
+    if (props.lstOrg.length > 0) {
+      let lstOrgTemp = props.lstOrg;
+      if(props.dataDetail.code){
+        let index = props.lstOrg.findIndex(x=>x.value === props.dataDetail.code);
+        if(index >= 0){
+          lstOrgTemp.splice(index, 1);
+        }
+      }
+      setLstOrg(lstOrgTemp);
     }
     if (props.dataDetail && props.dataDetail.id) {
       setDataDetail(props.dataDetail);
@@ -74,6 +81,7 @@ export function PopupInfo(props) {
               filterBy="name"
               register={register}
               setValue={setValue}
+              value={props.dataDetail.parentCode}
               errors={errors}
               showClear={true} />
           </Col>

@@ -47,23 +47,24 @@ function MenuComponent(props) {
         setOnInit(false);
     }
 
-    useEffect(()=>{
-        if (onInit) {
-            if (currentUser && currentUser.typeOfUser === 1) {
-                setMenu(menu);
-                setOnInit(false);
-            }
-            else if (currentUser && currentUser.typeOfUser !== 1) {
-                filterMenu();
-            }
+    if (onInit) {
+        if (currentUser && currentUser.typeOfUser === 1) {
+            setMenu(menu);
+            setOnInit(false);
         }
+        else if (currentUser && currentUser.typeOfUser !== 1) {
+            filterMenu();
+        }
+    }
+
+    useEffect(()=>{
         if(props.updateMenu){
             if (currentUser && currentUser.typeOfUser !== 1) {
                 filterMenu();
                 props.setUpdateMenu(!props.updateMenu);
             }
         }
-    }, [props, onInit, setMenu, setOnInit]);
+    }, [props.updateMenu, props.setUpdateMenu, onInit, setMenu, setOnInit]);
 
     const renderMenu = menus.map((item) =>
         item.childs.length > 0 ?
