@@ -42,11 +42,7 @@ public interface CatGroupMerchandiseDAO extends CrudRepository<CatGroupMerchandi
 		query.setMaxResults(CommonUtil.NVL(pageable.getPageSize(), 10));
         for (int i = 0; i < paramList.size(); i++) {
             query.setParameter(i, paramList.get(i));
-            if (paramList.size() > 2) {
-                if (paramList.size() - i > 2) {
-                    queryCount.setParameter(i, paramList.get(i));
-                }
-            }
+            queryCount.setParameter(i, paramList.get(i));
         }
         vfData.setResultTransformer(query, CatGroupMerchandiseDTO.class);
         results.setTotal(((BigInteger) queryCount.uniqueResult()).intValue());

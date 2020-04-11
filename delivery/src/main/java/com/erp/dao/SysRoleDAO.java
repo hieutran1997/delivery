@@ -57,11 +57,7 @@ public interface SysRoleDAO extends CrudRepository<SysRoleModel, Long> {
 		query.setMaxResults(CommonUtil.NVL(pageable.getPageSize(), 10));
         for (int i = 0; i < paramList.size(); i++) {
             query.setParameter(i, paramList.get(i));
-            if (paramList.size() > 2) {
-                if (paramList.size() - i > 2) {
-                    queryCount.setParameter(i, paramList.get(i));
-                }
-            }
+            queryCount.setParameter(i, paramList.get(i));
         }
         vfData.setResultTransformer(query, SysRoleModel.class);
         results.setTotal(((BigInteger) queryCount.uniqueResult()).intValue());
@@ -139,7 +135,7 @@ public interface SysRoleDAO extends CrudRepository<SysRoleModel, Long> {
     }
     
     public default List<RolePermissionDTO> getListPermission(VfData vfData, String userName){
-        String sql = " select sre.code resourceCode, srp.has_view hasView, srp.has_add hasAdd, srp.has_edit hasEdit, srp.has_delete hasDelete, srp.has_approve hasApprove, srp.orther_control ortherControls "
+        String sql = " select sre.code resourceCode, srp.has_view hasView, srp.has_add hasAdd, srp.has_edit hasEdit, srp.has_delete hasDelete, srp.has_approve hasApprove, srp.orther_control ortherControls, path_url pathUrl "
                     +" from sys_role_permission srp" 
                     +" inner join sys_role sr on sr.code = srp.role_code" 
                     +" inner join sys_resource sre on srp.resource_code = sre.code"

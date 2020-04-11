@@ -179,7 +179,7 @@ export const hasMenu = (keyMenu) => {
         scope = JSON.parse(scope);
         var result = undefined;
         scope.forEach(element => {
-            if (element.resourceCode === keyMenu) {
+            if (element.pathUrl === keyMenu) {
                 result = element;
             }
         });

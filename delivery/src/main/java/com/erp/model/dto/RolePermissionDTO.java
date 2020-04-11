@@ -17,6 +17,8 @@ public class RolePermissionDTO {
     
     private String resourceName;
     
+    private String pathUrl;
+    
     private Long hasView;
     
     private Long hasAdd;
@@ -110,4 +112,14 @@ public class RolePermissionDTO {
     public void setOrtherControlsOfResource(String ortherControlsOfResource) {
         this.ortherControlsOfResource = ortherControlsOfResource;
     }
+
+	public String getPathUrl() {
+		return pathUrl;
+	}
+
+	public void setPathUrl(String pathUrl) {
+		this.pathUrl = pathUrl;
+	}
+    
+    
 }

@@ -43,10 +43,11 @@ function AdminLayout(props) {
 
     const checker = () => {
         if (props.currentUser) {
-            if (!hasMenu(history.location.pathname.substring(1))
+            if (!hasMenu(history.location.pathname)
                 && props.currentUser.typeOfUser !== 1
                 && "/admin/permission" !== history.location.pathname
-                && "/admin" !== history.location.pathname) { //Loại bỏ dấu /
+                //&& "/admin" !== history.location.pathname
+                ) { //Loại bỏ dấu /
                 history.push("/admin/permission");
             }
         } else {
