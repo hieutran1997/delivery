@@ -1,5 +1,6 @@
-package com.erp.categories.bo;
+package com.erp.process.bo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.erp.util.FileAttachment;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +19,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "growth_process")
-public class GrowthProcessBO {
+public class GrowthProcessBO extends FileAttachment implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id
     @Column(name = "growth_process_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)

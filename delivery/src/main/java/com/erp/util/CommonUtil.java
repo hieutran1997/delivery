@@ -72,6 +72,19 @@ public class CommonUtil {
     private static final String[] UNSIGNED_ARR = new String[]{"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "i", "i", "i", "i", "i", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "u", "u", "u", "u", "u", "u", "u", "u", "u", "u", "u", "y", "y", "y", "y", "y", "d", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "I", "I", "I", "I", "I", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "Y", "Y", "Y", "Y", "Y", "D"};
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    
+    /**
+	 * toList
+	 * 
+	 * @param           <T>
+	 * @param json
+	 * @param typeClass
+	 * @return
+	 */
+	public static <T> List<T> toList(String json, Class<T> typeClass) {
+		Gson gson = new Gson();
+		return gson.fromJson(json, new ListOfJson<T>(typeClass));
+	}
 
     /**
      * Cast BigDemical to Long

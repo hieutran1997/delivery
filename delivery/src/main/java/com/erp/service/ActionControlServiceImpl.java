@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
  * @author hieut
  */
 @Service("actionControlService")
-public class ActionControlServiceImpl implements ActionControlService{
+public class ActionControlServiceImpl implements ActionControlService {
     
     @Autowired
     private ActionControlDAO actionsControlDao;

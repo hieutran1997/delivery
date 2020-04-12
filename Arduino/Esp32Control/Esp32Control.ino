@@ -54,6 +54,8 @@ String days = "";
 unsigned long nowLong;
 int dayOfWeek = -1;
 String defaultHour = "10:00:00";
+const char* postHost = "192.168.1.20";
+const int postPort = 8000;
 
 // Tạo 1 server web
 AsyncWebServer server(80);
@@ -61,6 +63,7 @@ AsyncWebServer server(80);
 // Define NTP Client to get time
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
+WiFiClient client;
 
 //create web page
 const char index_html[] PROGMEM = R"rawliteral(
@@ -130,13 +133,13 @@ const char index_html[] PROGMEM = R"rawliteral(
                 <label class="col-md-3">Chọn ngày lặp lại</label>
                 <div class='col-md-3'>
                   <select class="form-control" id="days" style="width:100%;" multiple="multiple">
-                    <option value="0">Thứ 2</option>
-                    <option value="1">Thứ 3</option>
-                    <option value="2">Thứ 4</option>
-                    <option value="3">Thứ 5</option>
-                    <option value="4">Thứ 6</option>
-                    <option value="5">Thứ 7</option>
-                    <option value="6">Chủ nhật</option>
+                    <option value="1">Thứ 2</option>
+                    <option value="2">Thứ 3</option>
+                    <option value="3">Thứ 4</option>
+                    <option value="4">Thứ 5</option>
+                    <option value="5">Thứ 6</option>
+                    <option value="6">Thứ 7</option>
+                    <option value="0">Chủ nhật</option>
                   </select>
                 </div>
               </div>
@@ -261,10 +264,154 @@ void capturePhotoSaveSpiffs( void ) {
   } while ( !ok );
 }
 
-void getDayOfWeek(){
-  nowLong = timeClient.getEpochTime();
-  long day = nowLong / 86400L;
-  dayOfWeek = day % 7;
+String postFile(File myFile) {
+
+  // open sd and file
+  // String fileName = path;
+  // SD.begin(0);
+  // fs::File myFile = SD.open(fileName);
+  String fileName = myFile.name();
+  String fileSize = String(myFile.size());
+
+  Serial.println();
+  Serial.println("file exists");
+  Serial.println(myFile);
+
+  if (myFile) {
+    String url = "/growth-up";
+    // print content length and host
+    Serial.println("contentLength");
+    Serial.println(fileSize);
+    Serial.print("connecting to ");
+    Serial.println(postHost);
+
+    // try connect or return on fail
+    if (!client.connect(postHost, postPort)) {
+      Serial.println("http post connection failed");
+      return String("Post Failure");
+    }
+
+    // We now create a URI for the request
+    Serial.println("Connected to server");
+    Serial.print("Requesting URL: ");
+    Serial.println(url);
+
+
+    // Make a HTTP request and add HTTP headers
+    String boundary = "SolarServerBoundaryjg2qVIUS8teOAbN3";
+    String contentType = "image/jpeg";
+    String portString = String(postPort);
+    String hostString = String(postHost);
+    String timeNow = String(timeClient.getEpochTime());
+    // post header
+    String postHeader = "POST " + url + " HTTP/1.1\r\n";
+    postHeader += "Host: " + hostString + ":" + portString + "\r\n";
+    postHeader += "Content-Type: multipart/form-data; boundary=" + boundary + "\r\n";
+    postHeader += "Accept: application/json, text/plain, */*\r\n";
+    postHeader += "Accept-Encoding: gzip, deflate\r\n";
+    postHeader += "Accept-Language: vi,en;q=0.9\r\n";
+    postHeader += "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7\r\n";
+    postHeader += "User-Agent: Arduino/Solar-Server\r\n";
+    postHeader += "Connection: keep-alive\r\n";
+  
+     // key header
+    String keyHeader = "--" + boundary + "\r\n";
+    keyHeader += "Content-Disposition: form-data; name=\"processType\"\r\n\r\n";
+    keyHeader += "1\r\n";
+    keyHeader += "--" + boundary + "\r\n";
+    keyHeader += "Content-Disposition: form-data; name=\"clientIp\"\r\n\r\n";
+    keyHeader += "1\r\n";
+    keyHeader += "--" + boundary + "\r\n";
+    keyHeader += "Content-Disposition: form-data; name=\"startDate\"\r\n\r\n";
+    keyHeader += timeNow+"\r\n";
+
+    // request header
+    String requestHead = "--" + boundary + "\r\n";
+    requestHead += "Content-Disposition: form-data; name=\"file\"; filename=\"" + fileName + "\"\r\n";
+    requestHead += "Content-Type: " + contentType + "\r\n\r\n";
+
+    // request tail
+    String tail = "\r\n--" + boundary + "--\r\n\r\n";
+
+    // content length
+    int contentLength = keyHeader.length() + requestHead.length() + myFile.size() + tail.length();
+    postHeader += "Content-Length: " + String(contentLength, DEC) + "\n\n";
+
+    // send post header
+    char charBuf0[postHeader.length() + 1];
+    postHeader.toCharArray(charBuf0, postHeader.length() + 1);
+    client.write(charBuf0);
+    Serial.print(charBuf0);
+
+    // send key header
+    char charBufKey[keyHeader.length() + 1];
+    keyHeader.toCharArray(charBufKey, keyHeader.length() + 1);
+    client.write(charBufKey);
+    Serial.print(charBufKey);
+
+    // send request buffer
+    char charBuf1[requestHead.length() + 1];
+    requestHead.toCharArray(charBuf1, requestHead.length() + 1);
+    client.write(charBuf1);
+    Serial.print(charBuf1);
+
+    // create buffer
+    const int bufSize = 2048;
+    byte clientBuf[bufSize];
+    int clientCount = 0;
+
+    while (myFile.available()) {
+
+      clientBuf[clientCount] = myFile.read();
+
+      clientCount++;
+
+      if (clientCount > (bufSize - 1)) {
+        client.write((const uint8_t *)clientBuf, bufSize);
+        clientCount = 0;
+      }
+
+    }
+
+    if (clientCount > 0) {
+      client.write((const uint8_t *)clientBuf, clientCount);
+      Serial.println("Sent LAST buffer");
+    }
+
+    // send tail
+    char charBuf3[tail.length() + 1];
+    tail.toCharArray(charBuf3, tail.length() + 1);
+    client.write(charBuf3);
+    Serial.print(charBuf3);
+
+    // Read all the lines of the reply from server and print them to Serial
+    Serial.println("request sent");
+    String responseHeaders = "";
+
+    while (client.connected()) {
+      // Serial.println("while client connected");
+      String line = client.readStringUntil('\n');
+      Serial.println(line);
+      responseHeaders += line;
+      if (line == "\r") {
+        Serial.println("headers received");
+        break;
+      }
+    }
+
+    String line = client.readStringUntil('\n');
+
+    Serial.println("reply was:");
+    Serial.println("==========");
+    Serial.println(line);
+    Serial.println("==========");
+    Serial.println("closing connection");
+
+    // close the file:
+    myFile.close();
+    return responseHeaders;
+
+  }
 }
 
 void setup() {
@@ -294,9 +441,9 @@ void setup() {
   while (!timeClient.update()) {
     timeClient.forceUpdate();
   }
-  getDayOfWeek();
+  dayOfWeek = timeClient.getDay();
   Serial.print("Thứ: ");
-  Serial.println(dayOfWeek + 2);
+  Serial.println(dayOfWeek);
   // Turn-off the 'brownout detector'
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   // OV2640 camera module
@@ -358,6 +505,8 @@ void setup() {
     String message;
     if (request->hasParam(paramType, true)) {
       type = request->getParam(paramType, true)->value();
+      Serial.print("type: ");
+      Serial.println(type);
     } else {
       type = "0";
     }
@@ -368,6 +517,9 @@ void setup() {
     }
     if (request->hasParam(paramHour, true)) {
       hours = request->getParam(paramHour, true)->value();
+      hours += ":00";
+      Serial.print("hour: ");
+      Serial.println(hours);
     } else {
       hours = "";
     }
@@ -381,6 +533,10 @@ void setup() {
 }
 
 void loop() {
+  if (client.available()) {
+    char c = client.read();
+    Serial.print(c);
+  }
   //Chup anh
   if (takeNewPhoto) {
     capturePhotoSaveSpiffs();
@@ -389,17 +545,15 @@ void loop() {
   while (!timeClient.update()) {
     timeClient.forceUpdate();
   }
-  formattedDate = timeClient.getFormattedDate();
-  int splitT = formattedDate.indexOf("T");
-  timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
+  formattedDate = timeClient.getFormattedTime();
   //Check 1 ngày lặp lại 1 lần lúc 00:00:00
   if(timeStamp == "00:00:01"){
-    getDayOfWeek();
+    dayOfWeek = timeClient.getDay();
   }
   if(type == "1"){ //Trường hợp theo tuần
-    String dayOfWeekStr = String(dayOfWeek)
-    size_t found = days.find(dayOfWeekStr); 
-    if (found != string::npos){
+    String dayOfWeekStr = String(dayOfWeek);
+    int found = days.indexOf(dayOfWeekStr); 
+    if (found >= 0){
         capturePhotoSaveSpiffs();
         takeNewPhoto = false;
     }
@@ -408,18 +562,15 @@ void loop() {
     if (hours == formattedDate) {
       capturePhotoSaveSpiffs();
       takeNewPhoto = false;
-      Serial.println("Begin [HTTP]");
-      http.begin("http://192.168.1.20:8080/users/getAll");
-      int httpCode = http.GET();
-      if (httpCode > 0) {
-        Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-        if (httpCode == HTTP_CODE_OK) {
-          String payload = http.getString();
-          Serial.println(payload);
-        }
-      } else {
-        Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-      }
+      File file = SPIFFS.open(FILE_PHOTO, FILE_WRITE);
+      postFile(file);
+//      Serial.println("Begin [HTTP]");
+//      if (client.connect("192.168.1.20", 8000)) {
+//        Serial.println("connected");
+//        // Make a HTTP request:
+//        client.println("GET /users/getAll HTTP/1.0");
+//        client.println();
+//      }
     }
   }
   delay(1000);
