@@ -12,11 +12,15 @@
 #include <StringArray.h>
 #include <SPIFFS.h>
 #include <FS.h>
+#include "SD_MMC.h"            // SD Card ESP32
 #include <HTTPClient.h>
 #include <string>
+#include <EEPROM.h>            // read and write from flash memory
 
 // Photo File Name to save in SPIFFS
 #define FILE_PHOTO "/photo.jpg"
+// define the number of bytes you want to access
+#define EEPROM_SIZE 1
 // OV2640 camera module pins (CAMERA_MODEL_AI_THINKER)
 #define PWDN_GPIO_NUM     32
 #define RESET_GPIO_NUM    -1
@@ -54,8 +58,10 @@ String days = "";
 unsigned long nowLong;
 int dayOfWeek = -1;
 String defaultHour = "10:00:00";
-const char* postHost = "192.168.1.20";
-const int postPort = 8000;
+const char* post_host = "192.168.1.20";
+const int post_port = 8000;
+String url = "/growth-up";
+int pictureNumber = 0;
 
 // Tạo 1 server web
 AsyncWebServer server(80);
@@ -264,7 +270,57 @@ void capturePhotoSaveSpiffs( void ) {
   } while ( !ok );
 }
 
-String postFile(File myFile) {
+void capturePhotoSaveSD(void){
+  camera_fb_t * fb = NULL;
+  
+  // Take Picture with Camera
+  fb = esp_camera_fb_get();  
+  if(!fb) {
+    Serial.println("Camera capture failed");
+    return;
+  }
+  // initialize EEPROM with predefined size
+  EEPROM.begin(EEPROM_SIZE);
+  pictureNumber = EEPROM.read(0) + 1;
+
+  // Path where new picture will be saved in SD Card
+  String path = "/picture" + String(pictureNumber) +".jpg";
+
+  fs::FS &fs = SD_MMC; 
+  Serial.printf("Picture file name: %s\n", path.c_str());
+  
+  File file = fs.open(path.c_str(), FILE_WRITE);
+  if(!file){
+    Serial.println("Failed to open file in writing mode");
+  } 
+  else {
+    file.write(fb->buf, fb->len); // payload (image), payload length
+    Serial.printf("Saved file to path: %s\n", path.c_str());
+    EEPROM.write(0, pictureNumber);
+    EEPROM.commit();
+  }
+  file.close();
+  esp_camera_fb_return(fb);  
+}
+
+//Read a file in SD card
+void readFile(fs::FS &fs, const char * path){
+    Serial.printf("Reading file: %s\n", path);
+
+    File file = fs.open(path);
+    if(!file){
+        Serial.println("Failed to open file for reading");
+        return;
+    }
+
+    Serial.print("Read from file: ");
+    while(file.available()){
+        Serial.write(file.read());
+    }
+}
+
+//post file to server
+void post(File myFile) {
 
   // open sd and file
   // String fileName = path;
@@ -272,23 +328,23 @@ String postFile(File myFile) {
   // fs::File myFile = SD.open(fileName);
   String fileName = myFile.name();
   String fileSize = String(myFile.size());
-
+  unsigned int pic_sz = myFile.size();
   Serial.println();
   Serial.println("file exists");
   Serial.println(myFile);
 
   if (myFile) {
-    String url = "/growth-up";
+
     // print content length and host
     Serial.println("contentLength");
     Serial.println(fileSize);
     Serial.print("connecting to ");
-    Serial.println(postHost);
+    Serial.println(post_host);
 
     // try connect or return on fail
-    if (!client.connect(postHost, postPort)) {
+    if (!client.connect(post_host, post_port)) {
       Serial.println("http post connection failed");
-      return String("Post Failure");
+      Serial.println("Post Failure");
     }
 
     // We now create a URI for the request
@@ -299,36 +355,34 @@ String postFile(File myFile) {
 
     // Make a HTTP request and add HTTP headers
     String boundary = "SolarServerBoundaryjg2qVIUS8teOAbN3";
-    String contentType = "image/jpeg";
-    String portString = String(postPort);
-    String hostString = String(postHost);
-    String timeNow = String(timeClient.getEpochTime());
+    String contentType = "image/jpg";
+    String portString = String(post_port);
+    String hostString = String(post_host);
+
     // post header
     String postHeader = "POST " + url + " HTTP/1.1\r\n";
     postHeader += "Host: " + hostString + ":" + portString + "\r\n";
     postHeader += "Content-Type: multipart/form-data; boundary=" + boundary + "\r\n";
     postHeader += "Accept: application/json, text/plain, */*\r\n";
-    postHeader += "Accept-Encoding: gzip, deflate\r\n";
-    postHeader += "Accept-Language: vi,en;q=0.9\r\n";
-    postHeader += "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7\r\n";
+    postHeader += "Accept-Encoding: gzip,deflate\r\n";
     postHeader += "User-Agent: Arduino/Solar-Server\r\n";
+    postHeader += "Keep-Alive: 3000\r\n";
     postHeader += "Connection: keep-alive\r\n";
-  
-     // key header
+    postHeader += "Accept-Language: vi,en;q=0.9\r\n";
+
+    // key header
     String keyHeader = "--" + boundary + "\r\n";
+    keyHeader += "Content-Disposition: form-data; name=\"merchandiseId\"\r\n\r\n";
+    keyHeader += "1\r\n";
+    keyHeader += "--" + boundary + "\r\n";
     keyHeader += "Content-Disposition: form-data; name=\"processType\"\r\n\r\n";
     keyHeader += "1\r\n";
-    keyHeader += "--" + boundary + "\r\n";
-    keyHeader += "Content-Disposition: form-data; name=\"clientIp\"\r\n\r\n";
-    keyHeader += "1\r\n";
-    keyHeader += "--" + boundary + "\r\n";
-    keyHeader += "Content-Disposition: form-data; name=\"startDate\"\r\n\r\n";
-    keyHeader += timeNow+"\r\n";
 
     // request header
     String requestHead = "--" + boundary + "\r\n";
     requestHead += "Content-Disposition: form-data; name=\"file\"; filename=\"" + fileName + "\"\r\n";
     requestHead += "Content-Type: " + contentType + "\r\n\r\n";
+
 
     // request tail
     String tail = "\r\n--" + boundary + "--\r\n\r\n";
@@ -359,25 +413,20 @@ String postFile(File myFile) {
     const int bufSize = 2048;
     byte clientBuf[bufSize];
     int clientCount = 0;
-
     while (myFile.available()) {
-
       clientBuf[clientCount] = myFile.read();
-
       clientCount++;
-
       if (clientCount > (bufSize - 1)) {
         client.write((const uint8_t *)clientBuf, bufSize);
         clientCount = 0;
       }
-
     }
 
     if (clientCount > 0) {
       client.write((const uint8_t *)clientBuf, clientCount);
       Serial.println("Sent LAST buffer");
     }
-
+    
     // send tail
     char charBuf3[tail.length() + 1];
     tail.toCharArray(charBuf3, tail.length() + 1);
@@ -386,31 +435,9 @@ String postFile(File myFile) {
 
     // Read all the lines of the reply from server and print them to Serial
     Serial.println("request sent");
-    String responseHeaders = "";
-
-    while (client.connected()) {
-      // Serial.println("while client connected");
-      String line = client.readStringUntil('\n');
-      Serial.println(line);
-      responseHeaders += line;
-      if (line == "\r") {
-        Serial.println("headers received");
-        break;
-      }
-    }
-
-    String line = client.readStringUntil('\n');
-
-    Serial.println("reply was:");
-    Serial.println("==========");
-    Serial.println(line);
-    Serial.println("==========");
-    Serial.println("closing connection");
-
+    
     // close the file:
     myFile.close();
-    return responseHeaders;
-
   }
 }
 
@@ -485,6 +512,18 @@ void setup() {
     ESP.restart();
   }
 
+  //Serial.println("Starting SD Card");
+  if(!SD_MMC.begin()){
+    Serial.println("SD Card Mount Failed");
+    return;
+  }
+  
+  uint8_t cardType = SD_MMC.cardType();
+  if(cardType == CARD_NONE){
+    Serial.println("No SD Card attached");
+    return;
+  }
+
   /*** Server listener **/
   // Route for root / web page
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
@@ -533,10 +572,6 @@ void setup() {
 }
 
 void loop() {
-  if (client.available()) {
-    char c = client.read();
-    Serial.print(c);
-  }
   //Chup anh
   if (takeNewPhoto) {
     capturePhotoSaveSpiffs();
@@ -560,10 +595,15 @@ void loop() {
   }
   else if(type == "2"){ // Trường hợp theo ngày
     if (hours == formattedDate) {
-      capturePhotoSaveSpiffs();
+      //capturePhotoSaveSpiffs();
+      capturePhotoSaveSD();
       takeNewPhoto = false;
-      File file = SPIFFS.open(FILE_PHOTO, FILE_WRITE);
-      postFile(file);
+      int number = EEPROM.read(0);
+      String path = "/picture" + String(number) +".jpg";
+      Serial.print("path: ");
+      Serial.println(path);
+      File f = SD_MMC.open(path);
+      post(f);
 //      Serial.println("Begin [HTTP]");
 //      if (client.connect("192.168.1.20", 8000)) {
 //        Serial.println("connected");

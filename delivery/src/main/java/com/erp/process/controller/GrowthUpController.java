@@ -6,10 +6,10 @@ import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.process.bo.GrowthProcessBO;
 import com.erp.process.dto.GrowthProcessDTO;
@@ -19,7 +19,7 @@ import com.erp.util.FileStorage;
 import com.erp.util.Response;
 import com.erp.util.SysException;
 
-@RestController
+@Controller
 @RequestMapping("/growth-up")
 public class GrowthUpController {
 	
@@ -35,13 +35,10 @@ public class GrowthUpController {
 	 * @throws Exception
 	 * @throws SysException
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
-	@Transactional
-	public @ResponseBody Response saveOrUpdate(HttpServletRequest req, GrowthProcessDTO dto)
-			throws Exception, SysException {
+	@PostMapping(produces = MediaType.APPLICATION_JSON)
+	public @ResponseBody Response saveOrUpdate(HttpServletRequest req, GrowthProcessDTO dto) throws Exception, SysException {
 		GrowthProcessBO bo = service.saveOrUpdate(dto);
-		FileStorage.append(FileStorage.FILE_TYPE.GROWTH_UP_PROCESS,
-				bo.getGrowthProcessId(), dto.getFile());
+		FileStorage.append(FileStorage.FILE_TYPE.GROWTH_UP_PROCESS, 1L, dto.getFile());
 		return Response.success(Constants.RESPONSE_CODE.SUCCESS).withData(bo);
 	}
 }

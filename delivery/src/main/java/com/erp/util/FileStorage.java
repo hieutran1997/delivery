@@ -24,16 +24,13 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 
 public class FileStorage {
     public static final Logger LOGGER = LoggerFactory.getLogger(FileStorage.class);
     
-    @Value("${fileStorage.serverUrl}")
-    private static String URL;
+    private static final String URL = CommonUtil.getConfig("fileStorage.serverUrl");
     
     public static interface FILE_TYPE {
         public static Long GROWTH_UP_PROCESS = 1L;
