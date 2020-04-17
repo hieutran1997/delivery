@@ -51,6 +51,7 @@ String formattedDate;
 String dayStamp;
 String timeStamp;
 boolean takeNewPhoto = false;
+boolean sendData = false;
 HTTPClient http;
 String type = "0"; //1: Theo tuần; 2: Theo ngày
 String hours = "";
@@ -62,6 +63,8 @@ const char* post_host = "192.168.1.20";
 const int post_port = 8000;
 String url = "/growth-up";
 int pictureNumber = 0;
+int countTime = 0;
+int countTimeReconnect = 0;
 
 // Tạo 1 server web
 AsyncWebServer server(80);
@@ -103,15 +106,22 @@ const char index_html[] PROGMEM = R"rawliteral(
   <div id="container">
     <h2>Ứng dụng quản lý cammera</h2>
     <p>
-      <button onclick="rotatePhoto();">ROTATE</button>
-      <button onclick="capturePhoto()">CAPTURE PHOTO</button>
-      <button onclick="location.reload();">REFRESH PAGE</button>
+      <button class="btn btn-primary" id="btn-send-data">Gửi dữ liệu</button>
+      <button class="btn btn-primary" onclick="location.reload();">Làm mới</button>
     </p>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popup-setting">
-      Đặt lịch tự động
-    </button>
-    <!-- Modal -->
+    <div class="row">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popup-setting">
+        Đặt lịch tự động
+      </button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popup-setting-data">
+        Cấu hình thông tin
+      </button>
+    </div>
+    <div class="row" style="text-align: center;">
+      <img src="get-photo"/>
+    </div>
+    <!-- Modal Config time-->
     <div class="modal fade bd-example-modal-lg" id="popup-setting" tabindex="-1" role="dialog"
       aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -149,6 +159,7 @@ const char index_html[] PROGMEM = R"rawliteral(
                   </select>
                 </div>
               </div>
+              <br />
               <div class="row type-day">
                 <label class="col-md-3">Chọn giờ lặp lại</label>
                 <div class='col-md-3'>
@@ -172,6 +183,28 @@ const char index_html[] PROGMEM = R"rawliteral(
         </div>
       </div>
     </div>
+
+    <!-- Modal Config time-->
+    <div class="modal fade bd-example-modal-lg" id="popup-setting-data" tabindex="-1" role="dialog"
+      aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <label class="modal-title" id="myLargeModalLabel">Cấu hình dữ liệu</label>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="container">
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-primary" id="btn-save">Xác nhận</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 <script>
@@ -185,12 +218,12 @@ const char index_html[] PROGMEM = R"rawliteral(
       locale: 'vi'
     });
     $('#days').select2();
-    $('.type-day').hide();
+    $('.type-day').show();
     $('.type-week').show();
     $('#type').on('change', function(){
       var type = $('#type').val();
       if (type == 1) {
-        $('.type-day').hide();
+        $('.type-day').show();
         $('.type-week').show();
       }
       else {
@@ -209,7 +242,7 @@ const char index_html[] PROGMEM = R"rawliteral(
           days += '_' + listDate[idx];
         }
       }
-      var data = $("form").serialize() + "&days=" + days;;
+      var data = $("form").serialize() + "&days=" + days;
       var xhr = new XMLHttpRequest();
       xhr.open('POST', "/post", true);
       xhr.onreadystatechange = function () { // Call a function when the state changes.
@@ -218,6 +251,12 @@ const char index_html[] PROGMEM = R"rawliteral(
         }
       }
       xhr.send(data);
+    });
+
+    $('#btn-send-data').on('click', function(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', "/send-data", true);
+      xhr.send();
     });
   });
 </script>
@@ -300,7 +339,47 @@ void capturePhotoSaveSD(void){
     EEPROM.commit();
   }
   file.close();
+
+  // Photo file name
+  Serial.printf("Picture file name: %s\n", FILE_PHOTO);
+  File f = SPIFFS.open(FILE_PHOTO, FILE_WRITE);
+
+  // Insert the data in the photo file
+  if (!f) {
+    Serial.println("Failed to open file in writing mode");
+  }
+  else {
+    f.write(fb->buf, fb->len); // payload (image), payload length
+    Serial.print("The picture has been saved in ");
+    Serial.print(FILE_PHOTO);
+    Serial.print(" - Size: ");
+    Serial.print(file.size());
+    Serial.println(" bytes");
+  }
+  // Close the file
+  f.close();
   esp_camera_fb_return(fb);  
+}
+
+/*----Utils File SD card*/
+//Create a dir in SD card
+void createDir(fs::FS &fs, const char * path){
+    Serial.printf("Creating Dir: %s\n", path);
+    if(fs.mkdir(path)){
+        Serial.println("Dir created");
+    } else {
+        Serial.println("mkdir failed");
+    }
+}
+
+//delete a dir in SD card
+void removeDir(fs::FS &fs, const char * path){
+    Serial.printf("Removing Dir: %s\n", path);
+    if(fs.rmdir(path)){
+        Serial.println("Dir removed");
+    } else {
+        Serial.println("rmdir failed");
+    }
 }
 
 //Read a file in SD card
@@ -318,6 +397,72 @@ void readFile(fs::FS &fs, const char * path){
         Serial.write(file.read());
     }
 }
+
+//Write a file in SD card
+void writeFile(fs::FS &fs, const char * path, const char * message){
+    Serial.printf("Writing file: %s\n", path);
+
+    File file = fs.open(path, FILE_WRITE);
+    if(!file){
+        Serial.println("Failed to open file for writing");
+        return;
+    }
+   
+   //fwrite(fb->buf, 1, fb->len, file);
+    if(file.print(message)){
+        Serial.println("File written");
+    } else {
+        Serial.println("Write failed");
+    }
+}
+
+//Append to the end of file in SD card
+void appendFile(fs::FS &fs, const char * path, const char * message){
+    Serial.printf("Appending to file: %s\n", path);
+    File file = fs.open(path, FILE_APPEND);
+    if(!file){
+        Serial.println("Failed to open file for appending");
+        return;
+    }
+    if(file.print(message)){
+        Serial.println("Message appended");
+    } else {
+        Serial.println("Append failed");
+    }
+}
+
+//List dir in SD card
+void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
+    Serial.printf("Listing directory: %s\n", dirname);
+
+    File root = fs.open(dirname);
+    if(!root){
+        Serial.println("Failed to open directory");
+        return;
+    }
+    if(!root.isDirectory()){
+        Serial.println("Not a directory");
+        return;
+    }
+
+    File file = root.openNextFile();
+    while(file){
+        if(file.isDirectory()){
+            Serial.print("  DIR : ");
+            Serial.println(file.name());
+            if(levels){
+                listDir(fs, file.name(), levels -1);
+            }
+        } else {
+            Serial.print("  FILE: ");
+            Serial.print(file.name());
+            Serial.print("  SIZE: ");
+            Serial.println(file.size());
+        }
+        file = root.openNextFile();
+    }
+}
+/*----End utils File SD card--*/
 
 //post file to server
 void post(File myFile) {
@@ -441,6 +586,43 @@ void post(File myFile) {
   }
 }
 
+//reconnect to wifi
+void reconnect()
+{
+  Serial.println("Reconnecting WiFi ");
+  WiFi.begin(ssid, password);
+  Serial.println("Connecting to WiFi...");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    WiFi.reconnect();
+  }
+  return;
+}
+
+void sendNewData(){
+  capturePhotoSaveSD();
+  takeNewPhoto = false;
+  int number = EEPROM.read(0);
+  String path = "/picture" + String(number) +".jpg";
+  Serial.print("path: ");
+  Serial.println(path);
+  File f = SD_MMC.open(path);
+  post(f);
+}
+
+void copyImageLastest(){
+   int number = EEPROM.read(0);
+   String path = "/picture" + String(number) +".jpg";
+   File sourceFile = SD_MMC.open(path);
+   File destFile = SPIFFS.open(FILE_PHOTO, FILE_WRITE);
+   static uint8_t buf[512];
+   while( sourceFile.read( buf, 512) ) {
+       destFile.write( buf, 512 );
+   }
+   destFile.close();
+   sourceFile.close();
+}
+
 void setup() {
   // Initialize Serial Monitor
   Serial.begin(115200);
@@ -529,14 +711,14 @@ void setup() {
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send_P(200, "text/html", index_html);
   });
-
-  server.on("/capture", HTTP_GET, [](AsyncWebServerRequest * request) {
-    takeNewPhoto = true;
-    request->send_P(200, "text/plain", "Taking Photo");
+  
+  server.on("/get-photo", HTTP_GET, [](AsyncWebServerRequest * request) {
+    request->send(SPIFFS, FILE_PHOTO, "image/jpg", false);
   });
 
-  server.on("/saved-photo", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send(SPIFFS, FILE_PHOTO, "image/jpg", false);
+  server.on("/send-data", HTTP_GET, [](AsyncWebServerRequest * request) {
+    sendData = true;
+    request->send(200, "text/plain", "Thanh cong");
   });
 
   // Đặt lịch
@@ -560,7 +742,7 @@ void setup() {
       Serial.print("hour: ");
       Serial.println(hours);
     } else {
-      hours = "";
+      hours = defaultHour;
     }
     request->send(200, "text/plain", "Hello, POST: " + message);
   });
@@ -577,6 +759,12 @@ void loop() {
     capturePhotoSaveSpiffs();
     takeNewPhoto = false;
   }
+  //Gui du lieu
+  if(sendData){
+    sendNewData();
+    copyImageLastest();
+    sendData = false;
+  }
   while (!timeClient.update()) {
     timeClient.forceUpdate();
   }
@@ -586,32 +774,24 @@ void loop() {
     dayOfWeek = timeClient.getDay();
   }
   if(type == "1"){ //Trường hợp theo tuần
-    String dayOfWeekStr = String(dayOfWeek);
-    int found = days.indexOf(dayOfWeekStr); 
-    if (found >= 0){
-        capturePhotoSaveSpiffs();
-        takeNewPhoto = false;
-    }
+    if (hours == formattedDate) {
+        String dayOfWeekStr = String(dayOfWeek);
+        int found = days.indexOf(dayOfWeekStr); 
+        if (found >= 0){
+          sendNewData();
+        }
+      }
   }
   else if(type == "2"){ // Trường hợp theo ngày
     if (hours == formattedDate) {
-      //capturePhotoSaveSpiffs();
-      capturePhotoSaveSD();
-      takeNewPhoto = false;
-      int number = EEPROM.read(0);
-      String path = "/picture" + String(number) +".jpg";
-      Serial.print("path: ");
-      Serial.println(path);
-      File f = SD_MMC.open(path);
-      post(f);
-//      Serial.println("Begin [HTTP]");
-//      if (client.connect("192.168.1.20", 8000)) {
-//        Serial.println("connected");
-//        // Make a HTTP request:
-//        client.println("GET /users/getAll HTTP/1.0");
-//        client.println();
-//      }
+      sendNewData();
     }
   }
-  delay(1000);
+
+  if (WiFi.status() != WL_CONNECTED) {
+      reconnect();
+  }
+  else {
+      delay(1000);
+  }
 }
