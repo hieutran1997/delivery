@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +45,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.stereotype.Component;
 
-import com.erp.model.SysRoleModel;
 import com.google.gson.Gson;
 
 /**
@@ -54,6 +52,7 @@ import com.google.gson.Gson;
  * @since Jul, 2018
  * @version 1.0
  */
+@SuppressWarnings({"rawtypes", "deprecation", "unchecked"})
 @Component
 public class VfDataImpl implements VfData {
 
@@ -507,7 +506,6 @@ public class VfDataImpl implements VfData {
 
 	@Override
 	public <T> Page<T> listAll(Class dataModel, Pageable pageable) {
-		// TODO Auto-generated method stub
 		String hql = " FROM " + dataModel.getName() + " t";
 		String countHsql = "SELECT count(*) ";
 		hql = QueryUtils.applySorting(hql, pageable.getSort());

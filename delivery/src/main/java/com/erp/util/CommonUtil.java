@@ -64,6 +64,7 @@ import org.apache.commons.beanutils.converters.LongConverter;
  * @since Jul, 2018
  * @version 1.0
  */
+@SuppressWarnings("rawtypes")
 public class CommonUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonUtil.class);
@@ -116,7 +117,7 @@ public class CommonUtil {
      * @param str
      * @return
      */
-    public static boolean isNullOrEmpty(List data) {
+    public static boolean isNullOrEmpty( List data) {
         return (data == null || data.isEmpty());
     }
 

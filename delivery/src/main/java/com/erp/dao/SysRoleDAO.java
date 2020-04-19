@@ -21,21 +21,21 @@ import java.util.List;
 
 
 import org.hibernate.SQLQuery;
-import org.hibernate.Transaction;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author hieut
  */
+@Repository
+@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 public interface SysRoleDAO extends CrudRepository<SysRoleModel, Long> {
 
     public default PaginationUtil<SysRoleModel> getDataPaging(SearchRequestUtil<SysRoleModel> pageable, VfData vfData) {
         PaginationUtil<SysRoleModel> results = new PaginationUtil<>();
         int start = (pageable.getCurrent() - 1) * pageable.getPageSize();
-        int end = start + pageable.getPageSize();
-
         StringBuilder strCondition = new StringBuilder(" Where 1 = 1");
         List<Object> paramList = new ArrayList<Object>();
         StringBuilder sql = new StringBuilder("  SELECT syr.id, syr.code, syr.sys_role_name sysRoleName FROM sys_role syr ");
@@ -76,12 +76,12 @@ public interface SysRoleDAO extends CrudRepository<SysRoleModel, Long> {
 
     @Transactional
     public default void saveUserRole(VfData vfData, UserRoleDTO userRole) {
-        //Xóa hết vai trò của username
+        //XÃ³a háº¿t vai trÃ² cá»§a username
         String sqlDelete = " delete from user_role where username = ? ";
         SQLQuery queryDelete = vfData.createSQLQuery(sqlDelete);
         queryDelete.setParameter(0, userRole.getUsername());
         queryDelete.executeUpdate();
-        //Thêm mới vai trò của user
+        //ThÃªm má»›i vai trÃ² cá»§a user
         for (SelectedFormDTO item : userRole.getPickList()) {
             String sql = " insert into user_role(created_by, created_date, role_code, username) value(?, ?, ?, ?)";
             SQLQuery query = vfData.createSQLQuery(sql);
@@ -104,12 +104,12 @@ public interface SysRoleDAO extends CrudRepository<SysRoleModel, Long> {
 
     @Transactional
     public default void saveRolePermission(VfData vfData, RolePermissionForm rolePer) {
-        //Xóa hết quyền của vai trò
+        //XÃ³a háº¿t quyá»�n cá»§a vai trÃ²
         String sqlDelete = " delete from sys_role_permission where role_code = ? ";
         SQLQuery queryDelete = vfData.createSQLQuery(sqlDelete);
         queryDelete.setParameter(0, rolePer.getRoleCode());
         queryDelete.executeUpdate();
-        //Thêm mới quyền của vai trò
+        //ThÃªm má»›i quyá»�n cá»§a vai trÃ²
         for (RolePermissionDTO item : rolePer.getData()) {
             String sql = " insert into sys_role_permission(has_view, has_add, has_edit, has_delete, has_approve, orther_control, resource_code, role_code)"
                     + " value(?, ?, ?, ?, ?, ?, ?, ?)";

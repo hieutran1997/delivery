@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
  * @since Jul, 2018
  * @version 1.0
  */
+@SuppressWarnings({"rawtypes", "deprecation"})
 public interface VfData {
 	/**
 	 * Get session factory.

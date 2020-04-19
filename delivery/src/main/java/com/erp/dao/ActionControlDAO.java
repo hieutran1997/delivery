@@ -18,11 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SQLQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author hieut
  */
+@Repository
+@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 public interface ActionControlDAO extends JpaRepository<ActionsControlModel, Long>{
     public default PaginationUtil<ActionsControlModel> getDataPaging(SearchRequestUtil<ActionsControlModel> pageable, VfData vfData){
         PaginationUtil<ActionsControlModel> results = new PaginationUtil<>();

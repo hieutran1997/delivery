@@ -19,7 +19,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sys_role")
 public class SysRoleModel extends BaseModel{
-    @Id
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7077648657640226863L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     

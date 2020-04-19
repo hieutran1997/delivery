@@ -12,6 +12,7 @@ package com.erp.model.dto;
 public class SelectedFormDTO {
     private String value;
     private String name;
+    private Long id;
 
     public String getValue() {
         return value;
@@ -28,6 +29,13 @@ public class SelectedFormDTO {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 }

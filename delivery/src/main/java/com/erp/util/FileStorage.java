@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 
+@SuppressWarnings("deprecation")
 public class FileStorage {
     public static final Logger LOGGER = LoggerFactory.getLogger(FileStorage.class);
     
@@ -55,7 +56,7 @@ public class FileStorage {
         try {
             String urlSave = URL + String.format("/%s/save-or-update/%s", fileType, objectId);
             HttpPost httppost = new HttpPost(urlSave);
-            DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+			DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
             if (file != null) {
                 MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
                 fis = file.getInputStream();

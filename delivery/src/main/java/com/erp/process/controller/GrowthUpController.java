@@ -1,12 +1,12 @@
 package com.erp.process.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +19,7 @@ import com.erp.util.FileStorage;
 import com.erp.util.Response;
 import com.erp.util.SysException;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 @RequestMapping("/growth-up")
 public class GrowthUpController {

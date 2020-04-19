@@ -17,11 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SQLQuery;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author hieut
  */
+@Repository
+@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 public interface SysResourceDAO extends CrudRepository<SysResourceModel, Long> {
 
     public default PaginationUtil<ResourceDTO> getDataPaging(SearchRequestUtil<SysResourceModel> pageable, VfData vfData) {

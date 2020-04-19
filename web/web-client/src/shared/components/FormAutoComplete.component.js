@@ -23,7 +23,7 @@ export const FormAutoComplete = forwardRef((props, ref) => {
 
     React.useEffect(() => {
         props.register({ name: `${props.valueName}` }, props.validation || null); // custom register react-select 
-    }, [props.register, props.valueName, props.validation]);
+    }, [props, props.register, props.valueName, props.validation]);
 
     React.useEffect(() => {
         if(props.value !== null){

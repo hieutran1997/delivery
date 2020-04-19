@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 export const environments_dev = {
-    URL_SERVICE: 'http://localhost:8080'
+    URL_SERVICE: 'http://localhost:8000'
 }
 
 export const environments_prod = {
-    URL_SERVICE: 'http://localhost:8080'
+    URL_SERVICE: 'http://localhost:8000'
 }
 
 export const url_services = {
@@ -16,7 +16,10 @@ export const url_services = {
     ORGANIZATION: 'organizations',
     CONTROL: 'actioncontrol',
     WEBSOCKET: 'ws',
-    CAT_GROUP_MER: '/cat/group-merchandise'
+    CAT_GROUP_MER: '/cat/group-merchandise',
+    CAT_TYPE_MER: '/cat/type-merchandise',
+    CAT_UNIT: '/cat/unit',
+    MERCHANDISE: '/cat/merchandise'
 }
 
 export default function environments() {
@@ -92,6 +95,27 @@ export const menu = [
                 title: 'Danh mục nhóm hàng',
                 component: 'GroupMerchandise',
                 url_hash: 'admin/cat/group-merchandise',
+                icon: 'database'
+            },
+            {
+                key: 'admin/cat/type-merchandise',
+                title: 'Danh mục loại hàng',
+                component: 'TypeMerchandise',
+                url_hash: 'admin/cat/type-merchandise',
+                icon: 'database'
+            },
+            {
+                key: 'admin/cat/unit',
+                title: 'Danh mục đơn vị tính',
+                component: 'Unit',
+                url_hash: 'admin/cat/unit',
+                icon: 'database'
+            },
+            {
+                key: 'admin/cat/merchandise',
+                title: 'Danh mục hàng hóa',
+                component: 'Merchandise',
+                url_hash: 'admin/cat/merchandise',
                 icon: 'database'
             }
         ]

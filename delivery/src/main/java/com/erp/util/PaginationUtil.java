@@ -13,7 +13,11 @@ import java.util.List;
  * @author hieut
  */
 public class PaginationUtil<T> implements Serializable{
-    private Integer perPage;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 922187714768978022L;
+	private Integer perPage;
     private Integer total;
     private Integer curPage;
     private List<T> data;

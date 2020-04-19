@@ -5,7 +5,6 @@
  */
 package com.erp.util;
 
-import com.erp.config.JwtRequestFilter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -36,7 +35,8 @@ public class JsonToMapConverter
         return customerInfoJson;
     }
 
-    public Map<String, Object> convertToEntityAttribute(String customerInfoJSON) {
+    @SuppressWarnings("unchecked")
+	public Map<String, Object> convertToEntityAttribute(String customerInfoJSON) {
         Map<String, Object> customerInfo = null;
         try {
             customerInfo = (Map<String, Object>) objectMapper.readValue(customerInfoJSON, Map.class);

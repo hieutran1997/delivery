@@ -3,6 +3,7 @@ import React, { forwardRef, useState } from 'react';
 import { typeOfDynamicInput } from '../common';
 import { DatePicker } from 'antd';
 import { DateFormat } from '../common';
+import { Dropdown } from 'primereact/dropdown';
 import moment from 'moment';
 
 const BindingError = (props) => {
@@ -30,7 +31,14 @@ export const FormInput = forwardRef((props, ref) => {
         if (props.value) {
             props.setValue(props.valueName, moment(props.value, DateFormat));
         }
-    }, [props]);
+    }, [props.valueName, props.value, props.validation, props]);
+
+    React.useEffect(() => {
+        if(props.value !== null){
+            let dataSelected = props.options.find(x=>x[props.dataKey] === props.value);
+            setValue(dataSelected);
+        }
+    }, [props.value, props.options, props.dataKey, setValue]);
 
     const onChangeDate = (ev, str) => {
         if (ev != null) {
@@ -39,6 +47,16 @@ export const FormInput = forwardRef((props, ref) => {
         }
         if (props.onChange) {
             props.onChange(ev);
+        }
+    }
+
+    const onChangeSelect =(e) =>{
+        if(e){
+            setValue(e.value);
+            props.setValue(props.valueName, e.value[props.dataKey]);
+        }
+        if (props.onChange) {
+            props.onChange(e);
         }
     }
 
@@ -52,18 +70,34 @@ export const FormInput = forwardRef((props, ref) => {
                 <DatePicker
                     className={props.inputClassName}
                     onChange={onChangeDate}
-                    defaultValue={props.value ? moment(props.value, DateFormat):null}
+                    defaultValue={props.value ? moment(props.value, DateFormat) : null}
+                    disabled={props.disabled}
                     format={DateFormat} />
 
                 <BindingError errors={props.errors} name={props.valueName}></BindingError>
             </>
         );
     }
+    else if (props.type === typeOfDynamicInput.SELECT_FILTER) {
+        return (
+            <>
+                <span className={props.labelClassName}>{props.labelName} {
+                    props.validation.required && props.validation.required === true ? <span className="label-required">*</span> : ""
+                }</span>
+                <br />
+                <Dropdown value={value} options={props.options} onChange={onChangeSelect} disabled={props.disabled} className={props.inputClassName} optionLabel={props.optionLabel}
+                    filter={true} filterPlaceholder={props.placeholder} filterBy={props.filterBy} showClear={props.showClear} />
+            </>
+        );
+    }
     else if (props.type === typeOfDynamicInput.TEXT_AREA) {
         return (
             <>
-                <span className={props.labelClassName}>{props.labelName}</span>
-                <textarea name={props.valueName} value={value} className={props.inputClassName}
+                <span className={props.labelClassName}>{props.labelName} {
+                    props.validation.required && props.validation.required === true ? <span className="label-required">*</span> : ""
+                }</span>
+                <br />
+                <textarea name={props.valueName} value={value} className={props.inputClassName} disabled={props.disabled}
                     onChange={ev => { props.setValue(props.valueName, ev.target.value); setValue(ev.target.value); props.onChange ? props.onChange(ev) : void 0; }}
                     placeholder={props.placeholder}
                     ref={props.register} />
@@ -81,7 +115,7 @@ export const FormInput = forwardRef((props, ref) => {
                     className={props.inputClassName}
                     placeholder={props.placeholder}
                     onChange={(ev) => { props.onChange ? props.onChange(ev) : void 0 }}
-                    ref={props.register(props.validation)} />
+                    ref={props.register(props.validation)} disabled={props.disabled} />
                 <BindingError errors={props.errors} name={props.valueName}></BindingError>
 
             </>
@@ -101,5 +135,11 @@ FormInput.defaultProps = {
     value: '',
     register: null,
     validation: { required: false },
-    onChange: null
+    onChange: null,
+    disabled: false,
+    options: [],
+    showClear: null,
+    optionLabel: 'name',
+    filterBy: 'name',
+    dataKey: 'value'
 };

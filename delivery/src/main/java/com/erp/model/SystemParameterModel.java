@@ -19,16 +19,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name="sys_parameter")
 public class SystemParameterModel extends BaseModel {
-    @Id
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1852469087858252721L;
+	
+	@Id
     @Column(name = "sys_parameter_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long systemParameterId;
+	
     @Column(name = "code")
     private String code;
+    
     @Column(name = "name")
     private String name;
+    
     @Column(name = "value")
     private String value;
+    
     @Column(name = "description")
     private String description;
 

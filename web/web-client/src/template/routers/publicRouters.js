@@ -6,6 +6,9 @@ const SysRole = lazy(() => import('../../modules/system/sysrole/SysRole'));
 const Organization = lazy(() => import('../../modules/system/organization/Organization'));
 const HasNotPermission = lazy(() => import('../../modules/system/invalid/HasNotPermission'));
 const GroupMerchandise = lazy(() => import('../../modules/categories/groupmerchandise/Groupmerchandise'));
+const TypeMerchandise = lazy(() => import('../../modules/categories/typemerchandise/TypeMerchandise'));
+const Unit = lazy(() => import('../../modules/categories/unit/Unit'));
+const Merchandise = lazy(() => import('../../modules/categories/merchandise/Merchandise'));
 
 export default{
     Home: {
@@ -43,4 +46,20 @@ export default{
         path: '/group-merchandise',
         moduleUrl: '/admin/cat'
     },
+    TypeMerchandise:{
+        component: TypeMerchandise,
+        path: '/type-merchandise',
+        moduleUrl: '/admin/cat'
+    },
+    Unit:{
+        component: Unit,
+        path: '/unit',
+        moduleUrl: '/admin/cat'
+    },
+    Merchandise:{
+        component: Merchandise,
+        path: '/merchandise',
+        moduleUrl: '/admin/cat'
+    }
+    
 }

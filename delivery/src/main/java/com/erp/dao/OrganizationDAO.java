@@ -11,20 +11,19 @@ import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
-
-import io.lettuce.core.dynamic.annotation.Param;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SQLQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author hieut
  */
+@Repository
+@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 public interface OrganizationDAO extends JpaRepository<OrganizationModel, Long> {
 	public default PaginationUtil<OrganizationModel> getDataPaging(SearchRequestUtil<OrganizationModel> pageable,
 			VfData vfData) {

@@ -18,6 +18,9 @@ public class CatGroupMerchandiseBO {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "cat_group_mechandise_id")
 	private Long catGroupMerchandiseId;
+	
+	@Column(name = "type_code")
+	private String typeCode;
 
 	@Column(name = "code", length = 10, nullable = false)
 	private String code;
@@ -93,6 +96,14 @@ public class CatGroupMerchandiseBO {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public String getTypeCode() {
+		return typeCode;
+	}
+
+	public void setTypeCode(String typeCode) {
+		this.typeCode = typeCode;
 	}
 	
 }

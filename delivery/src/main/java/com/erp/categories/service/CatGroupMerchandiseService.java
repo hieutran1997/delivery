@@ -1,8 +1,6 @@
 package com.erp.categories.service;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import com.erp.categories.bo.CatGroupMerchandiseBO;
 import com.erp.categories.dao.CatGroupMerchandiseDAO;
 import com.erp.categories.dto.CatGroupMerchandiseDTO;
 import com.erp.model.dto.SelectedFormDTO;
-import com.erp.util.DataTableResults;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;

@@ -18,7 +18,8 @@ public class StringToDateConverter implements Converter {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(StringToDateConverter.class);
 
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     public Object convert(Class type, Object value) {
         if (value == null) {
             return null;

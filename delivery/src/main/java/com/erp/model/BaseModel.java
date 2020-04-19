@@ -16,8 +16,13 @@ import javax.persistence.TemporalType;
  * @author hieut
  */
 public class BaseModel implements Serializable{
-    
-    @Column(name="created_date")
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6773162102175585407L;
+
+	@Column(name="created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     

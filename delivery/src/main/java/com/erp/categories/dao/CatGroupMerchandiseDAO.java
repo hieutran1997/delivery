@@ -16,6 +16,7 @@ import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
 
 @Repository
+@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 public interface CatGroupMerchandiseDAO extends CrudRepository<CatGroupMerchandiseBO, Long> {
 
 	public default PaginationUtil<CatGroupMerchandiseDTO> getDataPaging(SearchRequestUtil<CatGroupMerchandiseDTO> pageable, VfData vfData) {
@@ -36,8 +37,8 @@ public interface CatGroupMerchandiseDAO extends CrudRepository<CatGroupMerchandi
         StringBuilder sqlCount = new StringBuilder("SELECT COUNT(*) FROM (");
         sqlCount.append(sql.toString());
         sqlCount.append(") r ");
-        SQLQuery queryCount = vfData.createSQLQuery(sqlCount.toString());
-        SQLQuery query = vfData.createSQLQuery(sql.toString());
+		SQLQuery queryCount = vfData.createSQLQuery(sqlCount.toString());
+		SQLQuery query = vfData.createSQLQuery(sql.toString());
         query.setFirstResult(CommonUtil.NVL(start));
 		query.setMaxResults(CommonUtil.NVL(pageable.getPageSize(), 10));
         for (int i = 0; i < paramList.size(); i++) {
@@ -53,8 +54,8 @@ public interface CatGroupMerchandiseDAO extends CrudRepository<CatGroupMerchandi
     }
 	
 	public default List<SelectedFormDTO> getSelectedData(VfData vfData){
-        String sql = " Select code value, name from cat_group_mechandise ";
-        SQLQuery query = vfData.createSQLQuery(sql);
+        String sql = " Select cat_group_mechandise_id id, code value, name from cat_group_mechandise ";
+		SQLQuery query = vfData.createSQLQuery(sql);
         vfData.setResultTransformer(query, SelectedFormDTO.class);
         return query.list();
     }

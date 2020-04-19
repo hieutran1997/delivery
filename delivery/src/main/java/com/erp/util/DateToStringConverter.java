@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.Converter;
  * @since Jul, 2018
  * @version 1.0
  */
+@SuppressWarnings("rawtypes")
 public class DateToStringConverter implements Converter {
 
 	@Override

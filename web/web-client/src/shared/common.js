@@ -38,7 +38,8 @@ export const dataPost = {
 export const typeOfDynamicInput = {
     INPUT: 'input',
     TEXT_AREA: 'textarea',
-    DATE_TIME: 'date'
+    DATE_TIME: 'date',
+    SELECT_FILTER: 'select'
 }
 
 export const message = {
@@ -60,7 +61,10 @@ export const message = {
     titleFormControl: 'Danh sách hoạt động',
     missingNameControlError: 'Tên control chưa được chọn!',
     messageError: 'Có lỗi xảy ra',
-    titleFormListGroupMerchandise: "Danh sách nhóm hàng"
+    titleFormListGroupMerchandise: "Danh sách nhóm hàng",
+    titleFormListTypeMerchandise: "Danh sách loại hàng",
+    titleFormListUnit: "Danh sách đơn vị tính",
+    titleFormListMerchandise: "Danh sách hàng hóa"
 }
 
 /**
@@ -83,11 +87,17 @@ export const resourceCode = {
     role: "role",
     resource: "resource",
     organization: 'organization',
-    groupMerchandise: 'groupMerchandise'
+    groupMerchandise: 'groupMerchandise',
+    typeMerchandise: 'typeMerchandise',
+    unit: 'unit',
+    merchandise: 'merchandise'
 }
 
 export const ACTION_MODULE = {
-    CAT_GROUP_MER: "CAT_GROUP_MER"
+    CAT_GROUP_MER: "CAT_GROUP_MER",
+    CAT_TYPE_MER: "CAT_TYPE_MER",
+    CAT_UNIT: "CAT_UNIT",
+    MERCHANDISE: "MERCHANDISE"
 }
 
 export function mappingDataChange(resource, destinnation) {

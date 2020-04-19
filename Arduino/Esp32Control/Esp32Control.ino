@@ -339,25 +339,6 @@ void capturePhotoSaveSD(void){
     EEPROM.commit();
   }
   file.close();
-
-  // Photo file name
-  Serial.printf("Picture file name: %s\n", FILE_PHOTO);
-  File f = SPIFFS.open(FILE_PHOTO, FILE_WRITE);
-
-  // Insert the data in the photo file
-  if (!f) {
-    Serial.println("Failed to open file in writing mode");
-  }
-  else {
-    f.write(fb->buf, fb->len); // payload (image), payload length
-    Serial.print("The picture has been saved in ");
-    Serial.print(FILE_PHOTO);
-    Serial.print(" - Size: ");
-    Serial.print(file.size());
-    Serial.println(" bytes");
-  }
-  // Close the file
-  f.close();
   esp_camera_fb_return(fb);  
 }
 
@@ -608,6 +589,7 @@ void sendNewData(){
   Serial.println(path);
   File f = SD_MMC.open(path);
   post(f);
+  copyImageLastest();
 }
 
 void copyImageLastest(){
@@ -762,7 +744,6 @@ void loop() {
   //Gui du lieu
   if(sendData){
     sendNewData();
-    copyImageLastest();
     sendData = false;
   }
   while (!timeClient.update()) {

@@ -18,11 +18,14 @@ import org.hibernate.SQLQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author hieut
  */
+@Repository
+@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 public interface SysParameterDAO extends JpaRepository<SystemParameterModel, Long> {
 
     public default PaginationUtil<SystemParameterModel> getDataPaging(SearchRequestUtil<SystemParameterModel> pageable, VfData vfData) {

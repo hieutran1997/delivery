@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
 
 import com.erp.categories.bo.CatGroupMerchandiseBO;
+import com.erp.categories.bo.CatTypeMerchandiseBO;
 import com.erp.categories.dto.CatGroupMerchandiseDTO;
 import com.erp.categories.service.CatGroupMerchandiseService;
 import com.erp.service.ServiceChecker;
@@ -37,14 +38,14 @@ public class CatGroupMerchandiseController {
 	@RequestMapping(value = "/postQuery", method = RequestMethod.POST)
 	public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<CatGroupMerchandiseDTO> pageable) {
 		if (!serviceChecker.permissionChecker(Constants.RESOURCE.CAT_MERCHANDISE_GROUP, Constants.PERMISSION.VIEW)) {
-			return new ResponseEntity<>("Bạn không có quyền truy cập", HttpStatus.FORBIDDEN);
+			throw new PermissionException();
 		}
 		return new ResponseEntity<PaginationUtil<CatGroupMerchandiseDTO>>(service.processSearch(pageable), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<?> create(@RequestBody CatGroupMerchandiseBO entity) {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.RESOURCE, Constants.PERMISSION.ADD)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.CAT_MERCHANDISE_GROUP, Constants.PERMISSION.ADD)) {
 			throw new PermissionException();
 		}
 		entity.setCreatedBy(CommonUtil.getCurrentUser().getUsername());
@@ -55,19 +56,24 @@ public class CatGroupMerchandiseController {
 
 	@RequestMapping(value = "/", method = RequestMethod.PUT)
 	public ResponseEntity<?> update(@RequestBody CatGroupMerchandiseBO entity) {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.RESOURCE, Constants.PERMISSION.EDIT)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.CAT_MERCHANDISE_GROUP, Constants.PERMISSION.EDIT)) {
 			throw new PermissionException();
 		}
-		entity.setUpdatedBy(CommonUtil.getCurrentUser().getUsername());
-		entity.setUpdatedDate(new Date());
-		service.saveOrUpdate(entity);
+		CatGroupMerchandiseBO instance = service.findById(entity.getCatGroupMerchandiseId());
+		if(instance == null) {
+			return new ResponseEntity<CatTypeMerchandiseBO>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		instance.setName(entity.getName());
+		instance.setUpdatedBy(CommonUtil.getCurrentUser().getUsername());
+		instance.setUpdatedDate(new Date());
+		service.saveOrUpdate(instance);
 		return new ResponseEntity<CatGroupMerchandiseBO>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<ResponseUtil<String>> delete(@PathVariable(value = "id") Long id) {
 		ResponseUtil<String> result = new ResponseUtil<String>();
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.RESOURCE, Constants.PERMISSION.DELETE)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.CAT_MERCHANDISE_GROUP, Constants.PERMISSION.DELETE)) {
 			throw new PermissionException();
 		}
 		service.delete(id);

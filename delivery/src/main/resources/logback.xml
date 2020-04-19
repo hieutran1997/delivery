@@ -38,11 +38,17 @@
 			<pattern>%d %p %c{1.} [%t] %m%n</pattern>
 		</encoder>
 	</appender>
-
-	<logger name="com.erp" level="debug" >
-		<appender-ref ref="stash" />
+	
+	<root level="INFO">
 		<appender-ref ref="CONSOLE" />
+		<!-- Method 1-->
 		<appender-ref ref="FILE-ROLLING" />
-	</logger>
+		<!-- Method 2 -->
+		<appender-ref ref="stash" />
+	</root>
+	
+	<logger name="com.erp" level="debug" />
+    <logger name="org.hibernate" level="ERROR" />
+	<logger name="org.springframework" level="ERROR" />
 
 </configuration>

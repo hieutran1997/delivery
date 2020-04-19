@@ -23,8 +23,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sys_resource")
 public class SysResourceModel extends BaseModel {
-    
-    @Id
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9000347811104682533L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     

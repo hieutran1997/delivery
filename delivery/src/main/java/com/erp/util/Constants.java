@@ -5,8 +5,6 @@
  */
 package com.erp.util;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  *
  * @author hieut
@@ -34,13 +32,16 @@ public class Constants {
         public static final String RESOURCE = "resource";
         public static final String ORGANIZATION = "org";
         public static final String CAT_MERCHANDISE_GROUP = "group_merchandise";
+        public static final String CAT_MERCHANDISE_TYPE = "type_merchandise";
+        public static final String UNIT = "unit";
+        public static final String MERCHANDISE = "merchandise";
     }
     
     public interface CORS_FILTER {
         public static final String ALLOW_METHODS = "POST, PUT, GET, OPTIONS, DELETE";
         public static final String ALLOW_HEADERS = "X-CACHEABLE, Authorization, Content-Type, Current-Language, Current-Market, viettel-api-key, sso-two-factor-ticket";
     }
-    private static HttpServletRequest req;
+    
     public static String SCHEMA_PAYROLL="vhcm_report";
     public static class RESPONSE_TYPE {
         public static final String SUCCESS = "SUCCESS";
@@ -99,5 +100,12 @@ public class Constants {
         //Thu muc chua file tam de import
         String IMPORT_FOLDER = "/share/import/";
         String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
+    }
+    
+    public static class STATUS_MERCHANDISE {
+    	public static final Long NEW = 0L;
+    	public static final Long APPROVED = 1L;
+    	public static final Long ACTIVE = 2L;
+    	public static final Long NOT_ACTIVE = 3L;
     }
 }

@@ -64,7 +64,7 @@ function MenuComponent(props) {
                 props.setUpdateMenu(!props.updateMenu);
             }
         }
-    }, [props.updateMenu, props.setUpdateMenu, onInit, setMenu, setOnInit]);
+    }, [props, props.updateMenu, props.setUpdateMenu, onInit, setMenu, setOnInit]);
 
     const renderMenu = menus.map((item) =>
         item.childs.length > 0 ?

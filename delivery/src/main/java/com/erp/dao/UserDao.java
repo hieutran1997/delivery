@@ -13,10 +13,10 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SQLQuery;
-import org.hibernate.transform.Transformers;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
+@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 public interface UserDao extends JpaRepository<UserModel, Long> {
     
     UserModel findByUsername(String username);
@@ -62,7 +62,6 @@ public interface UserDao extends JpaRepository<UserModel, Long> {
     
     @Transactional
     public default Long addRole(UserRoleModel data, VfData vfData){
-        UserRoleModel instance = new UserRoleModel();
         StringBuilder sql = new StringBuilder("insert into user_role (created_by, created_date, role_code, username) ");
         String values = " values (?, ?, ?, ?)";
         sql.append(values);

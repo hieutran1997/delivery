@@ -2,3 +2,5 @@
 /delivery/target/*
 /realtime/.settings
 /delivery/.settings
+/file-storage/logs/*.log
+/delivery/logs/archived/*.log

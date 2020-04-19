@@ -20,7 +20,7 @@ public class MerchandiseBO {
 	@Id
     @Column(name = "merchandise_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long merchandise_id;
+    private Long merchandiseId;
 	
 	@Column(name= "merchandise_code")
 	private String merchandiseCode;
@@ -60,4 +60,7 @@ public class MerchandiseBO {
 
 	@Column(name= "created_date")
 	private Date createdDate;
+	
+	@Column(name= "organization_path")
+	private String organizationPath;
 }

@@ -1,5 +1,6 @@
 package com.erp.service;
 
+import com.erp.dao.OrganizationDAO;
 import com.erp.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.erp.model.OrganizationModel;
 import com.erp.model.UserModel;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
@@ -23,6 +26,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     
     @Autowired
     private VfData vfData;
+    
+    @Autowired
+	private OrganizationDAO orgDAO;
 
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         UserModel user = userDao.findByUsername(userId);
@@ -62,5 +68,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public UserModel findUser(String userName) {
         UserModel user = userDao.findByUsername(userName);
         return user;
+    }
+    
+    @Override
+    public OrganizationModel getOrganizationByUser(String userName) {
+    	OrganizationModel organization = new OrganizationModel();
+    	UserModel user = userDao.findByUsername(userName);
+    	if(user !=null && user.getOrganizationCode() != null) {
+    		organization = orgDAO.getOrgByCode(vfData, user.getOrganizationCode());	
+    	}
+    	return organization;
     }
 }

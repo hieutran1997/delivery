@@ -4,11 +4,7 @@ import { ACTION_MODULE } from '../../common';
 const groupMerchandiseReducer = (state, action) => {
     switch (action.type) {
         case `${ACTION_MODULE.CAT_GROUP_MER}_${types.REQUEST_SUCCESS}`:
-            return {
-                ...action,
-                error: false,
-                type: action.type
-            };
+            return null;
         case `${ACTION_MODULE.CAT_GROUP_MER}_${types.PAGING_SUCCESS}`:
             return {
                 ...action.result.data,
@@ -57,6 +53,8 @@ const groupMerchandiseReducer = (state, action) => {
                 error: true,
                 type: action.type
             };
+        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.GET_SELETED_SUCCESS}`:
+                return action.result.data;
         default:
             return null;
     }
