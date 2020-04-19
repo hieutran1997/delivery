@@ -27,6 +27,7 @@ function AdminLayout(props) {
     const [clientConnected, setClientConnected] = useState(false);
     const [client, setClient] = useState({});
     const [updateMenu, setUpdateMenu] = useState(false);
+    const [pathData, setPathData] = useState({});
 
     // const Component = props.component;
     const route = props.history;

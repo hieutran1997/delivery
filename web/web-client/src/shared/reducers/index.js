@@ -9,6 +9,7 @@ import groupMerchandiseReducer from './categories/GroupMerchandiseReducer';
 import typeMerchandiseReducer from './categories/TypeMerchandiseReducer';
 import catUnitReducer from './categories/UnitReducer';
 import merchandiseReducer from './categories/MerchandiseReducer';
+import merchandiseRegisReducer from './process/MerchandiseRegisterReducer';
 
 export default combineReducers({
   authReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
   groupMerchandiseReducer,
   typeMerchandiseReducer,
   catUnitReducer,
-  merchandiseReducer
+  merchandiseReducer,
+  merchandiseRegisReducer
 })

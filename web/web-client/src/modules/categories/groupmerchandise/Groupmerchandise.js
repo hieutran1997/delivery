@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
 import { getDataPaging, insert, update, deleteData } from '../../../shared/actions/categories/GroupMerchandiseResource';
+import { getSelectedData as getTypeData} from '../../../shared/actions/categories/TypeMerchandiseResource';
 import { dataPost, message, mappingDataChange, openNotification, hasPermission, control, resourceCode, ACTION_MODULE } from '../../../shared/common';
 import { Table, Icon, Popconfirm, Card } from 'antd';
 import { PopupInfo } from './PopupInfo.component';
@@ -18,6 +19,7 @@ function GroupMerchandise(props) {
   const [isEdit, setIsEdit] = useState(false);
   const [isShowAdd, setIsShowAdd] = useState(false);
   const [dataDetail, setDataDetail] = useState(null);
+  const [lstType, setLstType] = useState([]);
 
   const columns = [
     {
@@ -29,14 +31,19 @@ function GroupMerchandise(props) {
       }
     },
     {
+      title: 'Mã loại',
+      dataIndex: 'typeCode',
+      width: '10%'
+    },
+    {
       title: 'Mã nhóm',
       dataIndex: 'code',
-      width: '20%'
+      width: '10%'
     },
     {
       title: 'Tên nhóm hàng',
       dataIndex: 'name',
-      width: '20%'
+      width: '30%'
     },
     {
       title: '#',
@@ -65,6 +72,7 @@ function GroupMerchandise(props) {
     if (onInit) {
       setLoading(true);
       props.filterData(dataSearch);
+      props.getTypeData();
       setOnInit(false);
     }
     if (props.datagroupMerchandise) {
@@ -107,6 +115,12 @@ function GroupMerchandise(props) {
       }
     }
   }, [props, onInit, dataSearch]);
+
+  useEffect(()=>{
+    if(props.typeMerchandiseProps){
+      setLstType(props.typeMerchandiseProps);
+    }
+  }, [props.typeMerchandiseProps]);
 
   const handlerSearch = data => {
     dataPost.data = data;
@@ -172,10 +186,10 @@ function GroupMerchandise(props) {
         
       </Card>
       {
-        hasPermission(resourceCode.groupMerchandise, control.hasEdit) === 1 ? <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange} /> : ""
+        hasPermission(resourceCode.groupMerchandise, control.hasEdit) === 1 ? <PopupInfo isEdit={isEdit} lstType={lstType} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange} /> : ""
       }
       {
-        hasPermission(resourceCode.groupMerchandise, control.hasAdd) === 1 ? <PopupAdd isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave} /> : ""
+        hasPermission(resourceCode.groupMerchandise, control.hasAdd) === 1 ? <PopupAdd isShowAdd={isShowAdd} lstType={lstType} closePopup={closePopup} onSave={onSave} /> : ""
       }
     </div>
   );
@@ -183,6 +197,7 @@ function GroupMerchandise(props) {
 
 const mapStateToProps = state => ({
   datagroupMerchandise: state.groupMerchandiseReducer,
+  typeMerchandiseProps: state.typeMerchandiseReducer,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -191,6 +206,7 @@ const mapDispatchToProps = dispatch => {
     insert: (data) => dispatch(insert(data)),
     update: (data) => dispatch(update(data)),
     deleteData: (data) => dispatch(deleteData(data)),
+    getTypeData: () => dispatch(getTypeData()),
   }
 };
 

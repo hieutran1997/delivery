@@ -35,7 +35,7 @@ export function FormSearch(props) {
                             labelName="Loại hàng"
                             valueName="catTypeMerchandiseId"
                             dataKey="id"
-                            options={props.lstType}
+                            options={props.lstType? props.lstType: []}
                             optionLabel="name"
                             filter={true}
                             filterPlaceholder='Chọn loại hàng hóa'
@@ -51,7 +51,7 @@ export function FormSearch(props) {
                             labelName="Nhóm hàng"
                             valueName="catGroupMerchandiseId"
                             dataKey="id"
-                            options={props.lstGroup}
+                            options={props.lstGroup? props.lstGroup: []}
                             optionLabel="name"
                             filter={true}
                             filterPlaceholder='Chọn nhóm hàng hóa'
@@ -68,7 +68,7 @@ export function FormSearch(props) {
                             labelName="Đơn vị tính"
                             valueName="catUnitId"
                             dataKey="id"
-                            options={props.lstUnit}
+                            options={props.lstUnit? props.lstUnit: []}
                             optionLabel="name"
                             filter={true}
                             filterPlaceholder='Chọn đơn vị tính'

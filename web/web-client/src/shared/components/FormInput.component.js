@@ -3,7 +3,6 @@ import React, { forwardRef, useState } from 'react';
 import { typeOfDynamicInput } from '../common';
 import { DatePicker } from 'antd';
 import { DateFormat } from '../common';
-import { Dropdown } from 'primereact/dropdown';
 import moment from 'moment';
 
 const BindingError = (props) => {
@@ -31,11 +30,11 @@ export const FormInput = forwardRef((props, ref) => {
         if (props.value) {
             props.setValue(props.valueName, moment(props.value, DateFormat));
         }
-    }, [props.valueName, props.value, props.validation, props]);
+    }, [props.valueName, props.value, props.validation]);
 
     React.useEffect(() => {
-        if(props.value !== null){
-            let dataSelected = props.options.find(x=>x[props.dataKey] === props.value);
+        if (props.value !== null) {
+            let dataSelected = props.options.find(x => x[props.dataKey] === props.value);
             setValue(dataSelected);
         }
     }, [props.value, props.options, props.dataKey, setValue]);
@@ -47,16 +46,6 @@ export const FormInput = forwardRef((props, ref) => {
         }
         if (props.onChange) {
             props.onChange(ev);
-        }
-    }
-
-    const onChangeSelect =(e) =>{
-        if(e){
-            setValue(e.value);
-            props.setValue(props.valueName, e.value[props.dataKey]);
-        }
-        if (props.onChange) {
-            props.onChange(e);
         }
     }
 
@@ -72,6 +61,7 @@ export const FormInput = forwardRef((props, ref) => {
                     onChange={onChangeDate}
                     defaultValue={props.value ? moment(props.value, DateFormat) : null}
                     disabled={props.disabled}
+                    placeholder="Chọn ngày"
                     format={DateFormat} />
 
                 <BindingError errors={props.errors} name={props.valueName}></BindingError>
@@ -85,8 +75,13 @@ export const FormInput = forwardRef((props, ref) => {
                     props.validation.required && props.validation.required === true ? <span className="label-required">*</span> : ""
                 }</span>
                 <br />
-                <Dropdown value={value} options={props.options} onChange={onChangeSelect} disabled={props.disabled} className={props.inputClassName} optionLabel={props.optionLabel}
-                    filter={true} filterPlaceholder={props.placeholder} filterBy={props.filterBy} showClear={props.showClear} />
+                <select name={props.valueName} value={props.value} className={props.inputClassName} disabled={props.disabled} onChange={(ev) => { props.onChange ? props.onChange(ev) : void 0 }}
+                    ref={props.register(props.validation)} >
+                    <option>{props.placeholder}</option>
+                    {props.options ? props.options.map((item, index) => (
+                        <option key={index} value={item[props.dataKey]} >{item[props.optionLabel]}</option>
+                    )) : <></>}
+                </select>
             </>
         );
     }
@@ -98,9 +93,9 @@ export const FormInput = forwardRef((props, ref) => {
                 }</span>
                 <br />
                 <textarea name={props.valueName} value={value} className={props.inputClassName} disabled={props.disabled}
-                    onChange={ev => { props.setValue(props.valueName, ev.target.value); setValue(ev.target.value); props.onChange ? props.onChange(ev) : void 0; }}
+                    onChange={ev => { setValue(ev.target.value); props.onChange ? props.onChange(ev) : void 0; }}
                     placeholder={props.placeholder}
-                    ref={props.register} />
+                    ref={props.register(props.validation)} />
                 <BindingError errors={props.errors} name={props.valueName}></BindingError>
             </>
 

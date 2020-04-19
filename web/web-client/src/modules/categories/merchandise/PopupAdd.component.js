@@ -44,6 +44,18 @@ export function PopupAdd(props) {
     setValue('description', '');
   }, [props.isShowAdd, setValue]);
 
+  useEffect(() => {
+    if(props.newCode){
+      setValue('merchandiseCode', props.newCode);
+    }
+  }, [props.newCode, setValue]);
+
+  const changeTypeMer = (ev) => {
+    if(ev){
+      props.getNewCode(ev.value.value);
+    }
+  }
+
   return (
     <Modal
       title={`Thêm mới hàng hóa`}
@@ -65,7 +77,7 @@ export function PopupAdd(props) {
           </Col>
         </Row>
         <Row type="flex" justify="space-around">
-        <Col span={11}>
+          <Col span={11}>
             <FormAutoComplete inputClassName="custom-input-as-ant-input"
               labelName="Loại hàng"
               valueName="catTypeMerchandiseId"
@@ -78,6 +90,7 @@ export function PopupAdd(props) {
               register={register}
               setValue={setValue}
               errors={errors}
+              onChange={changeTypeMer}
               validation={{ required: true }}
               showClear={true} />
           </Col>
@@ -97,8 +110,6 @@ export function PopupAdd(props) {
               errors={errors}
               showClear={true} />
           </Col>
-          
-          
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={11}>
@@ -118,7 +129,7 @@ export function PopupAdd(props) {
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <FormInput valueName="status" value={0} labelName="Trạng thái" disabled={true} inputClassName="custom-input-as-ant-input" options={lstStatus} showClear={true}
+            <FormInput valueName="status" value={0} labelName="Trạng thái" disabled={true} inputClassName="ant-input custom-input-as-ant-input" options={lstStatus} showClear={true}
               register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.SELECT_FILTER} />
           </Col>
         </Row>

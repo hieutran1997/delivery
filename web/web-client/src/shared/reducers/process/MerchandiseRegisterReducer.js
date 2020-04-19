@@ -1,61 +1,70 @@
 import * as types from '../../constants/ActionTypeCommon';
 import { ACTION_MODULE } from '../../common';
 
-const groupMerchandiseReducer = (state, action) => {
+const merchandiseRegisReducer = (state, action) => {
     switch (action.type) {
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.REQUEST_SUCCESS}`:
-            return null;
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.PAGING_SUCCESS}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.REQUEST_SUCCESS}`:
+            return {
+                ...action,
+                error: false,
+                type: action.type
+            };
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.PAGING_SUCCESS}`:
             return {
                 ...action.result.data,
                 error: false,
                 type: action.type
             };
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.PAGING_ERROR}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.PAGING_ERROR}`:
             return {
                 ...action,
                 error: true,
                 type: action.type
             };
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.CREATE_SUCCESS}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.CREATE_SUCCESS}`:
             return {
                 ...action.result.data,
                 error: false,
                 type: action.type
             };
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.CREATE_ERROR}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.CREATE_ERROR}`:
             return {
                 ...action,
                 error: true,
                 type: action.type
             };
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.UPDATE_SUCCESS}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.UPDATE_SUCCESS}`:
             return {
                 ...action.result.data,
                 error: false,
                 type: action.type
             };
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.UPDATE_ERROR}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.UPDATE_ERROR}`:
             return {
                 ...action,
                 error: true,
                 type: action.type
             };
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.DELETE_SUCCESS}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.DELETE_SUCCESS}`:
             return {
                 ...action.result.data,
                 error: false,
                 type: action.type
             };
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.DELETE_ERROR}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.DELETE_ERROR}`:
             return {
                 ...action,
                 error: true,
                 type: action.type
             };
-        case `${ACTION_MODULE.CAT_GROUP_MER}_${types.GET_SELETED_SUCCESS}`:
+        case  `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.APPROVE_SUCCESS}`:
             return {
-                ...action,
+                error: false,
+                type: action.type
+            };
+        case  `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.FIND_BY_MERCHANDISE_ID_SUCCESS}`:
+            return {
+                ...action.result,
                 error: false,
                 type: action.type
             };
@@ -64,4 +73,4 @@ const groupMerchandiseReducer = (state, action) => {
     }
 }
 
-export default groupMerchandiseReducer;
+export default merchandiseRegisReducer;

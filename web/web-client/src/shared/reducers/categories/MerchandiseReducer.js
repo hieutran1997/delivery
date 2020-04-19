@@ -57,6 +57,23 @@ const merchandiseReducer = (state, action) => {
                 error: true,
                 type: action.type
             };
+        case `${ACTION_MODULE.MERCHANDISE}_${types.GET_NEW_MERCHANDISE_CODE_SUCCESS}`:
+            return {
+                ...action.result,
+                error: false,
+                type: action.type
+            };
+        case `${ACTION_MODULE.MERCHANDISE}_${types.FIND_BY_ID_SUCCESS}`:
+            return {
+                ...action.result,
+                error: false,
+                type: action.type
+            };
+        case  `${ACTION_MODULE.MERCHANDISE}_${types.APPROVE_SUCCESS}`:
+            return {
+                error: false,
+                type: action.type
+            };
         default:
             return null;
     }

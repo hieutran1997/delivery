@@ -41,4 +41,29 @@ const getSelectedData = ()=>{
         api: (axios) => axios.get(url)
     };
 }
-export { getDataPaging, insert, update, deleteData, getSelectedData };
+
+const getNewCode = (typeCode) =>{
+    const url =  `${url_services.MERCHANDISE}/get-new-code/${typeCode}`;
+    return {
+        types: [`${ACTION_MODULE.MERCHANDISE}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE}_${types.GET_NEW_MERCHANDISE_CODE_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE}_${types.GET_NEW_MERCHANDISE_CODE_ERROR}`],
+        api: (axios) => axios.get(url)
+    };
+}
+
+const findById = (id) => {
+    const url =  `${url_services.MERCHANDISE}/${id}`;
+    return {
+        types: [`${ACTION_MODULE.MERCHANDISE}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE}_${types.FIND_BY_ID_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE}_${types.FIND_BY_ID_ERROR}`],
+        api: (axios) => axios.get(url)
+    };
+}
+
+const approve = (id) => {
+    const url =  `${url_services.MERCHANDISE}/approve/${id}`;
+    return {
+        types: [`${ACTION_MODULE.MERCHANDISE}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE}_${types.APPROVE_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE}_${types.APPROVE_ERROR}`],
+        api: (axios) => axios.get(url)
+    };
+}
+
+export { getDataPaging, insert, update, deleteData, getSelectedData, getNewCode, findById, approve };

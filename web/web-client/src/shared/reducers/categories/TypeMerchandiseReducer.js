@@ -54,7 +54,11 @@ const typeMerchandiseReducer = (state, action) => {
                 type: action.type
             };
         case `${ACTION_MODULE.CAT_TYPE_MER}_${types.GET_SELETED_SUCCESS}`:
-            return action.result.data;
+            return {
+                ...action,
+                error: false,
+                type: action.type
+            };
         default:
             return null;
     }

@@ -11,6 +11,7 @@ function MenuComponent(props) {
 
     const [menus, setMenu] = useState([]);
     const [onInit, setOnInit] = useState(true);
+    const [menuOpen, setMenuOpen] = useState("/process");
 
     const filterMenu = () => {
         let data = [...menu];
@@ -64,7 +65,7 @@ function MenuComponent(props) {
                 props.setUpdateMenu(!props.updateMenu);
             }
         }
-    }, [props, props.updateMenu, props.setUpdateMenu, onInit, setMenu, setOnInit]);
+    }, [props.updateMenu, props.setUpdateMenu, onInit, setMenu, setOnInit]);
 
     const renderMenu = menus.map((item) =>
         item.childs.length > 0 ?
@@ -99,13 +100,11 @@ function MenuComponent(props) {
             </Menu.Item>
     );
 
-
     return (
         <Menu theme="dark"
             mode="inline"
             selectable={true}
             defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["/system"]}
             selectedKeys={[props.pathUrl.pathname]}
         >
             {renderMenu}

@@ -24,7 +24,7 @@ public interface CatGroupMerchandiseDAO extends CrudRepository<CatGroupMerchandi
         int start = (pageable.getCurrent() - 1) * pageable.getPageSize();
         StringBuilder strCondition = new StringBuilder(" Where 1 = 1");
         List<Object> paramList = new ArrayList<Object>();
-        StringBuilder sql = new StringBuilder(" SELECT cgm.cat_group_mechandise_id catGroupMerchandiseId, cgm.`code` code, cgm.`name` name from cat_group_mechandise cgm ");
+        StringBuilder sql = new StringBuilder(" SELECT cgm.cat_group_mechandise_id catGroupMerchandiseId, cgm.`type_code` typeCode, cgm.`code` code, cgm.`name` name from cat_group_mechandise cgm ");
         if (pageable.getData() != null && !CommonUtil.isNullOrEmpty(pageable.getData().getCode())) {
             strCondition.append(" AND LOWER(cgm.`code`) = LOWER(?) ");
             paramList.add(pageable.getData().getCode());

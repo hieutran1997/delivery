@@ -105,6 +105,26 @@ public class MerchandiseController extends BaseController {
 		result.setMessage("Thành công!");
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.MERCHANDISE, Constants.PERMISSION.VIEW)) {
+			throw new PermissionException();
+		}
+		MerchandiseBO bo = service.findById(id);
+		return new ResponseEntity<>(bo, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/approve/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> approve(@PathVariable(value = "id") Long id) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.MERCHANDISE, Constants.PERMISSION.VIEW)) {
+			throw new PermissionException();
+		}
+		MerchandiseBO bo = service.findById(id);
+		bo.setStatus(Constants.STATUS_MERCHANDISE.APPROVED);
+		service.saveOrUpdate(bo);
+		return new ResponseEntity<>(bo, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/getSelectedData", method = RequestMethod.GET)
 	public ResponseEntity<?> getSelectedData() {
@@ -112,6 +132,11 @@ public class MerchandiseController extends BaseController {
 			throw new PermissionException();
 		}
 		return new ResponseEntity<>(service.getSelectedData(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/get-new-code/{typeCode}", method = RequestMethod.GET)
+	public ResponseEntity<?> getNewCode(@PathVariable(value = "typeCode") String typeCode) {
+		return new ResponseEntity<>(service.generateCode(typeCode), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/create-index", method = RequestMethod.GET)

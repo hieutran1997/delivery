@@ -81,7 +81,7 @@ public interface OrganizationDAO extends JpaRepository<OrganizationModel, Long> 
 	}
 	
 	public default OrganizationModel getOrgByCode(VfData vfData, String code){
-		String sql = " SELECT code, organization_name organizationName, organization_path organizationPath FROM organization org WHERE org.code = :code ";
+		String sql = " SELECT id, code, organization_name organizationName, organization_path organizationPath FROM organization org WHERE org.code = :code ";
 		SQLQuery query = vfData.createSQLQuery(sql);
 		query.setParameter("code", code);
 		vfData.setResultTransformer(query, OrganizationModel.class);

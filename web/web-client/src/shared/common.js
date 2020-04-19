@@ -44,11 +44,14 @@ export const typeOfDynamicInput = {
 
 export const message = {
     messageConfirmDelete: 'Bạn có chắc chắn muốn xóa?',
+    messageConfirmApprove: 'Bạn có chắc chắn muốn duyệt?',
     createSuccess: 'Thêm mới thành công',
     createError: 'Không thêm được!',
     updateSuccess: 'Sửa thành công',
     updateError: 'Không sửa được!',
     deleteSuccess: 'Xóa thành công',
+    approveSuccess: 'Duyệt thành công',
+    approveError: 'Xóa thành công',
     deleteError: 'Không xóa được!',
     okText: 'Đồng ý',
     cancelText: 'Hủy bỏ',
@@ -79,7 +82,8 @@ export const control = {
     //other control
     addRole: "addRole",
     addPermission: "addPermission",
-    addAction: "addAction"
+    addAction: "addAction",
+    regisMerchandise: "regisMerchandise"
 }
 
 export const resourceCode = {
@@ -97,7 +101,8 @@ export const ACTION_MODULE = {
     CAT_GROUP_MER: "CAT_GROUP_MER",
     CAT_TYPE_MER: "CAT_TYPE_MER",
     CAT_UNIT: "CAT_UNIT",
-    MERCHANDISE: "MERCHANDISE"
+    MERCHANDISE: "MERCHANDISE",
+    MERCHANDISE_REGISTER: "MERCHANDISE_REGISTER"
 }
 
 export function mappingDataChange(resource, destinnation) {
