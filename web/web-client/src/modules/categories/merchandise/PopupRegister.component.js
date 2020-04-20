@@ -3,12 +3,15 @@ import { Modal, Row, Col, Button } from 'antd';
 import useForm from 'react-hook-form';
 import { FormInput } from '../../../shared/components';
 import { typeOfDynamicInput } from '../../../shared/common';
+import FormFile from '../../../shared/components/FormFile.component';
 
 const toDay = new Date();
 export function PopupRegis(props) {
   const { register, handleSubmit, errors, setValue } = useForm();
   const [isShowRegis, setIsShowRegis] = useState(false);
   const [merchandiseId, setMerchandiseId] = useState(0);
+  const [merchandiseRegisterId, setMerchandiseRegisterId] = useState(0);
+  const [fileAttachment, setFileAttachment] = useState({});
   const lstStatus = [
     {
       value: 1,
@@ -22,18 +25,21 @@ export function PopupRegis(props) {
 
   const onSaveEdit = data => {
     data.merchandiseId = merchandiseId;
+    data.merchandiseRegisterId = merchandiseRegisterId;
     props.onSave(data);
-    
   };
 
   useEffect(() => {
-    if(props.dataDetail){
+    if (props.dataDetail) {
       setValue('merchandiseId', props.dataDetail.merchandiseId);
       setValue('startDate', props.dataDetail.startDate);
       setValue('endDate', props.dataDetail.endDate);
       setValue('status', props.dataDetail.status);
       setValue('description', props.dataDetail.description);
+      setValue('files', []);
       setMerchandiseId(props.dataDetail.merchandiseId);
+      setMerchandiseRegisterId(props.dataDetail.merchandiseRegisterId);
+      setFileAttachment(props.dataDetail.fileAttachment);
     }
   }, [props.dataDetail, setValue]);
 
@@ -71,6 +77,12 @@ export function PopupRegis(props) {
             <FormInput valueName="description" labelName="Mô tả" inputClassName="ant-input"
               register={register} setValue={setValue} validation={{ maxlength: 1000 }} type={typeOfDynamicInput.TEXT_AREA} errors={errors} />
           </Col>
+        </Row>
+        <Row type="flex" justify="space-around">
+          <Col span={11}>
+            <FormFile valueName="files" fileAttachment={fileAttachment} register={register} setValue={setValue}></FormFile>
+          </Col>
+          <Col span={13}></Col>
         </Row>
         <div className="footer-modal">
           <input type="submit" className="btn-save ant-btn btn-discard ant-btn-primary" value="Lưu lại" />

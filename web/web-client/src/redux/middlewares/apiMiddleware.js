@@ -14,11 +14,11 @@ const apiMiddleware = store => next => action => {
     return next(action);
   }
 
-  const [REQUEST, SUCCESS, FAILURE] = types;
+  const [REQUEST, SUCCESS, FAILURE, MODULE] = types;
   next({ ...rest, type: REQUEST });
 
   const _service = axios.create({
-    baseURL: environments_dev.URL_SERVICE,
+    baseURL: MODULE === 'file'? environments_dev.URL_SERVICE_FILE : environments_dev.URL_SERVICE,
     headers: {
       'Content-Type': 'application/json'
     }

@@ -1,6 +1,7 @@
 package com.erp.process.bo;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import com.erp.util.FileAttachment;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +22,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "merchandise_register")
-public class MerchandiseRegisterBO {
+public class MerchandiseRegisterBO extends FileAttachment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "merchandise_register_id")
@@ -48,4 +54,7 @@ public class MerchandiseRegisterBO {
 	
 	@Column(name = "description")
 	private String description;
+	
+	@Transient
+	private List<MultipartFile> files;
 }

@@ -246,3 +246,101 @@ export const getListTopic = () => {
     }
     return result;
 }
+
+export const convertFormFile = (dataPost) => {
+    const filteredData = convertData(dataPost);
+    const formData = objectToFormData(filteredData, '', []);
+    return formData;
+}
+
+const objectToFormData = (obj, rootName, ignoreList) => {
+    const formData = new FormData();
+    function appendFormData(data, root) {
+        if (!ignore(root)) {
+            root = root || '';
+            if (data instanceof File) {
+                if (data.type !== 'vhr_stored_file') {
+                    formData.append(root, data);
+                }
+            } else if (Array.isArray(data)) {
+                let index = 0;
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i] instanceof File) {
+                        if (data[i].type !== 'vhr_stored_file') {
+                            appendFormData(data[i], root + '[' + index + ']');
+                            index++;
+                        }
+                    } else {
+                        appendFormData(data[i], root + '[' + i + ']');
+                    }
+                }
+            } else if (data && typeof data === 'object') {
+                for (const key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        if (root === '') {
+                            appendFormData(data[key], key);
+                        } else {
+                            appendFormData(data[key], root + '.' + key);
+                        }
+                    }
+                }
+            } else {
+                if (data !== null && typeof data !== 'undefined') {
+                    formData.append(root, data);
+                }
+            }
+        }
+    }
+
+    function ignore(root) {
+        return Array.isArray(ignoreList) && ignoreList.some(function (x) { return x === root; });
+    }
+
+    appendFormData(obj, rootName);
+    return formData;
+}
+
+/**
+   * convertData
+   */
+export const convertData = (data) => {
+    if (typeof data === typeof {}) {
+        return convertDataObject(data);
+    } else if (typeof data === typeof []) {
+        return convertDataArray(data);
+    } else if (typeof data === typeof true) {
+        return convertBoolean(data);
+    }
+    return data;
+}
+/**
+ * convertDataObject
+ * param data
+ */
+export const convertDataObject = (data) => {
+    if (data) {
+        for (const key in data) {
+            if (data[key] instanceof File) {
+
+            } 
+            else if(data[key] instanceof Date){
+                data[key] = (new Date(data[key])).toUTCString();
+            }
+            else if(data[key] instanceof Object){
+                data[key] = convertData(data[key]);
+            }
+        }
+    }
+    return data;
+}
+export const convertDataArray = (data) => {
+    if (data && data.length > 0) {
+        for (const i in data) {
+            data[i] = convertData(data[i]);
+        }
+    }
+    return data;
+}
+export const convertBoolean = (value) => {
+    return value ? 1 : 0;
+}

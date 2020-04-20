@@ -4,10 +4,11 @@
  */
 package com.viettel.storage.service;
 
+import java.io.IOException; 
+import java.nio.file.*; 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -278,11 +279,26 @@ public class AttachmentFileService {
     public boolean deleteFile(AttachmentFileBO attachmentFileBO) {
         String filePath = getFilePath(attachmentFileBO.getFileType(), attachmentFileBO.getAttachmentFileId());
         if (filePath != null) {
-            File file = new File(filePath);
-            if(file.delete()) { 
+            try
+            { 
+                Files.deleteIfExists(Paths.get(filePath));
                 attachmentFileDAO.delete(attachmentFileBO);
                 return true;
-            }
+            } 
+            catch(NoSuchFileException e) 
+            { 
+                System.out.println("No such file/directory exists"); 
+            } 
+            catch(DirectoryNotEmptyException e) 
+            { 
+                System.out.println("Directory is not empty."); 
+            } 
+            catch(IOException e) 
+            { 
+                System.out.println("Invalid permissions."); 
+            } 
+              
+            System.out.println("Deletion successful."); 
         }
         return false;
     }
@@ -318,6 +334,7 @@ public class AttachmentFileService {
                 for (AttachmentFileBO attachmentFileBO: listAttachmentFileBO) {
                     deleteFile(attachmentFileBO);
                 }
+                
                 return true;
             }
         return false;

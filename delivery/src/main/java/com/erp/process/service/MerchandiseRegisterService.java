@@ -1,10 +1,13 @@
 package com.erp.process.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.erp.model.dto.SelectedFormDTO;
 import com.erp.process.bo.MerchandiseRegisterBO;
 import com.erp.process.dao.MerchandiseRegisterDAO;
 import com.erp.process.dto.MerchandiseRegisterDTO;
@@ -45,6 +48,10 @@ public class MerchandiseRegisterService {
      */
     public PaginationUtil<MerchandiseRegisterDTO> processSearch(SearchRequestUtil<MerchandiseRegisterDTO> pageable) {
         return dao.getDataPaging(pageable, vfData);
+    }
+    
+    public List<SelectedFormDTO> getSelectedDataByOrgPath(String orgPath){
+    	return dao.getSelectedDataByOrgPath(vfData, orgPath);
     }
     
 }

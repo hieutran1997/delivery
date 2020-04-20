@@ -28,7 +28,7 @@ export const FormInput = forwardRef((props, ref) => {
     React.useEffect(() => {
         props.register({ name: `${props.valueName}` }, props.validation || null); // custom register react-select 
         if (props.value) {
-            props.setValue(props.valueName, moment(props.value, DateFormat));
+            setValue(props.valueName, moment(props.value, DateFormat));
         }
     }, [props.valueName, props.value, props.validation]);
 
@@ -42,7 +42,7 @@ export const FormInput = forwardRef((props, ref) => {
     const onChangeDate = (ev, str) => {
         if (ev != null) {
             setValue(ev.toDate());
-            props.setValue(props.valueName, ev.toDate());
+            props.setValue(props.valueName, ev.toDate().toUTCString());
         }
         if (props.onChange) {
             props.onChange(ev);

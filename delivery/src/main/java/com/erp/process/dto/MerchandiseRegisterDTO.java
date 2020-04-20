@@ -1,6 +1,9 @@
 package com.erp.process.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,4 +30,6 @@ public class MerchandiseRegisterDTO {
 	private Date createdDate;
 
 	private String description;
+	
+	private List<MultipartFile> files;
 }

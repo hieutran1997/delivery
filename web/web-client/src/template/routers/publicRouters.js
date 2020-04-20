@@ -9,6 +9,7 @@ const GroupMerchandise = lazy(() => import('../../modules/categories/groupmercha
 const TypeMerchandise = lazy(() => import('../../modules/categories/typemerchandise/TypeMerchandise'));
 const Unit = lazy(() => import('../../modules/categories/unit/Unit'));
 const Merchandise = lazy(() => import('../../modules/categories/merchandise/Merchandise'));
+const Product = lazy(() => import('../../modules/process/product/Product'));
 
 export default{
     Home: {
@@ -60,6 +61,10 @@ export default{
         component: Merchandise,
         path: '/merchandise',
         moduleUrl: '/admin/cat'
+    },
+    Product:{
+        component: Product,
+        path: '/products',
+        moduleUrl: '/admin/process'
     }
-    
 }

@@ -1,6 +1,6 @@
 import * as types from '../../constants/ActionTypeCommon';
 import { url_services } from '../../../environment';
-import { ACTION_MODULE } from '../../common';
+import { ACTION_MODULE, convertFormFile } from '../../common';
 
 const getDataPaging = (data) => {
     const url =  `${url_services.MERCHANDISE_REGISTER}/postQuery`;
@@ -12,9 +12,10 @@ const getDataPaging = (data) => {
 
 const insert = (data) => {
     const url = `${url_services.MERCHANDISE_REGISTER}/`;
+    const form = convertFormFile(data);
     return {
         types: [`${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.CREATE_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.CREATE_ERROR}`],
-        api: (axios) => axios.post(url, data)
+        api: (axios) => axios.post(url, form, { headers: { 'Content-Type': 'multipart/form-data; text/html; charset=UTF-8' }})
     };
 };
 
@@ -57,7 +58,5 @@ const findByMerchandiseId = (id) => {
         api: (axios) => axios.get(url)
     };
 }
-
-
 
 export { getDataPaging, insert, update, deleteData, findById, approve, findByMerchandiseId };
