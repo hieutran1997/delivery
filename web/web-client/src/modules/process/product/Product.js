@@ -13,6 +13,7 @@ import { getSeletedByOrgpath } from '../../../shared/actions/process/Merchandise
 import moment from 'moment';
 import TableFile from '../../../shared/components/FileTable.component';
 import { GET_SELETED_ORGANIZATION_SUCCESS } from '../../../shared/constants/ActionTypes';
+import { Link } from 'react-router-dom';
 
 function Product(props) {
   const [dataContent, setDataContent] = useState([]);
@@ -109,6 +110,13 @@ function Product(props) {
             >
               <Icon type="delete" className="icon-action  icon-delete" title="Xóa" />
             </Popconfirm> : ""}
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          {hasPermission(resourceCode.product, control.hasView) === 1 ?
+            <Link to={{ pathname: "/admin/process/product-info", search: "?code=" + record.productCode, state: { fromDashboard: true } }} >
+              <Icon type="eye" className="icon-action icon-edit" title="Xem" />
+            </Link>
+            : ""}
+
         </span>
       ),
       width: '10%'

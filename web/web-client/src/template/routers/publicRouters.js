@@ -10,6 +10,7 @@ const TypeMerchandise = lazy(() => import('../../modules/categories/typemerchand
 const Unit = lazy(() => import('../../modules/categories/unit/Unit'));
 const Merchandise = lazy(() => import('../../modules/categories/merchandise/Merchandise'));
 const Product = lazy(() => import('../../modules/process/product/Product'));
+const ProductInfo = lazy(() => import ('../../modules/process/productinfo/ProductInfo'));
 
 export default{
     Home: {
@@ -65,6 +66,11 @@ export default{
     Product:{
         component: Product,
         path: '/products',
+        moduleUrl: '/admin/process'
+    },
+    ProductInfo:{
+        component: ProductInfo,
+        path: '/product-info',
         moduleUrl: '/admin/process'
     }
 }
