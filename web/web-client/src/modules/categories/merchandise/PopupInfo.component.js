@@ -137,7 +137,7 @@ export function PopupInfo(props) {
         </Col>
         <Col span={2}></Col>
         <Col span={11}>
-          <FormInput valueName="status" value={dataDetail.status} labelName="Trạng thái" disabled={dataDetail.status ===0} 
+          <FormInput valueName="status" valueFilter={dataDetail.status} labelName="Trạng thái" disabled={dataDetail.status ===0} 
             inputClassName="ant-input custom-input-as-ant-input" options={lstStatus} showClear={true}
             register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.SELECT_FILTER} />
         </Col>

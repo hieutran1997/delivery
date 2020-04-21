@@ -11,7 +11,6 @@ function MenuComponent(props) {
 
     const [menus, setMenu] = useState([]);
     const [onInit, setOnInit] = useState(true);
-    const [menuOpen, setMenuOpen] = useState("/process");
 
     const filterMenu = () => {
         let data = [...menu];
@@ -65,7 +64,7 @@ function MenuComponent(props) {
                 props.setUpdateMenu(!props.updateMenu);
             }
         }
-    }, [props.updateMenu, props.setUpdateMenu, onInit, setMenu, setOnInit]);
+    }, [props, props.updateMenu]);
 
     const renderMenu = menus.map((item) =>
         item.childs.length > 0 ?

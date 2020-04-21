@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.erp.model.OrganizationModel;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.process.bo.MerchandiseRegisterBO;
+import com.erp.process.dto.ProductDTO;
 import com.erp.process.service.MerchandiseRegisterService;
 import com.erp.service.ServiceChecker;
 import com.erp.service.UserService;
@@ -97,7 +98,16 @@ public class MerchandiseRegisterController extends BaseController {
 		}
 		String userName = CommonUtil.getCurrentUser().getUsername();
 		OrganizationModel org = userService.getOrganizationByUser(userName);
-		List<SelectedFormDTO> bo = service.getSelectedDataByOrgPath(org.getOrganizationPath());
+		List<SelectedFormDTO> bo = service.getSelectedDataByOrgPath(org.getCode());
+		return new ResponseEntity<>(bo, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/get-new-instance/{merchandiseRegId}", method = RequestMethod.GET)
+	public ResponseEntity<?> getNewInstance(@PathVariable(value = "merchandiseRegId") Long merchandiseRegId) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.MERCHANDISE, Constants.PERMISSION.VIEW)) {
+			throw new PermissionException();
+		}
+		ProductDTO bo = service.getNewInstance(merchandiseRegId);
 		return new ResponseEntity<>(bo, HttpStatus.OK);
 	}
 }

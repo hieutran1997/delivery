@@ -28,6 +28,41 @@ export const openNotification = (type, message, description) => {
     }
 };
 
+export const appConfig = {
+    PRODUCT_STATUS: [
+        {
+            value: 1,
+            name: "Mới"
+        },
+        {
+            value: 2,
+            name: "Đang trong quá trình"
+        },
+        {
+            value: 3,
+            name: "Hoàn thành"
+        }
+    ],
+    TYPE_OF_MANUFACTURE: [
+        {
+            value: 1,
+            name: "Nuôi trồng, chăm sóc"
+        },
+        {
+            value: 2,
+            name: "Vận chuyển"
+        },
+        {
+            value: 3,
+            name: "Chế biến, sản xuất"
+        },
+        {
+            value: 4,
+            name: "Bày bán"
+        }
+    ]
+}
+
 export const dataPost = {
     current: 1,
     pageSize: 10,
@@ -102,7 +137,8 @@ export const ACTION_MODULE = {
     CAT_TYPE_MER: "CAT_TYPE_MER",
     CAT_UNIT: "CAT_UNIT",
     MERCHANDISE: "MERCHANDISE",
-    MERCHANDISE_REGISTER: "MERCHANDISE_REGISTER"
+    MERCHANDISE_REGISTER: "MERCHANDISE_REGISTER",
+    PRODUCT: "PRODUCT"
 }
 
 export function mappingDataChange(resource, destinnation) {

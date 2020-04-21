@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.erp.model.dto.SelectedFormDTO;
 import com.erp.process.bo.MerchandiseRegisterBO;
 import com.erp.process.dto.MerchandiseRegisterDTO;
+import com.erp.process.dto.ProductDTO;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
@@ -53,15 +54,24 @@ public interface MerchandiseRegisterDAO extends CrudRepository<MerchandiseRegist
 	
 	MerchandiseRegisterBO findByMerchandiseId(Long merchandiseId);
 	
-	public default List<SelectedFormDTO> getSelectedDataByOrgPath(VfData vfData, String orgPath){
+	public default List<SelectedFormDTO> getSelectedDataByOrgPath(VfData vfData, String orgCode){
 		String sql = "SELECT " + 
 				" md.merchandise_register_id id" + 
 				", (SELECT m.merchandise_code FROM merchandise m WHERE m.merchandise_id = md.merchandise_id) value" + 
 				", (SELECT m.merchandise_name FROM merchandise m WHERE m.merchandise_id = md.merchandise_id) name" + 
-				" FROM merchandise_register md WHERE md.organization_path LIKE ?";
+				" FROM merchandise_register md WHERE md.organization_path LIKE ? AND status = 1";
 		SQLQuery query = vfData.createSQLQuery(sql);
-		query.setParameter(0, "%/" +orgPath + "/%");
+		query.setParameter(0, "%/" + orgCode + "/%");
         vfData.setResultTransformer(query, SelectedFormDTO.class);
+        return query.list();
+    }
+	
+	public default List<ProductDTO> getNewInstance(VfData vfData, Long merchandiseRegId){
+		String sql = " SELECT md.merchandise_code productCode, md.merchandise_name productName FROM merchandise_register mr, merchandise md "
+					+" WHERE md.merchandise_id = mr.merchandise_id AND mr.merchandise_register_id = ? ";
+		SQLQuery query = vfData.createSQLQuery(sql);
+		query.setParameter(0, merchandiseRegId);
+        vfData.setResultTransformer(query, ProductDTO.class);
         return query.list();
     }
 }

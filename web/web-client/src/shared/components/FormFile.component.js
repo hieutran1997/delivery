@@ -13,7 +13,6 @@ const dummyRequest = ({ file, onSuccess }) => {
     }, 0);
 };
 
-
 const mapStateToProps = state => ({
     file: state.fileReducer
 });
@@ -58,7 +57,7 @@ const FormFile = forwardRef((props, ref) => {
                 openNotification('error', 'Lỗi', message.messageError);
             }
         }
-    }, [props.file]);
+    }, [props.file, listValue]);
 
     const onChange = info => {
         const lstFile = selectedFileList;
@@ -99,7 +98,7 @@ const FormFile = forwardRef((props, ref) => {
     }
 
     return (
-        <>
+        <div className="custom-upload">
             <Upload
                 showUploadList={false}
                 multiple={props.multiple}
@@ -124,7 +123,7 @@ const FormFile = forwardRef((props, ref) => {
                     <DownloadOutlined style={{float: "right"}} onClick={() => handleDownloadFile(file)} className="icon-action icon-edit" title="Tải xuống"/>
                 </Row>
             )) : ""}
-        </>
+        </div>
     );
 });
 

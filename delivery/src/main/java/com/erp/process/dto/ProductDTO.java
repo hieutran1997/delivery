@@ -1,6 +1,9 @@
 package com.erp.process.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,4 +32,6 @@ public class ProductDTO {
 	private Long status;
 
 	private Long parentId;
+	
+	private List<MultipartFile> files;
 }

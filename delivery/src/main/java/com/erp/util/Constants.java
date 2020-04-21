@@ -35,6 +35,7 @@ public class Constants {
         public static final String CAT_MERCHANDISE_TYPE = "type_merchandise";
         public static final String UNIT = "unit";
         public static final String MERCHANDISE = "merchandise";
+        public static final String PRODUCT = "product";
     }
     
     public interface CORS_FILTER {

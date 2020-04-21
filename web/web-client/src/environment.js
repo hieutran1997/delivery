@@ -22,7 +22,8 @@ export const url_services = {
     CAT_TYPE_MER: '/cat/type-merchandise',
     CAT_UNIT: '/cat/unit',
     MERCHANDISE: '/cat/merchandise',
-    MERCHANDISE_REGISTER: '/process/merchandise-register'
+    MERCHANDISE_REGISTER: '/process/merchandise-register',
+    PRODUCT: '/process/product'
 }
 
 export default function environments() {

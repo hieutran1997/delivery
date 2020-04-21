@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getDataPaging, insert, update, deleteData } from '../../../shared/actions/categories/UnitResource';
+import { getDataPaging, update, deleteData } from '../../../shared/actions/categories/UnitResource';
+import { saveOrUpdate } from '../../../shared/actions/process/ProductResource';
 import { dataPost, message, mappingDataChange, openNotification, hasPermission, control, resourceCode, ACTION_MODULE } from '../../../shared/common';
 import { Table, Icon, Popconfirm, Card } from 'antd';
 import { PopupInfo } from './PopupInfo.component';
-import { PopupAdd } from './PopupAdd.component';
+import PopupAdd from './PopupAdd.component';
 import { FormSearch } from './FormSearch.component';
 import * as types from '../../../shared/constants/ActionTypeCommon';
+import { getSeletedByOrgpath } from '../../../shared/actions/process/MerchandiseRegisterResource';
 
 function Product(props) {
   const [onInit, setOnInit] = useState(true);
@@ -18,6 +20,7 @@ function Product(props) {
   const [isEdit, setIsEdit] = useState(false);
   const [isShowAdd, setIsShowAdd] = useState(false);
   const [dataDetail, setDataDetail] = useState(null);
+  const [lstMerchandise, setLstMerchandise] = useState([]);
 
   const columns = [
     {
@@ -65,6 +68,7 @@ function Product(props) {
     if (onInit) {
       setLoading(true);
       props.filterData(dataSearch);
+      props.getSeletedByOrgpath();
       setOnInit(false);
     }
     if (props.dataCatUnit) {
@@ -108,6 +112,13 @@ function Product(props) {
     }
   }, [props, onInit, dataSearch]);
 
+  useEffect(()=>{
+    if(props.merchandiseData && props.merchandiseData.type === `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_SUCCESS}`){
+      console.log('props.merchandiseData', props.merchandiseData.data);
+      setLstMerchandise(props.merchandiseData.data);
+    }
+  }, [props.merchandiseData])
+
   const handlerSearch = data => {
     dataPost.data = data;
     setDataSearch(dataPost);
@@ -142,7 +153,7 @@ function Product(props) {
 
   const onSave = (data) => {
     var instance = data;
-    props.insert(instance);
+    props.saveOrUpdate(instance);
   }
 
   const handleDelete = (data) => {
@@ -158,7 +169,7 @@ function Product(props) {
       </Card>
       <br />
       <Card title={message.titleFormListUnit}>
-        {hasPermission(resourceCode.unit, control.hasView) === 1 ? 
+        {hasPermission(resourceCode.unit, control.hasView) === 1 ?
           <Table
             columns={columns}
             rowKey={record => record.code}
@@ -166,16 +177,16 @@ function Product(props) {
             pagination={pagination}
             loading={isLoading}
             onChange={handleTableChange}
-          /> : 
+          /> :
           <b>Không có quyền xem</b>
-      }
-        
+        }
+
       </Card>
       {
         hasPermission(resourceCode.unit, control.hasEdit) === 1 ? <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange} /> : ""
       }
       {
-        hasPermission(resourceCode.unit, control.hasAdd) === 1 ? <PopupAdd isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave} /> : ""
+        hasPermission(resourceCode.unit, control.hasAdd) === 1 ? <PopupAdd isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave} lstMerchandise={lstMerchandise} /> : ""
       }
     </div>
   );
@@ -183,14 +194,16 @@ function Product(props) {
 
 const mapStateToProps = state => ({
   dataCatUnit: state.catUnitReducer,
+  merchandiseData: state.merchandiseRegisReducer
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     filterData: (data) => dispatch(getDataPaging(data)),
-    insert: (data) => dispatch(insert(data)),
+    saveOrUpdate: (data) => dispatch(saveOrUpdate(data)),
     update: (data) => dispatch(update(data)),
     deleteData: (data) => dispatch(deleteData(data)),
+    getSeletedByOrgpath: () => dispatch(getSeletedByOrgpath())
   }
 };
 

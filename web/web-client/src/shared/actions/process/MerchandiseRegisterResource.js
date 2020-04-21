@@ -59,4 +59,20 @@ const findByMerchandiseId = (id) => {
     };
 }
 
-export { getDataPaging, insert, update, deleteData, findById, approve, findByMerchandiseId };
+const getSeletedByOrgpath = () => {
+    const url =  `${url_services.MERCHANDISE_REGISTER}/get-selected-data-by-orgPath`;
+    return {
+        types: [`${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_ERROR}`],
+        api: (axios) => axios.get(url)
+    };
+}
+
+const getNewInstance = (id) => {
+    const url =  `${url_services.MERCHANDISE_REGISTER}/get-new-instance/${id}`;
+    return {
+        types: [`${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_NEW_INSTANCE_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_NEW_INSTANCE_ERROR}`],
+        api: (axios) => axios.get(url)
+    };
+}
+
+export { getDataPaging, insert, update, deleteData, findById, approve, findByMerchandiseId, getSeletedByOrgpath, getNewInstance };

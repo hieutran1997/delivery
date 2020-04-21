@@ -28,16 +28,13 @@ export const FormInput = forwardRef((props, ref) => {
     React.useEffect(() => {
         props.register({ name: `${props.valueName}` }, props.validation || null); // custom register react-select 
         if (props.value) {
-            setValue(props.valueName, moment(props.value, DateFormat));
+            setValue(props.valueName, props.value);
         }
-    }, [props.valueName, props.value, props.validation]);
+    }, [props.register, props.valueName, props.value, props.validation]);
 
     React.useEffect(() => {
-        if (props.value !== null) {
-            let dataSelected = props.options.find(x => x[props.dataKey] === props.value);
-            setValue(dataSelected);
-        }
-    }, [props.value, props.options, props.dataKey, setValue]);
+        setValue(props.valueFilter);
+    }, [props.valueFilter]);
 
     const onChangeDate = (ev, str) => {
         if (ev != null) {
@@ -75,7 +72,7 @@ export const FormInput = forwardRef((props, ref) => {
                     props.validation.required && props.validation.required === true ? <span className="label-required">*</span> : ""
                 }</span>
                 <br />
-                <select name={props.valueName} value={props.value} className={props.inputClassName} disabled={props.disabled} onChange={(ev) => { props.onChange ? props.onChange(ev) : void 0 }}
+                <select name={props.valueName} value={value} className={props.inputClassName} disabled={props.disabled} onChange={(ev) => { setValue(ev.target.value); props.onChange ? props.onChange(ev) : void 0 }}
                     ref={props.register(props.validation)} >
                     <option>{props.placeholder}</option>
                     {props.options ? props.options.map((item, index) => (
@@ -136,5 +133,6 @@ FormInput.defaultProps = {
     showClear: null,
     optionLabel: 'name',
     filterBy: 'name',
-    dataKey: 'value'
+    dataKey: 'value',
+    valueFilter: 0
 };

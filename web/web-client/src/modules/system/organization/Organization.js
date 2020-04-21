@@ -69,6 +69,33 @@ function Organization(props) {
     ];
 
     useEffect(() => {
+        function searchTree(element, matchingCode) {
+            if (element.code === matchingCode) {
+                return element;
+            } else if (element.children && element.children !== null) {
+                let i;
+                let result = null;
+                for (i = 0; result === null && i < element.children.length; i++) {
+                    result = searchTree(element.children[i], matchingCode);
+                }
+                return result;
+            }
+            return null;
+        }
+        function pushData(data) {
+            let temp = dataContent;
+            if (data && data.length > 0) {
+                // eslint-disable-next-line
+                temp.map((item) => {
+                    let dataTemp = searchTree(item, parentCode);
+                    if (dataTemp) {
+                        dataTemp.children = [];
+                        dataTemp.children = data;
+                    }
+                });
+                setDataContent(temp);
+            }
+        }
         if (onInit) {
             setLoading(true);
             props.getSelectedData();
@@ -129,7 +156,7 @@ function Organization(props) {
                     break;
             }
         }
-    }, [props, dataContent, dataSearch, onInit]);
+    }, [props, dataContent, dataSearch, onInit, setDataContent, parentCode]);
 
     const prepareData = data => {
         if (data && data.length > 0) {
@@ -140,35 +167,6 @@ function Organization(props) {
                 }
             });
             return data;
-        }
-    }
-
-    const searchTree = (element, matchingCode) => {
-        if (element.code === matchingCode) {
-            return element;
-        } else if (element.children && element.children !== null ) {
-            let i;
-            let result = null;
-            for (i = 0; result === null && i < element.children.length; i++) {
-                result = searchTree(element.children[i], matchingCode);
-            }
-            return result;
-        }
-        return null;
-    }
-
-    const pushData = data => {
-        let temp = dataContent;
-        if (data && data.length > 0) {
-            // eslint-disable-next-line
-            temp.map((item) => {
-                let dataTemp = searchTree(item, parentCode);
-                if(dataTemp){
-                    dataTemp.children = [];
-                    dataTemp.children = data;
-                }
-            });
-            setDataContent(temp);
         }
     }
 

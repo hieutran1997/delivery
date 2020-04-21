@@ -57,17 +57,35 @@ const merchandiseRegisReducer = (state, action) => {
                 error: true,
                 type: action.type
             };
-        case  `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.APPROVE_SUCCESS}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.APPROVE_SUCCESS}`:
             return {
                 error: false,
                 type: action.type
             };
-        case  `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.FIND_BY_MERCHANDISE_ID_SUCCESS}`:
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.FIND_BY_MERCHANDISE_ID_SUCCESS}`:
             return {
                 ...action.result,
                 error: false,
                 type: action.type
             };
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_SUCCESS}`:
+            return {
+                ...action.result,
+                error: false,
+                type: `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_SUCCESS}`
+            }
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_ERROR}`:
+            return {
+                ...action.result.data,
+                error: true,
+                type: `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_ERROR}`
+            }
+        case `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_NEW_INSTANCE_SUCCESS}`:
+            return {
+                ...action.result.data,
+                error: true,
+                type: `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_NEW_INSTANCE_SUCCESS}`
+            }
         default:
             return null;
     }

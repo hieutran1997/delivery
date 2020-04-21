@@ -36,6 +36,7 @@ public class FileStorage {
     public static interface FILE_TYPE {
         public static Long GROWTH_UP_PROCESS = 1L;
         public static Long MERCHANDISE_REGIS = 2L;
+        public static Long PROCDUCT = 3L;
     }
 
     

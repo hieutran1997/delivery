@@ -85,3 +85,7 @@ code {
 .file-row-data:hover{
   background-color: skyblue;
 }
+
+.custom-upload{
+  margin-top: 20px;
+}

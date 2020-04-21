@@ -161,7 +161,7 @@ function Merchandise(props) {
           break;
       }
     }
-  }, [props.dataProps, onInit, dataSearch]);
+  }, [props, props.dataProps, onInit, dataSearch]);
 
   useEffect(() => {
     if (props.unitProps && props.unitProps.type === `${ACTION_MODULE.CAT_UNIT}_${types.GET_SELETED_SUCCESS}`) {
@@ -176,7 +176,7 @@ function Merchandise(props) {
   }, [props.groupMerchandiseProps, props.unitProps]);
 
   useEffect(() => {
-    if (props && props.typeMerchandiseProps && props.typeMerchandiseProps.type === `${ACTION_MODULE.CAT_TYPE_MER}_${types.GET_SELETED_SUCCESS}`) {
+    if (props.typeMerchandiseProps && props.typeMerchandiseProps.type === `${ACTION_MODULE.CAT_TYPE_MER}_${types.GET_SELETED_SUCCESS}`) {
       setLstType(props.typeMerchandiseProps.result.data);
     }
   }, [props.typeMerchandiseProps]);
