@@ -107,7 +107,7 @@ function User(props) {
             current: props.dataUser.curPage,
             pageSize: props.dataUser.perPage,
             total: props.dataUser.total,
-            size: 'small'
+            
           });
           break;
         case UPDATE_USER_SUCCESS:
@@ -223,7 +223,7 @@ function User(props) {
       <Card title={message.titleFormListUser}>
         {hasPermission(resourceCode.user, control.hasView) === 1 ? 
           <Table
-            columns={columns}
+            columns={columns} bordered
             rowKey={record => record.username}
             dataSource={dataContent}
             pagination={pagination}

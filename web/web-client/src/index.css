@@ -76,6 +76,8 @@ code {
 
 .file-row-data{
   line-height: 30px;
+  font-size: 12px;
+  color: blue;
 }
 .file-row-data .icon-action{
   padding-top: 8px;

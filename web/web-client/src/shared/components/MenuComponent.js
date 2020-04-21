@@ -3,14 +3,22 @@ import { menu } from '../../environment';
 import { Menu, Icon } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { hasMenu, getCurrentUser } from '../common';
+import { LOGIN_SUCCESS } from '../constants/ActionTypes';
+import { connect } from 'react-redux';
 
 const { SubMenu } = Menu;
 const currentUser = getCurrentUser();
 
+const mapStateToProps = state => {
+    return {
+        authRecieve: state.authReducer
+    };
+};
+
+let onInit = true;
 function MenuComponent(props) {
 
     const [menus, setMenu] = useState([]);
-    const [onInit, setOnInit] = useState(true);
 
     const filterMenu = () => {
         let data = [...menu];
@@ -44,18 +52,24 @@ function MenuComponent(props) {
             }
         }
         setMenu(result);
-        setOnInit(false);
+        onInit = false;
     }
 
     if (onInit) {
         if (currentUser && currentUser.typeOfUser === 1) {
             setMenu(menu);
-            setOnInit(false);
+            onInit = false;
         }
         else if (currentUser && currentUser.typeOfUser !== 1) {
             filterMenu();
         }
     }
+
+    useEffect(()=>{
+        if(props.authRecieve && props.authRecieve.type === LOGIN_SUCCESS){
+            filterMenu();
+        }
+    }, [props.authRecieve]);
 
     useEffect(()=>{
         if(props.updateMenu){
@@ -64,7 +78,7 @@ function MenuComponent(props) {
                 props.setUpdateMenu(!props.updateMenu);
             }
         }
-    }, [props, props.updateMenu]);
+    }, [props.updateMenu]);
 
     const renderMenu = menus.map((item) =>
         item.childs.length > 0 ?
@@ -111,4 +125,6 @@ function MenuComponent(props) {
     );
 }
 
-export default MenuComponent;
+export default connect(
+    mapStateToProps, null
+)(MenuComponent);

@@ -112,7 +112,7 @@ function SysRole(props) {
                         current: props.role.curPage,
                         pageSize: props.role.perPage,
                         total: props.role.total,
-                        size: 'small'
+                        
                     });
                     break;
                 case GETUSER_PAGING_ERROR:
@@ -257,7 +257,7 @@ function SysRole(props) {
             <br />
             <Card title={message.titleFormRole}>
                 <Table
-                    columns={columns}
+                    columns={columns} bordered
                     rowKey={record => record.code}
                     dataSource={dataContent}
                     pagination={pagination}

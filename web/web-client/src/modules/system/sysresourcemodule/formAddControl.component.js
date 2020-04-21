@@ -132,7 +132,7 @@ export function PopupAddControl(props) {
                 </Row>
                 <Divider dashed orientation="left">Danh sách control</Divider>
                 <Table
-                    columns={columns}
+                    columns={columns} bordered
                     rowKey={record => record.controlCode}
                     dataSource={dataTable}
                 />

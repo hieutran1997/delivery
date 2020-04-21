@@ -51,7 +51,7 @@ public class MerchandiseRegisterController extends BaseController {
 			throw new PermissionException();
 		}
 		MerchandiseRegisterBO bo = new MerchandiseRegisterBO();
-		if(entity.getMerchandiseRegisterId() != null || entity.getMerchandiseRegisterId() != 0) {
+		if(entity.getMerchandiseRegisterId() != null && entity.getMerchandiseRegisterId() != 0) {
 			bo = service.findById(entity.getMerchandiseRegisterId());
 			bo.setDescription(entity.getDescription());
 		}
@@ -84,9 +84,13 @@ public class MerchandiseRegisterController extends BaseController {
 		if (!serviceChecker.permissionChecker(Constants.RESOURCE.MERCHANDISE, Constants.PERMISSION.VIEW)) {
 			throw new PermissionException();
 		}
-		MerchandiseRegisterBO bo = service.findByMerchandiseId(id);
-		bo.setFileAttachment("file", FileStorage.getListFileInfo(
-				FileStorage.FILE_TYPE.MERCHANDISE_REGIS, bo.getMerchandiseRegisterId()));
+		String userName = CommonUtil.getCurrentUser().getUsername();
+		OrganizationModel org = userService.getOrganizationByUser(userName);
+		MerchandiseRegisterBO bo = service.findByMerchandiseId(id, org.getId());
+		if(bo != null) {
+			bo.setFileAttachment("file", FileStorage.getListFileInfo(
+					FileStorage.FILE_TYPE.MERCHANDISE_REGIS, bo.getMerchandiseRegisterId()));	
+		}
 		return new ResponseEntity<>(bo, HttpStatus.OK);
 	}
 	

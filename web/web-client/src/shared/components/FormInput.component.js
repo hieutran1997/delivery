@@ -27,14 +27,19 @@ export const FormInput = forwardRef((props, ref) => {
 
     React.useEffect(() => {
         props.register({ name: `${props.valueName}` }, props.validation || null); // custom register react-select 
-        if (props.value) {
-            setValue(props.valueName, props.value);
+        if (props.value && props.type === typeOfDynamicInput.DATE_TIME) {
+            setValue(props.valueName, new Date(props.value).toUTCString());
         }
-    }, [props.register, props.valueName, props.value, props.validation]);
+    }, [props.register, props.valueName, props.value, props.validation, props.type]);
 
     React.useEffect(() => {
-        setValue(props.valueFilter);
-    }, [props.valueFilter]);
+        if(props.type === typeOfDynamicInput.SELECT_FILTER){
+            setValue(props.valueFilter);
+        }
+        else if(props.type === typeOfDynamicInput.TEXT_AREA){
+            setValue(props.value);
+        }
+    }, [props.valueFilter, props.type, props.value]);
 
     const onChangeDate = (ev, str) => {
         if (ev != null) {
@@ -89,7 +94,7 @@ export const FormInput = forwardRef((props, ref) => {
                     props.validation.required && props.validation.required === true ? <span className="label-required">*</span> : ""
                 }</span>
                 <br />
-                <textarea name={props.valueName} value={value} className={props.inputClassName} disabled={props.disabled}
+                <textarea name={props.valueName} value={value? value : ""} className={props.inputClassName} disabled={props.disabled}
                     onChange={ev => { setValue(ev.target.value); props.onChange ? props.onChange(ev) : void 0; }}
                     placeholder={props.placeholder}
                     ref={props.register(props.validation)} />

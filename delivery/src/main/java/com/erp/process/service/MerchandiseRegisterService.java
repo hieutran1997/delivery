@@ -1,6 +1,5 @@
 package com.erp.process.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -34,8 +33,11 @@ public class MerchandiseRegisterService {
 		return dao.findById(sysActionId).orElse(null);
 	}
 	
-	public MerchandiseRegisterBO findByMerchandiseId(Long merchandiseId) {
-		return dao.findByMerchandiseId(merchandiseId);
+	public MerchandiseRegisterBO findByMerchandiseId(Long merchandiseId, Long orgId) {
+		List<MerchandiseRegisterBO> result = dao.findData(merchandiseId, orgId);
+		if(result != null && result.size() > 0)
+			return result.get(0);
+		return null;
 	}
 	
 	@Transactional

@@ -33,9 +33,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -52,7 +54,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.PropertyUtilsBean;
@@ -1312,6 +1314,39 @@ public class CommonUtil {
             return fileName.substring(dotPos);
         }
         return null;
+    }
+    
+    public static <T> void loadFileAttachment(List<T> lstData, String properties, Long fileType) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        if (CommonUtil.isNullOrEmpty(lstData)) {
+            return;
+        }
+        List<String> lstObjectId = new ArrayList<>();
+        Map<Long, List<FileInfoBean>> mapFile = new HashMap<>();
+        for(T bean : lstData) {
+            String objectId = BeanUtils.getProperty(bean, properties);
+            lstObjectId.add(objectId);
+        }
+        List<FileInfoBean> lstFile = FileStorage.getListFileInfo(fileType, lstObjectId);
+        if (!CommonUtil.isNullOrEmpty(lstFile)) {
+            for(FileInfoBean file : lstFile) {
+                if (mapFile.get(file.getObjectId()) == null) {
+                    List<FileInfoBean> listFile = new ArrayList<>();
+                    listFile.add(file);
+                    mapFile.put(file.getObjectId(), listFile);
+                } else {
+                    List<FileInfoBean> listFile = mapFile.get(file.getObjectId());
+                    listFile.add(file);
+                }
+            }
+        }
+
+        for(T bean : lstData) {
+            String objectId = BeanUtils.getProperty(bean, properties);
+            List<FileInfoBean> listFile = mapFile.get(Long.valueOf(objectId));
+            Map<String, List<FileInfoBean>> fileAttachment = new HashMap<>();
+            fileAttachment.put("file", listFile);
+            BeanUtils.setProperty(bean, "fileAttachment", fileAttachment);
+        }
     }
 
     /**

@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.erp.util.FileAttachment;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "product")
-public class ProductBO {
+public class ProductBO extends FileAttachment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "product_id")

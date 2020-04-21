@@ -116,9 +116,9 @@ export function PopupAddControl(props) {
                 <Row type="flex" justify="space-around">
                     <Col span={11}>
                         <span>Mã:</span>
-                        <input name="controlCode" className="ant-input" ref={register({ maxLength: 10 })} />
+                        <input name="controlCode" className="ant-input" ref={register({ maxLength: 20 })} />
                         <span className="error-message">
-                            {errors.controlCode && errors.controlCode.type === 'maxLength' && <span>Chỉ được nhập 10 ký tự</span> }
+                            {errors.controlCode && errors.controlCode.type === 'maxLength' && <span>Chỉ được nhập 20 ký tự</span> }
                         </span>
                     </Col>
                     <Col span={2}></Col>
@@ -132,7 +132,7 @@ export function PopupAddControl(props) {
                 </Row>
                 <Divider dashed orientation="left">Danh sách control</Divider>
                 <Table
-                    columns={columns}
+                    columns={columns} bordered
                     rowKey={record => record.controlCode}
                     dataSource={dataTable}
                 />

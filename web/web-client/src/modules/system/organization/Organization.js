@@ -112,7 +112,7 @@ function Organization(props) {
                         current: props.dataOrg.curPage,
                         pageSize: props.dataOrg.perPage,
                         total: props.dataOrg.total,
-                        size: 'small'
+                        
                     });
                     break;
                 case UPDATE_ORGANIZATION_SUCCESS:
@@ -227,7 +227,7 @@ function Organization(props) {
                 <FormSearch onCreate={handleAdd} onSearch={handlerSearch}></FormSearch>
             </Card>
             <Card title="Danh sách đơn vị" >
-                <Table rowKey={record => record.code} loading={isLoading} columns={columns} dataSource={dataContent} pagination={pagination} onExpand={onExpand} onChange={handleTableChange} />
+                <Table rowKey={record => record.code} loading={isLoading} columns={columns} bordered dataSource={dataContent} pagination={pagination} onExpand={onExpand} onChange={handleTableChange} />
             </Card>
 
             {

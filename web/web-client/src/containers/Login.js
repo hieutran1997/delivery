@@ -44,7 +44,8 @@ class Login extends React.Component {
                 this.setState({ loading: false });
                 if(authRecieve.error){
                     openNotification('error', 'Thất bại', 'Đăng nhập không thành công!');
-                }else if(getCurrentUser()){
+                }
+                else if(getCurrentUser()){
                     openNotification('success', 'Thành công', 'Đăng nhập thành công!');
                     this.props.history.replace(homePage);
                 }

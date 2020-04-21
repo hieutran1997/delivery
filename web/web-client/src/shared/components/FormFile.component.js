@@ -57,7 +57,7 @@ const FormFile = forwardRef((props, ref) => {
                 openNotification('error', 'Lỗi', message.messageError);
             }
         }
-    }, [props.file, listValue]);
+    }, [props.file]);
 
     const onChange = info => {
         const lstFile = selectedFileList;

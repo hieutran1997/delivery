@@ -3,9 +3,9 @@ import { url_services } from '../../../environment';
 import { ACTION_MODULE, convertFormFile } from '../../common';
 
 const getDataPaging = (data) => {
-    const url =  `${url_services.MERCHANDISE_REGISTER}/postQuery`;
+    const url =  `${url_services.PRODUCT}/postQuery`;
     return {
-        types: [`${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.PAGING_SUCCESS}`, `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.PAGING_ERROR}`],
+        types: [`${ACTION_MODULE.PRODUCT}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.PAGING_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.PAGING_ERROR}`],
         api: (axios) => axios.post(url, data)
     };
 };
@@ -27,4 +27,12 @@ const findById = (id) => {
     };
 }
 
-export { getDataPaging, saveOrUpdate, findById };
+const deleteData = (data) => {
+    const url = `${url_services.PRODUCT}/${data.productId}`;
+    return {
+        types: [`${ACTION_MODULE.PRODUCT}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.DELETE_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.DELETE_ERROR}`],
+        api: (axios) => axios.delete(url, data)
+    };
+};
+
+export { getDataPaging, saveOrUpdate, findById, deleteData };

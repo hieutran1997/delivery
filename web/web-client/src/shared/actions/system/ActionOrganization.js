@@ -66,4 +66,12 @@ const findOne = (id) => {
     };
 }
 
-export { getAll, insert, update, deleteData, getSelectedData, getDataPaging, getChild, findOne };
+const getSelectedDataWithOrg = ()=>{
+    const url =  `${url_services.ORGANIZATION}/get-selected-data-with-path`;
+    return {
+        types: [types.GET_SELETED_ORGANIZATION_REQUEST_SUCCESS, types.GET_SELETED_ORGANIZATION_SUCCESS, types.GET_SELETED_ORGANIZATION_ERROR],
+        api: (axios) => axios.get(url)
+    };
+} 
+
+export { getAll, insert, update, deleteData, getSelectedData, getDataPaging, getChild, findOne, getSelectedDataWithOrg };

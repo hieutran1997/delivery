@@ -6,12 +6,14 @@ import { typeOfDynamicInput } from '../../../shared/common';
 import FormFile from '../../../shared/components/FormFile.component';
 
 const toDay = new Date();
+let merchandiseId= 0;
 export function PopupRegis(props) {
   const { register, handleSubmit, errors, setValue } = useForm();
   const [isShowRegis, setIsShowRegis] = useState(false);
-  const [merchandiseId, setMerchandiseId] = useState(0);
   const [merchandiseRegisterId, setMerchandiseRegisterId] = useState(0);
   const [fileAttachment, setFileAttachment] = useState({});
+  const [status, setStatus] = useState(0);
+  const [description, setDescription] = useState(0);
   const lstStatus = [
     {
       value: 1,
@@ -37,9 +39,11 @@ export function PopupRegis(props) {
       setValue('status', props.dataDetail.status);
       setValue('description', props.dataDetail.description);
       setValue('files', []);
-      setMerchandiseId(props.dataDetail.merchandiseId);
+      merchandiseId = props.dataDetail.merchandiseId;
       setMerchandiseRegisterId(props.dataDetail.merchandiseRegisterId);
       setFileAttachment(props.dataDetail.fileAttachment);
+      setStatus(props.dataDetail.status);
+      setDescription(props.dataDetail.description);
     }
   }, [props.dataDetail, setValue]);
 
@@ -69,20 +73,20 @@ export function PopupRegis(props) {
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={11}>
-            <FormInput valueName="status" value={1} placeholder="Chọn trạng thái" labelName="Trạng thái" inputClassName="ant-input custom-input-as-ant-input" options={lstStatus} showClear={true}
+            <FormInput valueName="status" valueFilter={status} placeholder="Chọn trạng thái" labelName="Trạng thái" inputClassName="ant-input custom-input-as-ant-input" options={lstStatus} showClear={true}
               register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.SELECT_FILTER} />
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <FormInput valueName="description" labelName="Mô tả" inputClassName="ant-input"
-              register={register} setValue={setValue} validation={{ maxlength: 1000 }} type={typeOfDynamicInput.TEXT_AREA} errors={errors} />
-          </Col>
-        </Row>
-        <Row type="flex" justify="space-around">
-          <Col span={11}>
             <FormFile valueName="files" fileAttachment={fileAttachment} register={register} setValue={setValue}></FormFile>
           </Col>
-          <Col span={13}></Col>
+        </Row>
+        <br/>
+        <Row type="flex" justify="space-around">
+          <Col span={24}>
+            <FormInput valueName="description" labelName="Mô tả" value={description} inputClassName="ant-input"
+              register={register} setValue={setValue} validation={{ maxlength: 1000 }} type={typeOfDynamicInput.TEXT_AREA} errors={errors} />
+          </Col>
         </Row>
         <div className="footer-modal">
           <input type="submit" className="btn-save ant-btn btn-discard ant-btn-primary" value="Lưu lại" />

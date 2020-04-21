@@ -32,15 +32,18 @@ export const appConfig = {
     PRODUCT_STATUS: [
         {
             value: 1,
-            name: "Mới"
+            name: "Mới",
+            color: "geekblue"
         },
         {
             value: 2,
-            name: "Đang trong quá trình"
+            name: "Đang trong quá trình",
+            color: "green"
         },
         {
             value: 3,
-            name: "Hoàn thành"
+            name: "Hoàn thành",
+            color: "volcano"
         }
     ],
     TYPE_OF_MANUFACTURE: [
@@ -59,6 +62,16 @@ export const appConfig = {
         {
             value: 4,
             name: "Bày bán"
+        }
+    ],
+    TYPE_OF_RESOURCE: [
+        {
+            value: 0,
+            name: "Menu"
+        },
+        {
+            value: 1,
+            name: "Control"
         }
     ]
 }
@@ -81,7 +94,9 @@ export const message = {
     messageConfirmDelete: 'Bạn có chắc chắn muốn xóa?',
     messageConfirmApprove: 'Bạn có chắc chắn muốn duyệt?',
     createSuccess: 'Thêm mới thành công',
+    actionSuccess: 'Thao tác thành công',
     createError: 'Không thêm được!',
+    actionError: 'Thao tác thất bại',
     updateSuccess: 'Sửa thành công',
     updateError: 'Không sửa được!',
     deleteSuccess: 'Xóa thành công',
@@ -102,7 +117,8 @@ export const message = {
     titleFormListGroupMerchandise: "Danh sách nhóm hàng",
     titleFormListTypeMerchandise: "Danh sách loại hàng",
     titleFormListUnit: "Danh sách đơn vị tính",
-    titleFormListMerchandise: "Danh sách hàng hóa"
+    titleFormListMerchandise: "Danh sách hàng hóa",
+    titleFormListProduct: "Danh sách hàng hóa sản xuất",
 }
 
 /**
@@ -129,7 +145,8 @@ export const resourceCode = {
     groupMerchandise: 'groupMerchandise',
     typeMerchandise: 'typeMerchandise',
     unit: 'unit',
-    merchandise: 'merchandise'
+    merchandise: 'merchandise',
+    product: 'product',
 }
 
 export const ACTION_MODULE = {

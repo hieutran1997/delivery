@@ -112,7 +112,7 @@ function SysResource(props) {
                         current: props.resource.curPage,
                         pageSize: props.resource.perPage,
                         total: props.resource.total,
-                        size: 'small'
+                        
                     });
                     break;
                 case GETUSER_PAGING_ERROR:
@@ -218,7 +218,7 @@ function SysResource(props) {
             <br />
             <Card title={message.titleFormResource}>
                 <Table
-                    columns={columns}
+                    columns={columns} bordered
                     rowKey={record => record.code}
                     dataSource={dataContent}
                     pagination={pagination}

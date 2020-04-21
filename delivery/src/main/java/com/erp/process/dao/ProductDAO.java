@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,19 +18,49 @@ import com.erp.util.VfData;
 
 @Repository
 @SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
-public interface ProductDAO extends CrudRepository<ProductBO, Long>{
-	public default PaginationUtil<ProductDTO> getDataPaging(
-			SearchRequestUtil<ProductDTO> pageable, VfData vfData) {
+public interface ProductDAO extends CrudRepository<ProductBO, Long> {
+	public default PaginationUtil<ProductDTO> getDataPagingWithOrgpath(SearchRequestUtil<ProductDTO> pageable,
+			VfData vfData, String orgCode) {
 		PaginationUtil<ProductDTO> results = new PaginationUtil<>();
 		int start = (pageable.getCurrent() - 1) * pageable.getPageSize();
 		StringBuilder strCondition = new StringBuilder(" Where 1 = 1");
 		List<Object> paramList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(" SELECT cgm.cat_group_mechandise_id ProductId, cgm.`type_code` typeCode, cgm.`code` code, cgm.`name` name from merchandise_register md ");
-
-		if (pageable.getData() != null && !CommonUtil.isNullOrEmpty(pageable.getData().getOrganizationPath())) {
-			strCondition.append(" AND LOWER(md.`organization_path`) LIKE LOWER(?) ");
-			paramList.add("%" + pageable.getData().getOrganizationPath() + "%");
+		StringBuilder sql = new StringBuilder(
+				"SELECT pd.product_id productId, pd.product_code productCode, pd.product_name productName, pd.date_of_manufacture dateOfManufacture, pd.status"
+						+ "	, (SELECT DISTINCT org.organization_name FROM organization org WHERE org.id = pd.orgnization_id) organizationName, pd.type_of_manufacture typeOfManufacture FROM product pd ");
+		if (pageable.getData() != null && !CommonUtil.isNullOrEmpty(orgCode)) {
+			strCondition.append(" AND LOWER(pd.`organization_path`) LIKE LOWER(?) ");
+			paramList.add("%/" + orgCode + "/%");
 		}
+		if (pageable.getData() != null && !CommonUtil.isNullOrEmpty(pageable.getData().getProductCode())) {
+			strCondition.append(" AND LOWER(pd.`product_code`) LIKE LOWER(?) ");
+			paramList.add("%" + pageable.getData().getProductCode() + "%");
+		}
+		if (pageable.getData() != null && !CommonUtil.isNullOrEmpty(pageable.getData().getProductName())) {
+			strCondition.append(" AND LOWER(pd.`product_name`) LIKE LOWER(?) ");
+			paramList.add("%" + pageable.getData().getProductName() + "%");
+		}
+		if (pageable.getData() != null && pageable.getData().getStatus() != null) {
+			strCondition.append(" AND pd.status = ? ");
+			paramList.add(pageable.getData().getStatus());
+		}
+		if (pageable.getData() != null && pageable.getData().getMerchandiseRegisterId() != null) {
+			strCondition.append(" AND pd.merchandise_register_id = ? ");
+			paramList.add(pageable.getData().getMerchandiseRegisterId());
+		}
+		if (pageable.getData() != null && pageable.getData().getOrgnizationId() != null) {
+			strCondition.append(" AND pd.orgnization_id = ? ");
+			paramList.add(pageable.getData().getOrgnizationId());
+		}
+		if (pageable.getData() != null && pageable.getData().getTypeOfManufacture() != null) {
+			strCondition.append(" AND pd.type_of_manufacture = ? ");
+			paramList.add(pageable.getData().getTypeOfManufacture());
+		}
+		if (pageable.getData() != null && pageable.getData().getDateOfManufacture() != null) {
+			strCondition.append(" AND pd.date_of_manufacture >= ? ");
+			paramList.add(pageable.getData().getDateOfManufacture());
+		}
+		
 		sql.append(strCondition);
 		StringBuilder sqlCount = new StringBuilder("SELECT COUNT(*) FROM (");
 		sqlCount.append(sql.toString());
@@ -49,4 +80,7 @@ public interface ProductDAO extends CrudRepository<ProductBO, Long>{
 		results.setData(query.list());
 		return results;
 	}
+
+	@Query(value = "SELECT * FROM product WHERE merchandise_register_id = ?1 AND orgnization_id = ?2 AND `status` = 1", nativeQuery = true)
+	List<ProductBO> findData(Long merchandiseRegisterId, Long orgId);
 }

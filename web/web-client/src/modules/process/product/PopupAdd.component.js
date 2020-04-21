@@ -35,7 +35,7 @@ function PopupAdd(props) {
     setIsShowAdd(props.isShowAdd);
     setValue('productCode', '');
     setValue('productName', '');
-    setValue('dateOfManufacture', '');
+    setValue('dateOfManufacture', toDay);
     setValue('quantity', '');
     setValue('merchandiseRegisterId', '');
     setValue('typeOfManufacture', '');

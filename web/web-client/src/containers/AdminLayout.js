@@ -44,7 +44,7 @@ function AdminLayout(props) {
     const checker = () => {
         if (props.currentUser) {
             let path = history.location.pathname.substring(1);
-            if (!hasMenu(path)
+            if (!hasMenu(path) && path !== "admin"
                 && props.currentUser.typeOfUser !== 1
                 && "/admin/permission" !== history.location.pathname
                 //&& "/admin" !== history.location.pathname

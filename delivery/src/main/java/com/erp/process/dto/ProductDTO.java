@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.erp.util.FileAttachment;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductDTO {
+public class ProductDTO extends FileAttachment {
 	private Long productId;
 
 	private String productCode;
@@ -34,4 +36,6 @@ public class ProductDTO {
 	private Long parentId;
 	
 	private List<MultipartFile> files;
+	
+	private String organizationName;
 }

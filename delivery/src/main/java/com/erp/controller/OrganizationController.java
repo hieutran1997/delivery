@@ -7,6 +7,8 @@ package com.erp.controller;
 
 import com.erp.model.OrganizationModel;
 import com.erp.service.OrganizationService;
+import com.erp.service.UserService;
+import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.ResponseUtil;
 import com.erp.util.SearchRequestUtil;
@@ -29,6 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrganizationController {
     @Autowired
     private OrganizationService orgService;
+    
+    @Autowired
+    private UserService userService;
     
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity<?> getAll(){
@@ -73,4 +78,13 @@ public class OrganizationController {
     public ResponseEntity<?> getOrgChild(@PathVariable(value = "parentCode") String parentCode){
         return new ResponseEntity<>(orgService.getListChild(parentCode), HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/get-selected-data-with-path", method = RequestMethod.GET)
+    public ResponseEntity<?> getSelectedDataWithCode(){
+    	String userName = CommonUtil.getCurrentUser().getUsername();
+    	OrganizationModel org = userService.getOrganizationByUser(userName);
+        return new ResponseEntity<>(orgService.getSeletedData(org.getCode()), HttpStatus.OK);
+    }
+    
+    
 }

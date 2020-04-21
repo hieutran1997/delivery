@@ -84,4 +84,9 @@ public class OrganizationServiceImpl implements OrganizationService{
     	}
     	return result;
     }
+    
+    @Override
+    public List<SelectedFormDTO> getSeletedData(String code){
+    	return organizationDao.getSelectedData(vfData, code);
+    }
 }

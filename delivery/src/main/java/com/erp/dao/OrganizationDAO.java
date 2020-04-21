@@ -80,6 +80,14 @@ public interface OrganizationDAO extends JpaRepository<OrganizationModel, Long> 
 		return query.list();
 	}
 	
+	public default List<SelectedFormDTO> getSelectedData(VfData vfData, String orgCode) {
+		String sql = " Select id, code value, organization_name name from organization where organization_path like ? ";
+		SQLQuery query = vfData.createSQLQuery(sql);
+		query.setParameter(0, "%/"+orgCode+"/%");
+		vfData.setResultTransformer(query, SelectedFormDTO.class);
+		return query.list();
+	}
+	
 	public default OrganizationModel getOrgByCode(VfData vfData, String code){
 		String sql = " SELECT id, code, organization_name organizationName, organization_path organizationPath FROM organization org WHERE org.code = :code ";
 		SQLQuery query = vfData.createSQLQuery(sql);

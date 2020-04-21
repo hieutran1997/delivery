@@ -76,7 +76,7 @@ function TypeMerchandise(props) {
             current: props.datatypeMerchandise.curPage,
             pageSize: props.datatypeMerchandise.perPage,
             total: props.datatypeMerchandise.total,
-            size: 'small'
+            
           });
           break;
         case `${ACTION_MODULE.CAT_TYPE_MER}_${types.UPDATE_SUCCESS}`:
@@ -159,7 +159,8 @@ function TypeMerchandise(props) {
       <br />
       <Card title={message.titleFormListTypeMerchandise}>
         {hasPermission(resourceCode.typeMerchandise, control.hasView) === 1 ? 
-          <Table
+          <Table 
+            bordered
             columns={columns}
             rowKey={record => record.code}
             dataSource={dataContent}

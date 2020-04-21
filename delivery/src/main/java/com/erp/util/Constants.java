@@ -31,8 +31,8 @@ public class Constants {
         public static final String ROLE = "role";
         public static final String RESOURCE = "resource";
         public static final String ORGANIZATION = "org";
-        public static final String CAT_MERCHANDISE_GROUP = "group_merchandise";
-        public static final String CAT_MERCHANDISE_TYPE = "type_merchandise";
+        public static final String CAT_MERCHANDISE_GROUP = "groupMerchandise";
+        public static final String CAT_MERCHANDISE_TYPE = "typeMerchandise";
         public static final String UNIT = "unit";
         public static final String MERCHANDISE = "merchandise";
         public static final String PRODUCT = "product";

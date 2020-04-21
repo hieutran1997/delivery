@@ -94,7 +94,7 @@ function Merchandise(props) {
               </Popconfirm> : ""
           }
           {
-            hasPermission(resourceCode.merchandise, control.regisMerchandise) === 1 && record.status === 2 ? 
+            hasPermission(resourceCode.merchandise, control.regisMerchandise, 1) === 1 && record.status === 2 ? 
               <Icon type="select" onClick={() => { handleRegis(record) }} className="icon-action icon-edit" title="Đăng ký" theme="outlined" /> : ""
           }
         </span>
@@ -121,12 +121,13 @@ function Merchandise(props) {
             current: props.dataProps.curPage,
             pageSize: props.dataProps.perPage,
             total: props.dataProps.total,
-            size: 'small'
+            
           });
           break;
         case `${ACTION_MODULE.MERCHANDISE}_${types.UPDATE_SUCCESS}`:
           openNotification('success', 'Thành công', message.updateSuccess);
           props.filterData(dataSearch);
+          setDataDetail({});
           closePopup();
           break;
         case `${ACTION_MODULE.MERCHANDISE}_${types.UPDATE_ERROR}`:
@@ -134,6 +135,7 @@ function Merchandise(props) {
           break;
         case `${ACTION_MODULE.MERCHANDISE}_${types.CREATE_SUCCESS}`:
           openNotification('success', 'Thành công', message.createSuccess);
+          setDataDetail({});
           props.filterData(dataSearch);
           closePopup();
           break;
@@ -185,10 +187,13 @@ function Merchandise(props) {
     if(props.registerProps){
       if(props.registerProps.type === `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.CREATE_SUCCESS}`){
         openNotification('success', 'Thành công', message.createSuccess);
+        setDataDetail(null);
         closePopup();
       }
       else if(props.registerProps.type === `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.FIND_BY_MERCHANDISE_ID_SUCCESS}`){
-        setDataDetail(props.registerProps.data);
+        if(props.registerProps.data !== ""){
+          setDataDetail(props.registerProps.data);
+        }
       }
     }
   }, [props.registerProps])
@@ -268,6 +273,7 @@ function Merchandise(props) {
       <Card title={message.titleFormListMerchandise}>
         {hasPermission(resourceCode.merchandise, control.hasView) === 1 ?
           <Table
+            bordered
             columns={columns}
             rowKey={record => record.merchandiseCode}
             dataSource={dataContent}
@@ -290,7 +296,7 @@ function Merchandise(props) {
           : ""
       }
       {
-        hasPermission(resourceCode.merchandise, control.regisMerchandise) === 1 ? 
+        hasPermission(resourceCode.merchandise, control.regisMerchandise, 1) === 1 ? 
           <PopupRegis isShowRegis={isShowRegis} closePopup={closePopup} onSave={onRegis} dataDetail={dataDetail}/> : ""
       }
     </div>

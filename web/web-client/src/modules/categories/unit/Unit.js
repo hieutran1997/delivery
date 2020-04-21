@@ -76,7 +76,7 @@ function Unit(props) {
             current: props.dataCatUnit.curPage,
             pageSize: props.dataCatUnit.perPage,
             total: props.dataCatUnit.total,
-            size: 'small'
+            
           });
           break;
         case `${ACTION_MODULE.CAT_UNIT}_${types.UPDATE_SUCCESS}`:
@@ -160,7 +160,7 @@ function Unit(props) {
       <Card title={message.titleFormListUnit}>
         {hasPermission(resourceCode.unit, control.hasView) === 1 ? 
           <Table
-            columns={columns}
+            columns={columns} bordered
             rowKey={record => record.code}
             dataSource={dataContent}
             pagination={pagination}

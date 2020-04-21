@@ -23,5 +23,6 @@ public interface OrganizationService {
     List<SelectedFormDTO> getSeletedData();
     List<OrganizationModel> getListChild(String parentCode);
     OrganizationModel findOne(Long id);
+    List<SelectedFormDTO> getSeletedData(String code);
 }
 

@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getDataPaging, update, deleteData } from '../../../shared/actions/categories/UnitResource';
-import { saveOrUpdate } from '../../../shared/actions/process/ProductResource';
-import { dataPost, message, mappingDataChange, openNotification, hasPermission, control, resourceCode, ACTION_MODULE } from '../../../shared/common';
-import { Table, Icon, Popconfirm, Card } from 'antd';
+import { getDataPaging, saveOrUpdate, findById, deleteData } from '../../../shared/actions/process/ProductResource';
+import { getSelectedDataWithOrg as getSelectedDataOrg } from '../../../shared/actions/system/ActionOrganization';
+import { dataPost, message, openNotification, hasPermission, control, resourceCode, ACTION_MODULE, DateFormat, appConfig } from '../../../shared/common';
+import { Table, Icon, Popconfirm, Card, Tag } from 'antd';
 import { PopupInfo } from './PopupInfo.component';
 import PopupAdd from './PopupAdd.component';
 import { FormSearch } from './FormSearch.component';
 import * as types from '../../../shared/constants/ActionTypeCommon';
 import { getSeletedByOrgpath } from '../../../shared/actions/process/MerchandiseRegisterResource';
+import moment from 'moment';
+import TableFile from '../../../shared/components/FileTable.component';
+import { GET_SELETED_ORGANIZATION_SUCCESS } from '../../../shared/constants/ActionTypes';
 
 function Product(props) {
-  const [onInit, setOnInit] = useState(true);
   const [dataContent, setDataContent] = useState([]);
   const [pagination, setPagination] = useState({});
   const [isLoading, setLoading] = useState(false);
@@ -21,34 +23,83 @@ function Product(props) {
   const [isShowAdd, setIsShowAdd] = useState(false);
   const [dataDetail, setDataDetail] = useState(null);
   const [lstMerchandise, setLstMerchandise] = useState([]);
+  const [lstOrg, setLstOrg] = useState([]);
 
   const columns = [
     {
       title: 'STT',
       dataIndex: 'stt',
-      width: '5%',
+      width: '3%',
       render: (value, row, index) => {
         return index + 1;
       }
     },
     {
-      title: 'Mã DVT',
-      dataIndex: 'code',
-      width: '20%'
+      title: 'Mã',
+      dataIndex: 'productCode',
+      width: '5%'
     },
     {
-      title: 'Tên DVT',
-      dataIndex: 'name',
-      width: '20%'
+      title: 'Tên HH',
+      dataIndex: 'productName',
+      width: '15%'
+    },
+    {
+      title: 'Đơn vị',
+      dataIndex: 'organizationName',
+      width: '10%'
+    },
+    {
+      title: 'Trong loại hình',
+      key: 'typeOfManufacture',
+      width: '10%',
+      render: (text, record) => {
+        let tmp = appConfig.TYPE_OF_MANUFACTURE.find(x => x.value === record.typeOfManufacture);
+        return (
+          <>
+            {tmp ? tmp.name : "Chưa xác định"}
+          </>
+        );
+      }
+    },
+    {
+      title: 'Trạng thái',
+      key: 'status',
+      width: '5%',
+      render: (text, record) => {
+        let tmp = appConfig.PRODUCT_STATUS.find(x => x.value === record.status);
+        return (
+          <>
+            <Tag color={tmp.color} key={tmp ? tmp.name : "Chưa xác định"}>{tmp ? tmp.name : "Chưa xác định"}</Tag>
+          </>
+        );
+      }
+    },
+    {
+      title: 'Ngày bắt đầu',
+      width: '10%',
+      render: (text, record) => (
+        <span>{moment(record.dateOfManufacture).format(DateFormat)}</span>
+      )
+    },
+    {
+      title: 'Đính kèm',
+      key: 'attach',
+      width: '10%',
+      render: (text, record) => (
+        <>
+          <TableFile fileAttachment={record.fileAttachment}></TableFile>
+        </>
+      )
     },
     {
       title: '#',
       key: 'action',
       render: (text, record) => (
         <span>
-          {hasPermission(resourceCode.unit, control.hasEdit) === 1 ? <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action" title="Sửa" /> : ""}
+          {hasPermission(resourceCode.product, control.hasEdit) === 1 ? <Icon type="edit" onClick={() => { handleEdit(record) }} className="icon-action icon-edit" title="Sửa" /> : ""}
           &nbsp;&nbsp;&nbsp;&nbsp;
-          {hasPermission(resourceCode.unit, control.hasDelete) === 1 ?
+          {hasPermission(resourceCode.product, control.hasDelete) === 1 ?
             <Popconfirm
               title={message.messageConfirmDelete}
               okText={message.okText}
@@ -56,68 +107,72 @@ function Product(props) {
               icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
               onConfirm={() => { handleDelete(record) }}
             >
-              <Icon type="delete" className="icon-action" title="Xóa" />
+              <Icon type="delete" className="icon-action  icon-delete" title="Xóa" />
             </Popconfirm> : ""}
         </span>
       ),
-      width: '20%'
+      width: '10%'
     },
   ];
 
   useEffect(() => {
-    if (onInit) {
-      setLoading(true);
-      props.filterData(dataSearch);
-      props.getSeletedByOrgpath();
-      setOnInit(false);
-    }
-    if (props.dataCatUnit) {
+    props.getSeletedByOrgpath();
+    props.filterData(dataSearch);
+    props.getSelectedDataOrg();
+  }, []);
+
+  useEffect(() => {
+    if (props.productData) {
       setLoading(false);
-      switch (props.dataCatUnit.type) {
-        case `${ACTION_MODULE.CAT_UNIT}_${types.PAGING_SUCCESS}`:
-          setDataContent(props.dataCatUnit.data);
+      switch (props.productData.type) {
+        case `${ACTION_MODULE.PRODUCT}_${types.PAGING_SUCCESS}`:
+          setDataContent(props.productData.data);
           setPagination({
-            current: props.dataCatUnit.curPage,
-            pageSize: props.dataCatUnit.perPage,
-            total: props.dataCatUnit.total,
-            size: 'small'
+            current: props.productData.curPage,
+            pageSize: props.productData.perPage,
+            total: props.productData.total,
+
           });
           break;
-        case `${ACTION_MODULE.CAT_UNIT}_${types.UPDATE_SUCCESS}`:
-          openNotification('success', 'Thành công', message.updateSuccess);
-          props.filterData(dataSearch);
-          closePopup();
-          break;
-        case `${ACTION_MODULE.CAT_UNIT}_${types.UPDATE_ERROR}`:
-          openNotification('error', 'Lỗi', message.updateSuccess);
-          break;
-        case `${ACTION_MODULE.CAT_UNIT}_${types.CREATE_SUCCESS}`:
+        case `${ACTION_MODULE.PRODUCT}_${types.CREATE_UPDATE_SUCCESS}`:
           openNotification('success', 'Thành công', message.createSuccess);
           props.filterData(dataSearch);
           closePopup();
           break;
-        case `${ACTION_MODULE.CAT_UNIT}_${types.CREATE_ERROR}`:
+        case `${ACTION_MODULE.PRODUCT}_${types.CREATE_ERROR}`:
           openNotification('error', 'Lỗi', message.createError);
           break;
-        case `${ACTION_MODULE.CAT_UNIT}_${types.DELETE_SUCCESS}`:
+        case `${ACTION_MODULE.PRODUCT}_${types.DELETE_SUCCESS}`:
           openNotification('success', 'Thành công', message.deleteSuccess);
           props.filterData(dataSearch);
           break;
-        case `${ACTION_MODULE.CAT_UNIT}_${types.DELETE_ERROR}`:
+        case `${ACTION_MODULE.PRODUCT}_${types.DELETE_ERROR}`:
           openNotification('error', 'Lỗi', message.deleteError);
+          break;
+        case `${ACTION_MODULE.PRODUCT}_${types.FIND_BY_ID_SUCCESS}`:
+          setDataDetail(props.productData);
+          break;
+        case `${ACTION_MODULE.PRODUCT}_${types.FIND_BY_ID_ERROR}`:
+          openNotification('error', 'Lỗi', message.messageError);
           break;
         default:
           break;
       }
     }
-  }, [props, onInit, dataSearch]);
+  }, [props, props.productData, dataSearch]);
 
-  useEffect(()=>{
-    if(props.merchandiseData && props.merchandiseData.type === `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_SUCCESS}`){
+  useEffect(() => {
+    if (props.merchandiseData && props.merchandiseData.type === `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_SUCCESS}`) {
       console.log('props.merchandiseData', props.merchandiseData.data);
       setLstMerchandise(props.merchandiseData.data);
     }
-  }, [props.merchandiseData])
+  }, [props.merchandiseData]);
+
+  useEffect(() => {
+    if (props.dataOrg && props.dataOrg.type === GET_SELETED_ORGANIZATION_SUCCESS) {
+      setLstOrg(props.dataOrg.data);
+    }
+  })
 
   const handlerSearch = data => {
     dataPost.data = data;
@@ -131,7 +186,7 @@ function Product(props) {
   }
 
   const handleEdit = (data) => {
-    setDataDetail(data);
+    props.findById(data.productId);
     setIsEdit(true);
   }
 
@@ -146,9 +201,7 @@ function Product(props) {
   }
 
   const onSaveChange = (data) => {
-    var instance = dataDetail;
-    mappingDataChange(data, instance);
-    props.update(instance);
+    props.saveOrUpdate(data);
   }
 
   const onSave = (data) => {
@@ -165,14 +218,14 @@ function Product(props) {
   return (
     <div>
       <Card title={message.titleFormSearch}>
-        <FormSearch onCreate={handleAdd} onSearch={handlerSearch}></FormSearch>
+        <FormSearch lstOrg={lstOrg} lstMerchandise={lstMerchandise} onCreate={handleAdd} onSearch={handlerSearch}></FormSearch>
       </Card>
       <br />
-      <Card title={message.titleFormListUnit}>
-        {hasPermission(resourceCode.unit, control.hasView) === 1 ?
+      <Card title={message.titleFormListProduct}>
+        {hasPermission(resourceCode.product, control.hasView) === 1 ?
           <Table
-            columns={columns}
-            rowKey={record => record.code}
+            columns={columns} bordered
+            rowKey={record => record.productId}
             dataSource={dataContent}
             pagination={pagination}
             loading={isLoading}
@@ -183,27 +236,30 @@ function Product(props) {
 
       </Card>
       {
-        hasPermission(resourceCode.unit, control.hasEdit) === 1 ? <PopupInfo isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange} /> : ""
+        hasPermission(resourceCode.product, control.hasEdit) === 1 ? <PopupInfo lstMerchandise={lstMerchandise} isEdit={isEdit} dataDetail={dataDetail} closePopup={closePopup} onSave={onSaveChange} /> : ""
       }
       {
-        hasPermission(resourceCode.unit, control.hasAdd) === 1 ? <PopupAdd isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave} lstMerchandise={lstMerchandise} /> : ""
+        hasPermission(resourceCode.product, control.hasAdd) === 1 ? <PopupAdd isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave} lstMerchandise={lstMerchandise} /> : ""
       }
     </div>
   );
 }
 
 const mapStateToProps = state => ({
-  dataCatUnit: state.catUnitReducer,
-  merchandiseData: state.merchandiseRegisReducer
+  productData: state.productReducer,
+  merchandiseData: state.merchandiseRegisReducer,
+  file: state.fileReducer,
+  dataOrg: state.organizationReducer,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     filterData: (data) => dispatch(getDataPaging(data)),
     saveOrUpdate: (data) => dispatch(saveOrUpdate(data)),
-    update: (data) => dispatch(update(data)),
     deleteData: (data) => dispatch(deleteData(data)),
-    getSeletedByOrgpath: () => dispatch(getSeletedByOrgpath())
+    getSeletedByOrgpath: () => dispatch(getSeletedByOrgpath()),
+    findById: id => dispatch(findById(id)),
+    getSelectedDataOrg: () => dispatch(getSelectedDataOrg())
   }
 };
 

@@ -84,7 +84,6 @@ function GroupMerchandise(props) {
             current: props.datagroupMerchandise.curPage,
             pageSize: props.datagroupMerchandise.perPage,
             total: props.datagroupMerchandise.total,
-            size: 'small'
           });
           break;
         case `${ACTION_MODULE.CAT_GROUP_MER}_${types.UPDATE_SUCCESS}`:
@@ -174,6 +173,7 @@ function GroupMerchandise(props) {
       <Card title={message.titleFormListGroupMerchandise}>
         {hasPermission(resourceCode.groupMerchandise, control.hasView) === 1 ? 
           <Table
+            bordered
             columns={columns}
             rowKey={record => record.code}
             dataSource={dataContent}

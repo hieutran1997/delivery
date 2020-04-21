@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -74,4 +75,7 @@ public interface MerchandiseRegisterDAO extends CrudRepository<MerchandiseRegist
         vfData.setResultTransformer(query, ProductDTO.class);
         return query.list();
     }
+	
+	@Query(value = "SELECT * FROM merchandise_register WHERE merchandise_id = ?1 AND organization_id = ?2 order by merchandise_register_id desc", nativeQuery = true)
+	List<MerchandiseRegisterBO> findData(Long merchandiseId, Long orgId);
 }

@@ -94,7 +94,7 @@ function Control(props) {
                         current: props.control.curPage + 1,
                         pageSize: props.control.perPage,
                         total: props.control.total,
-                        size: 'small'
+                        
                     });
                     break;
                 case UPDATE_CONTROL_SUCCESS:
@@ -178,7 +178,7 @@ function Control(props) {
             <br />
             <Card title={message.titleFormControl}>
                 <Table
-                    columns={columns}
+                    columns={columns} bordered
                     rowKey={record => record.code}
                     dataSource={dataContent}
                     pagination={pagination}
