@@ -14,6 +14,7 @@ import moment from 'moment';
 import TableFile from '../../../shared/components/FileTable.component';
 import { GET_SELETED_ORGANIZATION_SUCCESS } from '../../../shared/constants/ActionTypes';
 import { Link } from 'react-router-dom';
+var QRCode = require('qrcode.react');
 
 function Product(props) {
   const [dataContent, setDataContent] = useState([]);
@@ -94,6 +95,16 @@ function Product(props) {
       )
     },
     {
+      title: 'QR code',
+      key: 'qr',
+      width: '5%',
+      render: (text, record) => (
+        <>
+         <QRCode value={`http://localhost:3000/previewer`} size={100}/>
+        </>
+      )
+    },
+    {
       title: '#',
       key: 'action',
       render: (text, record) => (
@@ -131,9 +142,9 @@ function Product(props) {
 
   useEffect(() => {
     if (props.productData) {
-      setLoading(false);
       switch (props.productData.type) {
         case `${ACTION_MODULE.PRODUCT}_${types.PAGING_SUCCESS}`:
+          setLoading(false);
           setDataContent(props.productData.data);
           setPagination({
             current: props.productData.curPage,
@@ -183,6 +194,7 @@ function Product(props) {
   })
 
   const handlerSearch = data => {
+    setLoading(true);
     dataPost.data = data;
     setDataSearch(dataPost);
     props.filterData(dataSearch);

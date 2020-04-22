@@ -35,4 +35,12 @@ const deleteData = (data) => {
     };
 };
 
-export { getDataPaging, saveOrUpdate, findById, deleteData };
+const findByCode = (id) => {
+    const url =  `${url_services.PRODUCT}/find-by-code/${id}`;
+    return {
+        types: [`${ACTION_MODULE.PRODUCT}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.FIND_BY_CODE_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.FIND_BY_CODE_ERROR}`],
+        api: (axios) => axios.get(url)
+    };
+}
+
+export { getDataPaging, saveOrUpdate, findById, deleteData, findByCode };

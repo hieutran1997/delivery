@@ -83,4 +83,13 @@ public interface ProductDAO extends CrudRepository<ProductBO, Long> {
 
 	@Query(value = "SELECT * FROM product WHERE merchandise_register_id = ?1 AND orgnization_id = ?2 AND `status` = 1", nativeQuery = true)
 	List<ProductBO> findData(Long merchandiseRegisterId, Long orgId);
+	
+	public default ProductDTO findByCode(VfData vfData, String code) {
+		List<Object> params = new ArrayList<Object>();
+		String sql = "SELECT pd.product_id productId, pd.product_code productCode, pd.product_name productName, "
+				+ " (SELECT organization_name FROM organization org WHERE org.id = pd.orgnization_id) organizationName "
+				+ " FROM product pd WHERE pd.product_code = ?";
+		params.add(code);
+        return vfData.get(sql, params, ProductDTO.class);
+	}
 }

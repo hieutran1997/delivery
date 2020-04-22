@@ -84,6 +84,7 @@ const FormFile = forwardRef((props, ref) => {
 
     const handleRemove = fileId => {
         var fileList = selectedFileList.filter(item => item.uid !== fileId);
+        props.setValue(props.valueName, fileList);
         setSelectedFileList(fileList);
     };
 

@@ -95,3 +95,24 @@ code {
 .p-tabview-panels{
   margin-top: 10px;
 }
+
+.file-image-data{
+  border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 110px;
+    display: inline-block;
+    margin: 5px;
+}
+
+.image-show{
+  max-width: 100px;
+}
+
+.col-image-data{
+  display: inline;
+}
+
+.vertical-timeline-element-date{
+  font-size: 14px !important;
+}

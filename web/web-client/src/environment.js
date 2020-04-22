@@ -23,7 +23,8 @@ export const url_services = {
     CAT_UNIT: '/cat/unit',
     MERCHANDISE: '/cat/merchandise',
     MERCHANDISE_REGISTER: '/process/merchandise-register',
-    PRODUCT: '/process/product'
+    PRODUCT: '/process/product',
+    GROWTHUP: '/process/growth-up'
 }
 
 export default function environments() {

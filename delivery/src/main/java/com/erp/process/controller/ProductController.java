@@ -120,4 +120,15 @@ public class ProductController extends BaseController{
 		result.setMessage("Thành công!");
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "find-by-code/{code}", method = RequestMethod.GET)
+	public ResponseEntity<?> findByCode(@PathVariable(value = "code") String code) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PRODUCT, Constants.PERMISSION.VIEW)) {
+			throw new PermissionException();
+		}
+		ProductDTO bo = service.findByCode(code);
+		bo.setFileAttachment("file", FileStorage.getListFileInfo(
+				FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId()));
+		return new ResponseEntity<>(bo, HttpStatus.OK);
+	}
 }

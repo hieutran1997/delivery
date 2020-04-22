@@ -155,7 +155,8 @@ export const ACTION_MODULE = {
     CAT_UNIT: "CAT_UNIT",
     MERCHANDISE: "MERCHANDISE",
     MERCHANDISE_REGISTER: "MERCHANDISE_REGISTER",
-    PRODUCT: "PRODUCT"
+    PRODUCT: "PRODUCT",
+    GROWTHUP: "GROWTHUP"
 }
 
 export function mappingDataChange(resource, destinnation) {
@@ -280,10 +281,20 @@ export const getPathMenu = (pathUrl) => {
                 result.push({
                     url: `/${check.url_hash}`,
                     label: check.title
-                })
+                });
             }
         }
     });
+    if(pathUrl === '/admin/process/product-info'){
+        result.push({
+            url: `/admin/process`,
+            label: "Quá trình"
+        });
+        result.push({
+            url: `/admin/process/product-info`,
+            label: "Thông tin hàng hóa"
+        })
+    }
     return result;
 }
 

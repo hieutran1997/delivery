@@ -28,7 +28,8 @@ export const FormInput = forwardRef((props, ref) => {
     React.useEffect(() => {
         props.register({ name: `${props.valueName}` }, props.validation || null); // custom register react-select 
         if (props.value && props.type === typeOfDynamicInput.DATE_TIME) {
-            setValue(props.valueName, new Date(props.value).toUTCString());
+            setValue(props.valueName, props.value.toUTCString());
+            props.setValue(props.valueName, props.value.toUTCString());
         }
     }, [props.register, props.valueName, props.value, props.validation, props.type]);
 
@@ -61,7 +62,7 @@ export const FormInput = forwardRef((props, ref) => {
                 <DatePicker
                     className={props.inputClassName}
                     onChange={onChangeDate}
-                    defaultValue={props.value ? moment(props.value, DateFormat) : null}
+                    value={props.value ? moment(props.value, DateFormat) : null}
                     disabled={props.disabled}
                     placeholder="Chọn ngày"
                     format={DateFormat} />

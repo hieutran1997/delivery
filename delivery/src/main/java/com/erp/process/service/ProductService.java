@@ -42,13 +42,17 @@ public class ProductService {
 		dao.deleteById(id);
     }
 	
+	public ProductDTO findByCode(String code) {
+		return dao.findByCode(vfData, code);
+	}
+	
 	 /**
      * @param form
      * @return
      */
     public PaginationUtil<ProductDTO> processSearch(SearchRequestUtil<ProductDTO> pageable, String orgCode) {
     	PaginationUtil<ProductDTO> result = dao.getDataPagingWithOrgpath(pageable, vfData, orgCode);
-	     // Xu ly doc file
+	    // Xu ly doc file
 		try {
 			CommonUtil.loadFileAttachment(result.getData(), "productId", FileStorage.FILE_TYPE.PROCDUCT);
 		} catch (Exception e) {
