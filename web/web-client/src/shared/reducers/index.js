@@ -13,6 +13,9 @@ import merchandiseRegisReducer from './process/MerchandiseRegisterReducer';
 import fileReducer from './FileReducer';
 import productReducer from './process/ProductReducer';
 import growthUpReducer from './process/GrowthUpReducer';
+import manufactureReducer from './process/ManufactureReducer';
+import deliveryReducer from './process/DeliveryReducer';
+import displayReducer from './process/DisplayReducer';
 
 export default combineReducers({
   authReducer,
@@ -28,5 +31,8 @@ export default combineReducers({
   merchandiseRegisReducer,
   fileReducer,
   productReducer,
-  growthUpReducer
+  growthUpReducer,
+  manufactureReducer,
+  deliveryReducer,
+  displayReducer
 })

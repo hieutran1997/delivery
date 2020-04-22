@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getDataPaging, findByMerCode, saveOrUpdate } from '../../../shared/actions/process/DisplayProcessResource';
+import { getDataPaging, findByMerCode, saveOrUpdate } from '../../../shared/actions/process/DeliveryProcessResource';
 import { dataPost, hasPermission, resourceCode, control, DateFormat, ACTION_MODULE, openNotification, message } from '../../../shared/common';
 import { Table, Button } from 'antd';
 import moment from 'moment';
 import TableFile from '../../../shared/components/FileTable.component';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-// import { PopupAddDisplay } from './PopupAddDisplay.component';
+// import { PopupAddDelivery } from './PopupAddDelivery.component';
 import * as types from '../../../shared/constants/ActionTypeCommon';
 
-function DisplayProcess(props) {
+function DeliveryProcess(props) {
     const [code, setCode] = useState('');
     const [dataSearch, setDataSearch] = useState(dataPost);
     const [dataContent, setDataContent] = useState([]);
@@ -74,7 +74,7 @@ function DisplayProcess(props) {
     useEffect(() => {
         if (props.propsData) {
             switch (props.propsData.type) {
-                case `${ACTION_MODULE.DISPLAY}_${types.PAGING_SUCCESS}`:
+                case `${ACTION_MODULE.DELIVERY}_${types.PAGING_SUCCESS}`:
                     setLoading(false);
                     setDataContent(props.propsData.data);
                     setPagination({
@@ -83,16 +83,16 @@ function DisplayProcess(props) {
                         total: props.propsData.total
                     });
                     break;
-                case `${ACTION_MODULE.DISPLAY}_${types.FIND_BY_MERCHANDISE_ID_SUCCESS}`:
+                case `${ACTION_MODULE.DELIVERY}_${types.FIND_BY_MERCHANDISE_ID_SUCCESS}`:
                     setLstTimeLine(props.propsData.data);
                     break;
-                case `${ACTION_MODULE.DISPLAY}_${types.CREATE_UPDATE_SUCCESS}`:
+                case `${ACTION_MODULE.DELIVERY}_${types.CREATE_UPDATE_SUCCESS}`:
                     openNotification('success', 'Thành công', message.createSuccess);
                     props.filterData(dataSearch);
                     props.findByMerCode(code);
                     closePopup();
                     break;
-                case `${ACTION_MODULE.DISPLAY}_${types.CREATE_ERROR}`:
+                case `${ACTION_MODULE.DELIVERY}_${types.CREATE_ERROR}`:
                     openNotification('error', 'Lỗi', message.createError);
                     break;
                 default:
@@ -226,7 +226,7 @@ function DisplayProcess(props) {
 }
 
 const mapStateToProps = state => ({
-    propsData: state.displayReducer,
+    propsData: state.deliveryReducer,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -236,8 +236,7 @@ const mapDispatchToProps = dispatch => {
         saveOrUpdate: (data) => dispatch(saveOrUpdate(data))
     }
 };
-
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(DisplayProcess);
+)(DeliveryProcess);

@@ -37,6 +37,9 @@ public class FileStorage {
         public static Long GROWTH_UP_PROCESS = 1L;
         public static Long MERCHANDISE_REGIS = 2L;
         public static Long PROCDUCT = 3L;
+        public static Long DELIVERY_PROCESS = 4L;
+        public static Long MANUFACTURE_PROCESS = 5L;
+        public static Long DISPLAY_PROCESS = 6L;
     }
 
     

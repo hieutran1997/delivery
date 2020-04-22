@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.erp.process.bo.GrowthProcessBO;
-import com.erp.process.dto.GrowthProcessDTO;
-import com.erp.process.service.GrowthProcessService;
+import com.erp.process.bo.DisplayProcessBO;
+import com.erp.process.dto.DisplayProcessDTO;
+import com.erp.process.service.DisplayProcessService;
 import com.erp.service.ServiceChecker;
 import com.erp.util.BaseController;
 import com.erp.util.Constants;
@@ -31,40 +30,23 @@ import com.erp.util.SysException;
 
 
 @Controller
-@RequestMapping("/process/growth-up")
-public class GrowthUpController extends BaseController {
+@RequestMapping("/process/display")
+public class DisplayProcessController extends BaseController {
 	
 	@Autowired
-	private GrowthProcessService service;
+	private DisplayProcessService service;
 	
 	@Autowired
 	private ServiceChecker serviceChecker;
 	
 	@RequestMapping(value = "/postQuery", method = RequestMethod.POST)
-	public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<GrowthProcessDTO> pageable) {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.GROWTH_UP, Constants.PERMISSION.VIEW)) {
+	public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<DisplayProcessDTO> pageable) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.DISPLAY, Constants.PERMISSION.VIEW)) {
 			throw new PermissionException();
 		}
-		return new ResponseEntity<PaginationUtil<GrowthProcessDTO>>(service.getDataSearch(pageable), HttpStatus.OK);
+		return new ResponseEntity<PaginationUtil<DisplayProcessDTO>>(service.getDataSearch(pageable), HttpStatus.OK);
 	}
-	
-	/**
-	 * saveOrUpdate WorkProcessBO
-	 * 
-	 * @param req
-	 * @param form
-	 * @return
-	 * @throws Exception
-	 * @throws SysException
-	 */
-	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	@PostMapping(produces = MediaType.APPLICATION_JSON)
-	public @ResponseBody Response saveOrUpdateWithoutPer(HttpServletRequest req, GrowthProcessDTO dto) throws Exception, SysException {
-		GrowthProcessBO bo = service.saveOrUpdate(dto);
-		FileStorage.append(FileStorage.FILE_TYPE.GROWTH_UP_PROCESS, bo.getGrowthProcessId(), dto.getFile());
-		return Response.success(Constants.RESPONSE_CODE.SUCCESS).withData(bo);
-	}
-	
+
 	/**
 	 * saveOrUpdate WorkProcessBO
 	 * 
@@ -75,18 +57,18 @@ public class GrowthUpController extends BaseController {
 	 * @throws SysException
 	 */
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON)
-	public @ResponseBody Response saveOrUpdate(HttpServletRequest req, GrowthProcessDTO dto) throws Exception, SysException {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.GROWTH_UP, Constants.PERMISSION.ADD)) {
+	public @ResponseBody Response saveOrUpdate(HttpServletRequest req, DisplayProcessDTO dto) throws Exception, SysException {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.DISPLAY, Constants.PERMISSION.ADD)) {
 			throw new PermissionException();
 		}
-		GrowthProcessBO bo = service.saveOrUpdate(dto);
-		FileStorage.append(FileStorage.FILE_TYPE.GROWTH_UP_PROCESS, bo.getGrowthProcessId(), dto.getFiles());
+		DisplayProcessBO bo = service.saveOrUpdate(dto);
+		FileStorage.append(FileStorage.FILE_TYPE.DISPLAY_PROCESS, bo.getDisplayProcessId(), dto.getFiles());
 		return Response.success(Constants.RESPONSE_CODE.SUCCESS).withData(bo);
 	}
 	
 	@RequestMapping(value = "/find-by-merid/{productCode}", method = RequestMethod.GET)
 	public ResponseEntity<?> findBtMerId(@PathVariable(value = "productCode") String productCode) {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.GROWTH_UP, Constants.PERMISSION.VIEW)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.DISPLAY, Constants.PERMISSION.VIEW)) {
 			throw new PermissionException();
 		}
 		return new ResponseEntity<>(service.findByMerchandiseId(productCode), HttpStatus.OK);

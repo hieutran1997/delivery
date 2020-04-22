@@ -147,6 +147,10 @@ export const resourceCode = {
     unit: 'unit',
     merchandise: 'merchandise',
     product: 'product',
+    growthUpProcess: 'growth_up_process',
+    deliveryProcess: 'delivery_process',
+    manufactureProcess: 'manufacture_process',
+    displayProcess: 'display_process',
 }
 
 export const ACTION_MODULE = {
@@ -156,7 +160,10 @@ export const ACTION_MODULE = {
     MERCHANDISE: "MERCHANDISE",
     MERCHANDISE_REGISTER: "MERCHANDISE_REGISTER",
     PRODUCT: "PRODUCT",
-    GROWTHUP: "GROWTHUP"
+    GROWTHUP: "GROWTHUP",
+    MANUAFACTURE: "MANUAFACTURE",
+    DELIVERY: "DELIVERY",
+    DISPLAY: "DISPLAY"
 }
 
 export function mappingDataChange(resource, destinnation) {

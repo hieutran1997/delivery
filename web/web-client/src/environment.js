@@ -24,7 +24,10 @@ export const url_services = {
     MERCHANDISE: '/cat/merchandise',
     MERCHANDISE_REGISTER: '/process/merchandise-register',
     PRODUCT: '/process/product',
-    GROWTHUP: '/process/growth-up'
+    GROWTHUP: '/process/growth-up',
+    MANUAFACTURE: '/process/manuafacture',
+    DELIVERY: '/process/delivery',
+    DISPLAY: '/process/display',
 }
 
 export default function environments() {

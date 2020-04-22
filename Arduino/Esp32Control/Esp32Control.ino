@@ -61,7 +61,7 @@ int dayOfWeek = -1;
 String defaultHour = "10:00:00";
 const char* post_host = "192.168.1.20";
 const int post_port = 8000;
-String url = "/growth-up";
+String url = "/process/growth-up";
 int pictureNumber = 0;
 int countTime = 0;
 int countTimeReconnect = 0;
@@ -580,18 +580,6 @@ void reconnect()
   return;
 }
 
-void sendNewData(){
-  capturePhotoSaveSD();
-  takeNewPhoto = false;
-  int number = EEPROM.read(0);
-  String path = "/picture" + String(number) +".jpg";
-  Serial.print("path: ");
-  Serial.println(path);
-  File f = SD_MMC.open(path);
-  post(f);
-  copyImageLastest();
-}
-
 void copyImageLastest(){
    int number = EEPROM.read(0);
    String path = "/picture" + String(number) +".jpg";
@@ -603,6 +591,18 @@ void copyImageLastest(){
    }
    destFile.close();
    sourceFile.close();
+}
+
+void sendNewData(){
+  capturePhotoSaveSD();
+  takeNewPhoto = false;
+  int number = EEPROM.read(0);
+  String path = "/picture" + String(number) +".jpg";
+  Serial.print("path: ");
+  Serial.println(path);
+  File f = SD_MMC.open(path);
+  post(f);
+  copyImageLastest();
 }
 
 void setup() {
@@ -635,8 +635,6 @@ void setup() {
   dayOfWeek = timeClient.getDay();
   Serial.print("Thứ: ");
   Serial.println(dayOfWeek);
-  // Turn-off the 'brownout detector'
-  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   // OV2640 camera module
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;

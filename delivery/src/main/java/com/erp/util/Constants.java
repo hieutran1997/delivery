@@ -36,6 +36,10 @@ public class Constants {
         public static final String UNIT = "unit";
         public static final String MERCHANDISE = "merchandise";
         public static final String PRODUCT = "product";
+        public static final String GROWTH_UP = "growth_up_process";
+        public static final String DELIVERY = "delivery_process";
+        public static final String MANUFACTURE = "manufacture_process";
+        public static final String DISPLAY = "display_process";
     }
     
     public interface CORS_FILTER {

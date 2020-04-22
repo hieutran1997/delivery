@@ -8,7 +8,7 @@ import moment from 'moment';
 import TableFile from '../../../shared/components/FileTable.component';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-import { PopupAdd } from './PopupAdd.component';
+import { PopupAddGrowthUp } from './PopupAddGrowthUp.component';
 import * as types from '../../../shared/constants/ActionTypeCommon';
 
 function GrowthUpProcess(props) {
@@ -109,7 +109,7 @@ function GrowthUpProcess(props) {
                 props.filterData(temp);
             }
         }
-        else if (props.view && props.view !== 'grid') {
+        else if (props.view && props.view !== 'grid' && code !== '') {
             props.findByMerCode(code);
         }
     }, [props.view, props.productCode]);
@@ -190,7 +190,7 @@ function GrowthUpProcess(props) {
                 {hasPermission(resourceCode.product, control.hasView) === 1 ?
                     <Table
                         columns={columns} bordered
-                        rowKey={record => record.startDate}
+                        rowKey={record => record.growthProcessId}
                         dataSource={dataContent}
                         pagination={pagination}
                         loading={isLoading}
@@ -220,8 +220,7 @@ function GrowthUpProcess(props) {
                     </VerticalTimeline>
                 </div>
             }
-            {hasPermission(resourceCode.product, control.addAction) === 1 ? <PopupAdd isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAdd> : ""}
-
+            {hasPermission(resourceCode.product, control.addAction) === 1 ? <PopupAddGrowthUp isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAddGrowthUp> : ""}
         </div>
     );
 }

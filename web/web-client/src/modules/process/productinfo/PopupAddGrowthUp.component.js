@@ -6,7 +6,7 @@ import FormFile from '../../../shared/components/FormFile.component';
 import { typeOfDynamicInput } from '../../../shared/common';
 
 const toDay = new Date();
-export function PopupAdd(props) {
+export function PopupAddGrowthUp(props) {
   const { register, handleSubmit, errors, setValue } = useForm();
   const [isShowAdd, setIsShowAdd] = useState(false);
   const [fileAttachment, setFileAttachment] = useState({});

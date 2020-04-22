@@ -8,8 +8,8 @@ import org.hibernate.SQLQuery;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.erp.process.bo.GrowthProcessBO;
-import com.erp.process.dto.GrowthProcessDTO;
+import com.erp.process.bo.ManufactureProcessBO;
+import com.erp.process.dto.ManufactureProcessDTO;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
@@ -17,31 +17,33 @@ import com.erp.util.VfData;
 
 @Repository
 @SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
-public interface GrowthProcessDAO extends CrudRepository<GrowthProcessBO, Long> {
-	public default List<GrowthProcessDTO> findByMerchandiseId(VfData vfData, String productCode){
-		StringBuilder sql = new StringBuilder(" SELECT gp.growth_process_id growthProcessId, pd.product_code productCode, pd.product_name productName, gp.start_date startDate, gp.end_date endDate, gp.address, gp.description "
-				+ " FROM growth_process gp, product pd "
+public interface ManufactureProcessDAO extends CrudRepository<ManufactureProcessBO, Long>{
+	public default List<ManufactureProcessDTO> findByMerchandiseId(VfData vfData, String productCode){
+		StringBuilder sql = new StringBuilder(" SELECT gp.manufacture_process_id manufactureProcessId, pd.product_code productCode, pd.product_name productName"
+				+ " , gp.start_date startDate, gp.end_date endDate, gp.people_processing peopleProcessing, gp.description, gp.factory factory "
+				+ " FROM manufacture_process gp, product pd "
 				+ " WHERE gp.merchandise_id = pd.product_id AND pd.product_code = ? ");
 		SQLQuery query = vfData.createSQLQuery(sql.toString());
 		query.setParameter(0, productCode);
-        vfData.setResultTransformer(query, GrowthProcessDTO.class);
+        vfData.setResultTransformer(query, ManufactureProcessDTO.class);
         return query.list();
 	}
 	
 	public default void finishPreviousProcess(VfData vfData, Long merchandiseId){
-		StringBuilder sql = new StringBuilder(" UPDATE growth_process gp SET gp.end_date = SYSDATE() WHERE gp.merchandise_id = ? ");
+		StringBuilder sql = new StringBuilder(" UPDATE manufacture_process gp SET gp.end_date = SYSDATE() WHERE gp.merchandise_id = ? ");
 		SQLQuery query = vfData.createSQLQuery(sql.toString());
 		query.setParameter(0, merchandiseId);
 		query.executeUpdate();
 	}
 	
-	public default PaginationUtil<GrowthProcessDTO> getDataPaging(SearchRequestUtil<GrowthProcessDTO> pageable, VfData vfData) {
-		PaginationUtil<GrowthProcessDTO> results = new PaginationUtil<>();
+	public default PaginationUtil<ManufactureProcessDTO> getDataPaging(SearchRequestUtil<ManufactureProcessDTO> pageable, VfData vfData) {
+		PaginationUtil<ManufactureProcessDTO> results = new PaginationUtil<>();
 		int start = (pageable.getCurrent() - 1) * pageable.getPageSize();
 		StringBuilder strCondition = new StringBuilder(" Where gp.merchandise_id = pd.product_id AND pd.product_code = ?");
 		List<Object> paramList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(" SELECT gp.growth_process_id growthProcessId, pd.product_code productCode, pd.product_name productName, gp.start_date startDate, gp.end_date endDate, gp.address, gp.description "
-				+ " FROM growth_process gp, product pd ");
+		StringBuilder sql = new StringBuilder(" SELECT gp.manufacture_process_id manufactureProcessId, pd.product_code productCode, pd.product_name productName"
+				+ ", gp.start_date startDate, gp.end_date endDate, gp.people_processing peopleProcessing, gp.description, gp.factory factory "
+				+ " FROM manufacture_process gp, product pd ");
 		if(pageable.getData() != null ) {
 			paramList.add(pageable.getData().getProductCode());
 		}
@@ -60,7 +62,7 @@ public interface GrowthProcessDAO extends CrudRepository<GrowthProcessBO, Long> 
 			query.setParameter(i, paramList.get(i));
 			queryCount.setParameter(i, paramList.get(i));
 		}
-		vfData.setResultTransformer(query, GrowthProcessDTO.class);
+		vfData.setResultTransformer(query, ManufactureProcessDTO.class);
 		results.setTotal(((BigInteger) queryCount.uniqueResult()).intValue());
 		results.setCurPage(pageable.getCurrent());
 		results.setPerPage(pageable.getPageSize());
