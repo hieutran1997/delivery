@@ -80,6 +80,9 @@ public class GrowthUpController extends BaseController {
 			throw new PermissionException();
 		}
 		GrowthProcessBO bo = service.saveOrUpdate(dto);
+		if(bo == null) {
+			return Response.success(Constants.RESPONSE_CODE.ERROR).withData(bo);
+		}
 		FileStorage.append(FileStorage.FILE_TYPE.GROWTH_UP_PROCESS, bo.getGrowthProcessId(), dto.getFiles());
 		return Response.success(Constants.RESPONSE_CODE.SUCCESS).withData(bo);
 	}

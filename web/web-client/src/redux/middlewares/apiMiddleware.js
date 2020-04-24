@@ -34,6 +34,11 @@ const apiMiddleware = store => next => action => {
   actionPromise.then(
     (result) => next({ result, type: SUCCESS }),
     (error) => {
+      if(error.response && error.response.status === 400){
+        console.log('error.response', error.response);
+        openNotification('warning', 'Cảnh báo', 'Bạn không có quyền truy cập!');
+        return;
+      }
       if(error.response && error.response.status === 401){
         return next({ error, type: UNAUTHORIZED });
       }

@@ -135,8 +135,10 @@ function Product(props) {
   ];
 
   useEffect(() => {
+    var dataSearchTmp = dataSearch;
+    dataSearchTmp.data = {};
     props.getSeletedByOrgpath();
-    props.filterData(dataSearch);
+    props.filterData(dataSearchTmp);
     props.getSelectedDataOrg();
   }, []);
 

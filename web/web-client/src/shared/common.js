@@ -23,6 +23,9 @@ export const openNotification = (type, message, description) => {
     if (type === 'error') {
         notification.error(args);
     }
+    else if(type === 'warning'){
+        notification.warning(args);
+    }
     else {
         notification.success(args);
     }
@@ -73,6 +76,20 @@ export const appConfig = {
             value: 1,
             name: "Control"
         }
+    ],
+    STATUS_DELIVERY: [
+        {
+            value: 0,
+            name: "Nguyên vẹn"
+        },
+        {
+            value: 1,
+            name: "Vỡ, Hỏng"
+        },
+        {
+            value: 2,
+            name: "Còn sử dụng được"
+        },
     ]
 }
 

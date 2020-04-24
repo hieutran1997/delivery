@@ -3,13 +3,15 @@ import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
 import { getDataPaging, findByMerCode, saveOrUpdate } from '../../../shared/actions/process/DeliveryProcessResource';
 import { dataPost, hasPermission, resourceCode, control, DateFormat, ACTION_MODULE, openNotification, message } from '../../../shared/common';
+import { getSelectedData as getSelectedDataOrg } from '../../../shared/actions/system/ActionOrganization';
 import { Table, Button } from 'antd';
 import moment from 'moment';
 import TableFile from '../../../shared/components/FileTable.component';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-// import { PopupAddDelivery } from './PopupAddDelivery.component';
+import { PopupAddDelivery } from './PopupAddDelivery.component';
 import * as types from '../../../shared/constants/ActionTypeCommon';
+import { GET_SELETED_ORGANIZATION_SUCCESS } from '../../../shared/constants/ActionTypes';
 
 function DeliveryProcess(props) {
     const [code, setCode] = useState('');
@@ -19,6 +21,7 @@ function DeliveryProcess(props) {
     const [isLoading, setLoading] = useState(false);
     const [isShowAdd, setIsShowAdd] = useState(false);
     const [lstTimeLine, setLstTimeLine] = useState([]);
+    const [lstOrg, setLstOrg] = useState([]);
 
     const columns = [
         {
@@ -101,6 +104,8 @@ function DeliveryProcess(props) {
         }
     }, [props.propsData]);
 
+
+
     useEffect(() => {
         if (props.view && props.view === 'grid') {
             if (code !== "") {
@@ -112,7 +117,17 @@ function DeliveryProcess(props) {
         else if (props.view && props.view !== 'grid' && code != '') {
             props.findByMerCode(code);
         }
+        if(props.view){
+            props.getSelectedDataOrg();
+        }
+        
     }, [props.view, props.productCode]);
+
+    useEffect(()=>{
+        if (props.dataOrg && props.dataOrg.type === GET_SELETED_ORGANIZATION_SUCCESS) {
+            setLstOrg(props.dataOrg.data);
+          }
+    }, [props.dataOrg])
 
     const handleTableChange = (pagination) => {
         setDataSearch(pagination);
@@ -190,7 +205,7 @@ function DeliveryProcess(props) {
                 {hasPermission(resourceCode.product, control.hasView) === 1 ?
                     <Table
                         columns={columns} bordered
-                        rowKey={record => record.growthProcessId}
+                        rowKey={record => record.deliveryProcessId}
                         dataSource={dataContent}
                         pagination={pagination}
                         loading={isLoading}
@@ -204,7 +219,7 @@ function DeliveryProcess(props) {
                     <VerticalTimeline>
                         {
                             lstTimeLine ? lstTimeLine.map(item => (
-                                <VerticalTimelineElement key={item.growthProcessId}
+                                <VerticalTimelineElement key={item.deliveryProcessId}
                                     className="vertical-timeline-element--work"
                                     date={bindDate(item)}
                                     iconClassName="icon-time-line"
@@ -220,20 +235,22 @@ function DeliveryProcess(props) {
                     </VerticalTimeline>
                 </div>
             }
-            {/* {hasPermission(resourceCode.product, control.addAction) === 1 ? <PopupAddGrowthUp isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAddGrowthUp> : ""} */}
+            {hasPermission(resourceCode.product, control.addAction) === 1 ? <PopupAddDelivery lstOrg={lstOrg} isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAddDelivery> : ""}
         </div>
     );
 }
 
 const mapStateToProps = state => ({
     propsData: state.deliveryReducer,
+    dataOrg: state.organizationReducer
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         filterData: (data) => dispatch(getDataPaging(data)),
         findByMerCode: (id) => dispatch(findByMerCode(id)),
-        saveOrUpdate: (data) => dispatch(saveOrUpdate(data))
+        saveOrUpdate: (data) => dispatch(saveOrUpdate(data)),
+        getSelectedDataOrg: () => dispatch(getSelectedDataOrg())
     }
 };
 export default connect(

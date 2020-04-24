@@ -1,5 +1,6 @@
 package com.erp.process.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.erp.process.bo.DeliveryProcessBO;
 import com.erp.process.dao.DeliveryProcessDAO;
 import com.erp.process.dto.DeliveryProcessDTO;
-import com.erp.service.UserService;
 import com.erp.util.CommonUtil;
 import com.erp.util.FileStorage;
 import com.erp.util.PaginationUtil;
@@ -26,15 +26,24 @@ public class DeliveryProcessService {
 	private DeliveryProcessDAO dao;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
 	private VfData vfData;
 
 	@Transactional
 	public DeliveryProcessBO saveOrUpdate(DeliveryProcessDTO dto) {
 		DeliveryProcessBO bo = new DeliveryProcessBO();
-		
+		String userName = CommonUtil.getCurrentUser().getUsername();
+		bo.setCreatedBy(userName);
+		bo.setCreatedDate(new Date());
+		bo.setDeliveryBy(dto.getDeliveryBy());
+		bo.setDescription(dto.getDescription());
+		bo.setDocumentNumber(dto.getDocumentNumber());
+		bo.setEvaluation(dto.getEvaluation());
+		bo.setMerchandiseId(dto.getMerchandiseId());
+		bo.setOrganizationDescId(dto.getOrganizationDescId());
+		bo.setOrganizationSourceId(dto.getOrganizationSourceId());
+		bo.setStartDate(dto.getStartDate());
+		bo.setStatus(dto.getStatus());
+		bo.setVerifiedBy(dto.getVerifiedBy());
 		dao.finishPreviousProcess(vfData, dto.getMerchandiseId());
 		dao.save(bo);
 

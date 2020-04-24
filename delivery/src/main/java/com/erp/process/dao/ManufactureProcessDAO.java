@@ -22,7 +22,7 @@ public interface ManufactureProcessDAO extends CrudRepository<ManufactureProcess
 		StringBuilder sql = new StringBuilder(" SELECT gp.manufacture_process_id manufactureProcessId, pd.product_code productCode, pd.product_name productName"
 				+ " , gp.start_date startDate, gp.end_date endDate, gp.people_processing peopleProcessing, gp.description, gp.factory factory "
 				+ " FROM manufacture_process gp, product pd "
-				+ " WHERE gp.merchandise_id = pd.product_id AND pd.product_code = ? ");
+				+ " WHERE gp.merchandise_id = pd.product_id AND pd.product_code = ? order by gp.start_date DESC");
 		SQLQuery query = vfData.createSQLQuery(sql.toString());
 		query.setParameter(0, productCode);
         vfData.setResultTransformer(query, ManufactureProcessDTO.class);
@@ -30,7 +30,7 @@ public interface ManufactureProcessDAO extends CrudRepository<ManufactureProcess
 	}
 	
 	public default void finishPreviousProcess(VfData vfData, Long merchandiseId){
-		StringBuilder sql = new StringBuilder(" UPDATE manufacture_process gp SET gp.end_date = SYSDATE() WHERE gp.merchandise_id = ? ");
+		StringBuilder sql = new StringBuilder(" UPDATE manufacture_process gp SET gp.end_date = SYSDATE() WHERE gp.merchandise_id = ? and gp.end_date is null");
 		SQLQuery query = vfData.createSQLQuery(sql.toString());
 		query.setParameter(0, merchandiseId);
 		query.executeUpdate();
@@ -55,7 +55,7 @@ public interface ManufactureProcessDAO extends CrudRepository<ManufactureProcess
 		sqlCount.append(sql.toString());
 		sqlCount.append(") r ");
 		SQLQuery queryCount = vfData.createSQLQuery(sqlCount.toString());
-		SQLQuery query = vfData.createSQLQuery(sql.toString());
+		SQLQuery query = vfData.createSQLQuery(sql.toString() + " order by gp.start_date DESC");
 		query.setFirstResult(CommonUtil.NVL(start));
 		query.setMaxResults(CommonUtil.NVL(pageable.getPageSize(), 10));
 		for (int i = 0; i < paramList.size(); i++) {
@@ -68,5 +68,14 @@ public interface ManufactureProcessDAO extends CrudRepository<ManufactureProcess
 		results.setPerPage(pageable.getPageSize());
 		results.setData(query.list());
 		return results;
+	}
+	
+	public default ManufactureProcessDTO getLastestData(VfData vfData, Long merchandiseId){
+		StringBuilder sql = new StringBuilder(" Select start_date startDate, end_date endDate from  manufacture_process mp WHERE mp.merchandise_id = ? Order by mp.start_date DESC");
+		SQLQuery query = vfData.createSQLQuery(sql.toString());
+		query.setParameter(0, merchandiseId);
+		query.setMaxResults(1);
+		vfData.setResultTransformer(query, ManufactureProcessDTO.class);
+		return (ManufactureProcessDTO) query.uniqueResult();
 	}
 }

@@ -8,7 +8,7 @@ import moment from 'moment';
 import TableFile from '../../../shared/components/FileTable.component';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-// import { PopupAddDisplay } from './PopupAddDisplay.component';
+import { PopupAddDisplay } from './PopupAddDisplay.component';
 import * as types from '../../../shared/constants/ActionTypeCommon';
 
 function DisplayProcess(props) {
@@ -190,7 +190,7 @@ function DisplayProcess(props) {
                 {hasPermission(resourceCode.product, control.hasView) === 1 ?
                     <Table
                         columns={columns} bordered
-                        rowKey={record => record.growthProcessId}
+                        rowKey={record => record.displayProcessId}
                         dataSource={dataContent}
                         pagination={pagination}
                         loading={isLoading}
@@ -204,7 +204,7 @@ function DisplayProcess(props) {
                     <VerticalTimeline>
                         {
                             lstTimeLine ? lstTimeLine.map(item => (
-                                <VerticalTimelineElement key={item.growthProcessId}
+                                <VerticalTimelineElement key={item.displayProcessId}
                                     className="vertical-timeline-element--work"
                                     date={bindDate(item)}
                                     iconClassName="icon-time-line"
@@ -220,7 +220,7 @@ function DisplayProcess(props) {
                     </VerticalTimeline>
                 </div>
             }
-            {/* {hasPermission(resourceCode.product, control.addAction) === 1 ? <PopupAddGrowthUp isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAddGrowthUp> : ""} */}
+            {hasPermission(resourceCode.product, control.addAction) === 1 ? <PopupAddDisplay isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAddDisplay> : ""}
         </div>
     );
 }

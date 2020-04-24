@@ -34,7 +34,7 @@ function GrowthUpProcess(props) {
             key: 'startDate',
             width: '10%',
             render: (text, record) => (
-                <span>{record.startDate ? moment(record.endstartDateate).format(DateFormat) : ""}</span>
+                <span>{record.startDate ? moment(record.startDate).format(DateFormat) : ""}</span>
             )
         },
         {
@@ -87,6 +87,10 @@ function GrowthUpProcess(props) {
                     setLstTimeLine(props.propsData.data);
                     break;
                 case `${ACTION_MODULE.GROWTHUP}_${types.CREATE_UPDATE_SUCCESS}`:
+                    if(props.propsData.code === 'error'){
+                        openNotification('error', 'Lỗi', message.createError);
+                        return;
+                    }
                     openNotification('success', 'Thành công', message.createSuccess);
                     props.filterData(dataSearch);
                     props.findByMerCode(code);

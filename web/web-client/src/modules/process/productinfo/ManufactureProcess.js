@@ -190,7 +190,7 @@ function ManufactureProcess(props) {
                 {hasPermission(resourceCode.product, control.hasView) === 1 ?
                     <Table
                         columns={columns} bordered
-                        rowKey={record => record.growthProcessId}
+                        rowKey={record => record.manufactureProcessId}
                         dataSource={dataContent}
                         pagination={pagination}
                         loading={isLoading}
@@ -204,7 +204,7 @@ function ManufactureProcess(props) {
                     <VerticalTimeline>
                         {
                             lstTimeLine ? lstTimeLine.map(item => (
-                                <VerticalTimelineElement key={item.growthProcessId}
+                                <VerticalTimelineElement key={item.manufactureProcessId}
                                     className="vertical-timeline-element--work"
                                     date={bindDate(item)}
                                     iconClassName="icon-time-line"

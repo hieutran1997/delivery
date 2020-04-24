@@ -1,5 +1,6 @@
 package com.erp.process.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.erp.model.OrganizationModel;
 import com.erp.process.bo.ManufactureProcessBO;
 import com.erp.process.dao.ManufactureProcessDAO;
 import com.erp.process.dto.ManufactureProcessDTO;
@@ -33,11 +35,21 @@ public class ManufactureProcessService {
 
 	@Transactional
 	public ManufactureProcessBO saveOrUpdate(ManufactureProcessDTO dto) {
+		checkBeforeSave(dto);
 		ManufactureProcessBO bo = new ManufactureProcessBO();
-		
+		String userName = CommonUtil.getCurrentUser().getUsername();
+		OrganizationModel org = userService.getOrganizationByUser(userName);
+		bo.setCreatedBy(userName);
+		bo.setCreatedDate(new Date());
+		bo.setDescription(dto.getDescription());
+		bo.setEndDate(dto.getEndDate());
+		bo.setFactory(dto.getFactory());
+		bo.setMerchandiseId(dto.getMerchandiseId());
+		bo.setOrgnizationId(org.getId());
+		bo.setPeopleProcessing(dto.getPeopleProcessing());
+		bo.setStartDate(dto.getStartDate());
 		dao.finishPreviousProcess(vfData, dto.getMerchandiseId());
 		dao.save(bo);
-
 		return bo;
 	}
 
@@ -65,5 +77,22 @@ public class ManufactureProcessService {
 			LOGGER.info("Loi doc file");
 		}
 		return result;
+	}
+	
+	public void checkBeforeSave(ManufactureProcessDTO dto) {
+		ManufactureProcessDTO data = dao.getLastestData(vfData, dto.getMerchandiseId());
+//		if(data == null) {
+//			return;
+//		}
+//		else {
+//			if(dto.getStartDate().after(data.getStartDate()) && dto.getStartDate().before(dto.getEndDate())) {
+//				
+//			}
+//			else if(dto.getStartDate().before(data.getStartDate())) {
+//				if(dto.getEndDate() != null) {
+//					throw new WarningException();
+//				}
+//			}
+//		}
 	}
 }

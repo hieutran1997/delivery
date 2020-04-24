@@ -27,7 +27,7 @@ public class ManufactureProcessBO extends FileAttachment{
 	@Column(name = "merchandise_id")
 	private Long merchandiseId;
 	
-	@Column(name = "orgnization_id")
+	@Column(name = "organization_id")
 	private Long orgnizationId;
 	
 	@Column(name = "start_date")
@@ -49,5 +49,5 @@ public class ManufactureProcessBO extends FileAttachment{
 	private String createdBy;
 	
 	@Column(name ="created_date")
-	private Long createdDate;
+	private Date createdDate;
 }

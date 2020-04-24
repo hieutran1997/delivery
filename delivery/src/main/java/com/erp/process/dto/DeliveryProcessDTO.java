@@ -25,7 +25,7 @@ public class DeliveryProcessDTO  extends FileAttachment{
 
 	private Long organizationSourceId;
 
-	private String verified_by;
+	private String verifiedBy;
 
 	private Long status;
 
@@ -39,7 +39,7 @@ public class DeliveryProcessDTO  extends FileAttachment{
 
 	private String createdBy;
 
-	private Long createdDate;
+	private Date createdDate;
 	
 	private List<MultipartFile> files;
 	

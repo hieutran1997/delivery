@@ -31,7 +31,7 @@ public interface DeliveryProcessDAO extends CrudRepository<DeliveryProcessBO, Lo
 	}
 	
 	public default void finishPreviousProcess(VfData vfData, Long merchandiseId){
-		StringBuilder sql = new StringBuilder(" UPDATE delivery_process gp SET gp.end_date = SYSDATE() WHERE gp.merchandise_id = ? ");
+		StringBuilder sql = new StringBuilder(" UPDATE delivery_process gp SET gp.end_date = SYSDATE() WHERE gp.merchandise_id = ? and end_date is null ");
 		SQLQuery query = vfData.createSQLQuery(sql.toString());
 		query.setParameter(0, merchandiseId);
 		query.executeUpdate();

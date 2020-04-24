@@ -21,7 +21,7 @@ public interface GrowthProcessDAO extends CrudRepository<GrowthProcessBO, Long> 
 	public default List<GrowthProcessDTO> findByMerchandiseId(VfData vfData, String productCode){
 		StringBuilder sql = new StringBuilder(" SELECT gp.growth_process_id growthProcessId, pd.product_code productCode, pd.product_name productName, gp.start_date startDate, gp.end_date endDate, gp.address, gp.description "
 				+ " FROM growth_process gp, product pd "
-				+ " WHERE gp.merchandise_id = pd.product_id AND pd.product_code = ? ");
+				+ " WHERE gp.merchandise_id = pd.product_id AND pd.product_code = ? order by gp.start_date DESC");
 		SQLQuery query = vfData.createSQLQuery(sql.toString());
 		query.setParameter(0, productCode);
         vfData.setResultTransformer(query, GrowthProcessDTO.class);
@@ -29,7 +29,7 @@ public interface GrowthProcessDAO extends CrudRepository<GrowthProcessBO, Long> 
 	}
 	
 	public default void finishPreviousProcess(VfData vfData, Long merchandiseId){
-		StringBuilder sql = new StringBuilder(" UPDATE growth_process gp SET gp.end_date = SYSDATE() WHERE gp.merchandise_id = ? ");
+		StringBuilder sql = new StringBuilder(" UPDATE growth_process gp SET gp.end_date = SYSDATE() WHERE gp.merchandise_id = ? and gp.end_date is null");
 		SQLQuery query = vfData.createSQLQuery(sql.toString());
 		query.setParameter(0, merchandiseId);
 		query.executeUpdate();
@@ -53,6 +53,7 @@ public interface GrowthProcessDAO extends CrudRepository<GrowthProcessBO, Long> 
 		sqlCount.append(sql.toString());
 		sqlCount.append(") r ");
 		SQLQuery queryCount = vfData.createSQLQuery(sqlCount.toString());
+		sql.append(" order by gp.start_date DESC");
 		SQLQuery query = vfData.createSQLQuery(sql.toString());
 		query.setFirstResult(CommonUtil.NVL(start));
 		query.setMaxResults(CommonUtil.NVL(pageable.getPageSize(), 10));
@@ -66,5 +67,14 @@ public interface GrowthProcessDAO extends CrudRepository<GrowthProcessBO, Long> 
 		results.setPerPage(pageable.getPageSize());
 		results.setData(query.list());
 		return results;
+	}
+	
+	public default GrowthProcessDTO getLastestData(VfData vfData, Long merchandiseId){
+		StringBuilder sql = new StringBuilder(" Select start_date startDate, end_date endDate from  growth_process mp WHERE mp.merchandise_id = ? Order by mp.start_date DESC");
+		SQLQuery query = vfData.createSQLQuery(sql.toString());
+		query.setParameter(0, merchandiseId);
+		query.setMaxResults(1);
+		vfData.setResultTransformer(query, GrowthProcessDTO.class);
+		return (GrowthProcessDTO) query.uniqueResult();
 	}
 }

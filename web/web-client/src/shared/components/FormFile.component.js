@@ -41,6 +41,9 @@ const FormFile = forwardRef((props, ref) => {
             setSelectedFileList([]);
             setListValue(props.fileAttachment.file);
         }
+        else{
+            props.setValue(props.valueName, []);
+        }
     }, [props.fileAttachment, setListValue]);
 
     React.useEffect(() => {

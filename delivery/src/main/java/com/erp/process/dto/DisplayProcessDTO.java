@@ -31,7 +31,7 @@ public class DisplayProcessDTO extends FileAttachment {
 
 	private String createdBy;
 
-	private String createdDate;
+	private Date createdDate;
 
 	private List<MultipartFile> files;
 

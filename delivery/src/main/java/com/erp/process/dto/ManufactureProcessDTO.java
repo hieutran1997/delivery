@@ -31,7 +31,7 @@ public class ManufactureProcessDTO extends FileAttachment{
 	
 	private String createdBy;
 	
-	private Long createdDate;
+	private Date createdDate;
 	
 	private List<MultipartFile> files;
 	

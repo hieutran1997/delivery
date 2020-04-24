@@ -49,5 +49,5 @@ public class DisplayProcessBO extends FileAttachment{
 	private String createdBy;
 	
 	@Column(name = "created_date")
-	private String createdDate;
+	private Date createdDate;
 }

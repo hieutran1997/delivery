@@ -40,7 +40,7 @@ public class DeliveryProcessBO extends FileAttachment{
 	private Long organizationSourceId;
 	
 	@Column(name = "verified_by")
-	private String verified_by;
+	private String verifiedBy;
 	
 	@Column(name = "status")
 	private Long status;
@@ -61,5 +61,5 @@ public class DeliveryProcessBO extends FileAttachment{
 	private String createdBy;
 	
 	@Column(name ="created_date")
-	private Long createdDate;
+	private Date createdDate;
 }

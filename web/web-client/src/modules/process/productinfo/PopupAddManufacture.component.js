@@ -26,7 +26,7 @@ export function PopupAddManufacture(props) {
 
   return (
     <Modal
-      title={`Thêm mới quá trình`}
+      title={`Thêm mới quá trình chế biến, sản xuất`}
       visible={isShowAdd}
       footer={null}
       width={800}

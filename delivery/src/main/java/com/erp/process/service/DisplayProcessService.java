@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.erp.model.OrganizationModel;
 import com.erp.process.bo.DisplayProcessBO;
 import com.erp.process.dao.DisplayProcessDAO;
 import com.erp.process.dto.DisplayProcessDTO;
@@ -35,7 +36,18 @@ public class DisplayProcessService {
 	@Transactional
 	public DisplayProcessBO saveOrUpdate(DisplayProcessDTO dto) {
 		DisplayProcessBO bo = new DisplayProcessBO();
-		
+		String userName = CommonUtil.getCurrentUser().getUsername();
+		OrganizationModel org = userService.getOrganizationByUser(userName);
+		if(org != null) {
+			bo.setOrganizationId(org.getId());
+		}
+		bo.setCreatedBy(userName);
+		bo.setCreatedDate(new Date());
+		bo.setDescription(dto.getDescription());
+		bo.setFactory(dto.getFactory());
+		bo.setMerchandiseId(dto.getMerchandiseId());
+		bo.setPeopleProcessing(dto.getPeopleProcessing());
+		bo.setStartDate(dto.getStartDate());
 		dao.finishPreviousProcess(vfData, dto.getMerchandiseId());
 		dao.save(bo);
 

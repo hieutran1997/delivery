@@ -74,7 +74,7 @@ public interface OrganizationDAO extends JpaRepository<OrganizationModel, Long> 
 	}
 
 	public default List<SelectedFormDTO> getSelectedData(VfData vfData) {
-		String sql = " Select code value, organization_name name from organization ";
+		String sql = " Select id, code value, organization_name name from organization ";
 		SQLQuery query = vfData.createSQLQuery(sql);
 		vfData.setResultTransformer(query, SelectedFormDTO.class);
 		return query.list();

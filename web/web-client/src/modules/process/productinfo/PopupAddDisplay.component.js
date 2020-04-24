@@ -6,8 +6,17 @@ import FormFile from '../../../shared/components/FormFile.component';
 import { typeOfDynamicInput } from '../../../shared/common';
 
 const toDay = new Date();
-export function PopupAddGrowthUp(props) {
-  const { register, handleSubmit, errors, setValue } = useForm();
+
+const defaultValues = {
+  startDate: toDay,
+  peopleProcessing: "",
+  factory: "",
+  files: [],
+  description: ""
+};
+
+export function PopupAddDisplay(props) {
+  const { register, handleSubmit, errors, setValue, reset, getValues } = useForm({defaultValues});
   const [isShowAdd, setIsShowAdd] = useState(false);
   const [fileAttachment, setFileAttachment] = useState({});
 
@@ -17,16 +26,13 @@ export function PopupAddGrowthUp(props) {
 
   useEffect(() => {
     setIsShowAdd(props.isShowAdd);
-    setValue('startDate', toDay.toUTCString());
-    setValue('address', '');
-    setValue('description', '');
-    setValue('files', '');
+    reset(defaultValues);
     setFileAttachment([]);
-  }, [props.isShowAdd, setValue]);
+  }, [props.isShowAdd, reset]);
 
   return (
     <Modal
-      title={`Thêm mới quá trình phát triển`}
+      title={`Thêm mới quá trình bày bán`}
       visible={isShowAdd}
       footer={null}
       width={800}
@@ -35,23 +41,29 @@ export function PopupAddGrowthUp(props) {
       <form onSubmit={handleSubmit(onSaveEdit)}>
         <Row type="flex" justify="space-around">
           <Col span={11}>
-            <FormInput valueName="startDate" value={toDay} labelName="Ngày bắt đầu" disabled={true}
+            <FormInput valueName="startDate" value={toDay} labelName="Ngày bắt đầu"
               register={register} validation={{ required: true }} setValue={setValue} errors={errors} type={typeOfDynamicInput.DATE_TIME} />
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <FormInput valueName="address" value="" labelName="Địa chỉ" inputClassName="ant-input"
-                            register={register} setValue={setValue} errors={errors} />
+            <FormInput valueName="peopleProcessing" value="" labelName="Người quản lý" inputClassName="ant-input"
+                register={register} setValue={setValue} errors={errors} />
           </Col>
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={11}>
-          <FormInput valueName="description" labelName="Mô tả" inputClassName="ant-input custom-input-as-ant-input"
-              register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.TEXT_AREA} />
+            <FormInput valueName="factory" value="" labelName="Khu sản xuất" inputClassName="ant-input"
+              register={register} setValue={setValue} errors={errors} />
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
             <FormFile valueName="files" fileAttachment={fileAttachment} register={register} setValue={setValue}></FormFile>
+          </Col>
+        </Row>
+        <Row type="flex" justify="space-around">
+          <Col span={24}>
+          <FormInput valueName="description" value="" labelName="Mô tả" inputClassName="ant-input custom-input-as-ant-input"
+              register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.TEXT_AREA} />
           </Col>
         </Row>
         <div className="footer-modal">
