@@ -33,11 +33,11 @@ const TableFile = forwardRef((props, ref) => {
     React.useEffect(() => {
         if (props.file) {
             if (props.file.type === DOWNLOAD_FILE_SUCCESS) {
-                if(fileName !== '' && firstDownload===1){
+                if (fileName !== '' && firstDownload === 1) {
                     firstDownload = 0;
                     saveAs(props.file.data, fileName);
                 }
-                
+
             }
         }
     }, [props.file]);
@@ -46,6 +46,15 @@ const TableFile = forwardRef((props, ref) => {
         fileName = file.fileName;
         firstDownload = 1;
         props.downloadFile(file.id);
+    }
+
+    const checkFile = fileName => {
+        let indexJpg = fileName.indexOf("jpg");
+        let indexPng = fileName.indexOf("png");
+        if (indexJpg >= 0 || indexPng >= 0) {
+            return 'image';
+        }
+        return 'file'
     }
 
     if (props.type !== 'image') {
@@ -65,12 +74,26 @@ const TableFile = forwardRef((props, ref) => {
             <>
                 <div className="col-image-data">
                     {listValue ? listValue.map(file => (
-                        <div key={file.id} className="file-image-data" onClick={()=>{setPreviewVisible(true); setPreviewImage(`${environments_dev.URL_SERVICE_FILE}/file/avatar/image/${file.id}`)}}>
-                            <img className="image-show" src={`${environments_dev.URL_SERVICE_FILE}/file/avatar/image/${file.id}`} alt={`${file.fileName}`} />
+                        <div key={file.id} style={{ display: 'inline-table' }}>
+                            {checkFile(file.fileName) === 'image' ?
+                                <div className="file-image-data" onClick={() => { setPreviewVisible(true); setPreviewImage(`${environments_dev.URL_SERVICE_FILE}/file/avatar/image/${file.id}`) }}>
+                                    <img className="image-show" src={`${environments_dev.URL_SERVICE_FILE}/file/avatar/image/${file.id}`} alt={`${file.fileName}`} />
+                                </div> :
+                                <div style={{
+                                    display: 'flex',
+                                    margin: '10px'
+                                }}>
+                                    <Row className="file-row-data">
+                                        <span style={{ float: "left" }}>{file.fileName}{" "}</span>
+                                        <DownloadOutlined style={{ float: "right", marginLeft: '10px' }} onClick={() => handleDownloadFile(file)} className="icon-action icon-edit" title="Tải xuống" />
+                                    </Row>
+                                    <br />
+                                </div>}
+
                         </div>
                     )) : ""}
                 </div>
-                <Modal visible={previewVisible} footer={null} onCancel={()=>{setPreviewVisible(false)}}>
+                <Modal visible={previewVisible} footer={null} onCancel={() => { setPreviewVisible(false) }}>
                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
                 </Modal>
             </>

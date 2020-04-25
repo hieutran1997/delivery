@@ -1,13 +1,15 @@
 import axios from 'axios';
 
 export const environments_dev = {
-    URL_SERVICE: 'http://localhost:8000',
-    URL_SERVICE_FILE: 'http://localhost:8001'
+    URL_SERVICE: 'http://192.168.1.20:8000',
+    URL_SERVICE_FILE: 'http://192.168.1.20:8001',
+    CLIENT_HOST: 'http://192.168.1.20:3000'
 }
 
 export const environments_prod = {
-    URL_SERVICE: 'http://localhost:8000',
-    URL_SERVICE_FILE: 'http://localhost:8001'
+    URL_SERVICE: 'http://192.168.1.20:8000',
+    URL_SERVICE_FILE: 'http://192.168.1.20:8001',
+    CLIENT_HOST: 'http://192.168.1.20:3000'
 }
 
 export const url_services = {

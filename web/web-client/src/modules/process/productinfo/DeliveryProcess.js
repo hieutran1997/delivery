@@ -35,26 +35,41 @@ function DeliveryProcess(props) {
         {
             title: 'Ngày bắt đầu',
             key: 'startDate',
-            width: '10%',
+            width: '7%',
             render: (text, record) => (
-                <span>{record.startDate ? moment(record.endstartDateate).format(DateFormat) : ""}</span>
+                <span>{record.startDate ? moment(record.startDate).format(DateFormat) : ""}</span>
             )
         },
         {
             title: 'Ngày kết thúc',
             key: 'endDate',
-            width: '10%',
+            width: '7%',
             render: (text, record) => (
                 <span>{record.endDate ? moment(record.endDate).format(DateFormat) : ""}</span>
             )
         },
         {
-            title: 'Địa chỉ',
-            dataIndex: 'address',
+            title: 'Số văn bản',
+            dataIndex: 'documentNumber',
             width: '10%',
         },
         {
-            title: 'Mô tả',
+            title: 'Đánh giá',
+            dataIndex: 'evaluation',
+            width: '10%',
+        },
+        {
+            title: 'Đơn vị chuyển',
+            dataIndex: 'organizationSourceName',
+            width: '10%',
+        },
+        {
+            title: 'Đơn vị nhận',
+            dataIndex: 'organizationDescName',
+            width: '10%',
+        },
+        {
+            title: 'Đính kèm',
             key: 'image',
             width: '10%',
             render: (text, record) => (
@@ -121,7 +136,7 @@ function DeliveryProcess(props) {
             props.getSelectedDataOrg();
         }
         
-    }, [props.view, props.productCode]);
+    }, [props.view, props.productCode, code]);
 
     useEffect(()=>{
         if (props.dataOrg && props.dataOrg.type === GET_SELETED_ORGANIZATION_SUCCESS) {
@@ -225,9 +240,10 @@ function DeliveryProcess(props) {
                                     iconClassName="icon-time-line"
                                     iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
                                 >
-                                    <h3 className="vertical-timeline-element-title"><b>Địa chỉ: </b>{item.address}</h3>
-                                    <span><b>Nội dung: </b> {item.description}</span>
-                                    <br />
+                                    <h3 className="vertical-timeline-element-title"><b>Số văn bản: </b>{item.documentNumber}</h3>
+                                    <p><b>Vận chuyển từ: </b> {item.organizationSourceName} -> {item.organizationDescName}</p>
+                                    <p><b>Đánh giá: </b> {item.evaluation}</p>
+                                    <p><b>File đính kèm: </b></p>
                                     <TableFile type="image" fileAttachment={item.fileAttachment}></TableFile>
                                 </VerticalTimelineElement>
                             )) : ""

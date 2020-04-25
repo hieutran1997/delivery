@@ -38,4 +38,6 @@ public class ProductDTO extends FileAttachment {
 	private List<MultipartFile> files;
 	
 	private String organizationName;
+	
+	private String productEncrypt;
 }

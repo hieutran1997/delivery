@@ -5,6 +5,7 @@ import { DatePicker } from 'antd';
 import { DateFormat } from '../common';
 import moment from 'moment';
 
+const toDay = new Date();
 const BindingError = (props) => {
     return (
         <p className="label-error">
@@ -23,12 +24,12 @@ const BindingError = (props) => {
 }
 
 export const FormInput = forwardRef((props, ref) => {
-    const [value, setValue] = useState(props.value);
+    const [value, setValue] = useState();
 
     React.useEffect(() => {
         props.register({ name: `${props.valueName}` }, props.validation || null); // custom register react-select 
         if (props.value && props.type === typeOfDynamicInput.DATE_TIME) {
-            setValue(props.valueName, props.value.toUTCString());
+            setValue(props.value);
             props.setValue(props.valueName, props.value.toUTCString());
         }
     }, [props.register, props.valueName, props.value, props.validation, props.type]);
@@ -62,7 +63,7 @@ export const FormInput = forwardRef((props, ref) => {
                 <DatePicker
                     className={props.inputClassName}
                     onChange={onChangeDate}
-                    value={props.value ? moment(props.value, DateFormat) : null}
+                    value={value ? moment(value, DateFormat) : moment(toDay, DateFormat)}
                     disabled={props.disabled}
                     placeholder="Chọn ngày"
                     format={DateFormat} />

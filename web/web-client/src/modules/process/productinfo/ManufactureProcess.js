@@ -34,7 +34,7 @@ function ManufactureProcess(props) {
             key: 'startDate',
             width: '10%',
             render: (text, record) => (
-                <span>{record.startDate ? moment(record.endstartDateate).format(DateFormat) : ""}</span>
+                <span>{record.startDate ? moment(record.startDate).format(DateFormat) : ""}</span>
             )
         },
         {
@@ -46,12 +46,17 @@ function ManufactureProcess(props) {
             )
         },
         {
-            title: 'Địa chỉ',
-            dataIndex: 'address',
+            title: 'Người quản lý',
+            dataIndex: 'peopleProcessing',
             width: '10%',
         },
         {
-            title: 'Mô tả',
+            title: 'Khu sản xuất',
+            dataIndex: 'factory',
+            width: '10%',
+        },
+        {
+            title: 'Đính kèm',
             key: 'image',
             width: '10%',
             render: (text, record) => (
@@ -112,7 +117,7 @@ function ManufactureProcess(props) {
         else if (props.view && props.view !== 'grid' && code != '') {
             props.findByMerCode(code);
         }
-    }, [props.view, props.productCode]);
+    }, [props.view, props.productCode, code]);
 
     const handleTableChange = (pagination) => {
         setDataSearch(pagination);
@@ -210,9 +215,9 @@ function ManufactureProcess(props) {
                                     iconClassName="icon-time-line"
                                     iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
                                 >
-                                    <h3 className="vertical-timeline-element-title"><b>Địa chỉ: </b>{item.address}</h3>
-                                    <span><b>Nội dung: </b> {item.description}</span>
-                                    <br />
+                                    <h3 className="vertical-timeline-element-title"><b>Khu sản xuất: </b>{item.factory}</h3>
+                                    <p><b>Người quản lý: </b> {item.peopleProcessing}</p>
+                                    <p><b>File đính kèm: </b></p>
                                     <TableFile type="image" fileAttachment={item.fileAttachment}></TableFile>
                                 </VerticalTimelineElement>
                             )) : ""

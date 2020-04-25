@@ -141,7 +141,8 @@ FormFile.defaultProps = {
     value: '',
     register: null,
     validation: { required: false },
-    fileAttachment: []
+    fileAttachment: [],
+    typeOf: ''
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormFile);

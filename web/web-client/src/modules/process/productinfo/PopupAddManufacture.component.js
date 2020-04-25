@@ -35,7 +35,7 @@ export function PopupAddManufacture(props) {
       <form onSubmit={handleSubmit(onSaveEdit)}>
         <Row type="flex" justify="space-around">
           <Col span={11}>
-            <FormInput valueName="startDate" value={toDay} labelName="Ngày bắt đầu"
+            <FormInput valueName="startDate" labelName="Ngày bắt đầu"
               register={register} validation={{ required: true }} setValue={setValue} errors={errors} type={typeOfDynamicInput.DATE_TIME} />
           </Col>
           <Col span={2}></Col>

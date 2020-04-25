@@ -43,4 +43,20 @@ const findByCode = (id) => {
     };
 }
 
-export { getDataPaging, saveOrUpdate, findById, deleteData, findByCode };
+const findByCodeWithoutSecure = (code) => {
+    const url =  `${url_services.PRODUCT}/find-by-code-without-secure?encryptCode=${code}`;
+    return {
+        types: [`${ACTION_MODULE.PRODUCT}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.FIND_BY_CODE_WITHOUT_SECURE_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.FIND_BY_CODE_WITHOUT_SECURE_ERROR}`],
+        api: (axios) => axios.get(url)
+    };
+}
+
+const getProcessByCodeWithoutSecure = (code) => {
+    const url =  `${url_services.PRODUCT}/get-process-by-code-without-secure?encryptCode=${code}`;
+    return {
+        types: [`${ACTION_MODULE.PRODUCT}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.GET_PROCESSS_BY_CODE_WITHOUT_SECURE_SUCCESS}`, `${ACTION_MODULE.PRODUCT}_${types.GET_PROCESSS_BY_CODE_WITHOUT_SECURE_ERROR}`],
+        api: (axios) => axios.get(url)
+    };
+}
+
+export { getDataPaging, saveOrUpdate, findById, deleteData, findByCode, findByCodeWithoutSecure, getProcessByCodeWithoutSecure };

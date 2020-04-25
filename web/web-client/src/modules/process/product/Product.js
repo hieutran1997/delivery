@@ -14,6 +14,7 @@ import moment from 'moment';
 import TableFile from '../../../shared/components/FileTable.component';
 import { GET_SELETED_ORGANIZATION_SUCCESS } from '../../../shared/constants/ActionTypes';
 import { Link } from 'react-router-dom';
+import { environments_dev } from '../../../environment';
 var QRCode = require('qrcode.react');
 
 function Product(props) {
@@ -26,7 +27,6 @@ function Product(props) {
   const [dataDetail, setDataDetail] = useState(null);
   const [lstMerchandise, setLstMerchandise] = useState([]);
   const [lstOrg, setLstOrg] = useState([]);
-
   const columns = [
     {
       title: 'STT',
@@ -100,7 +100,7 @@ function Product(props) {
       width: '5%',
       render: (text, record) => (
         <>
-         <QRCode value={`http://localhost:3000/previewer`} size={100}/>
+         <QRCode value={`${environments_dev.CLIENT_HOST}/view?code=${record.productEncrypt}`} size={100}/>
         </>
       )
     },

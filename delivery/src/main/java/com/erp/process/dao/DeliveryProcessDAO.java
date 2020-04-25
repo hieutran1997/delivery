@@ -22,6 +22,7 @@ public interface DeliveryProcessDAO extends CrudRepository<DeliveryProcessBO, Lo
 		StringBuilder sql = new StringBuilder("SELECT gp.delivery_process_id deliveryProcessId, pd.product_code productCode, pd.product_name productName, gp.start_date startDate, gp.end_date endDate, gp.address, gp.description" 
 				+ ", (SELECT org1.organization_name FROM organization org1 WHERE org1.id = gp.organization_desc_id) organizationDescName"
 				+ ", (SELECT org1.organization_name FROM organization org1 WHERE org1.id = gp.organization_source_id) organizationSourceName"
+				+ ", gp.evaluation, gp.delivery_by deliveryBy, gp.document_number documentNumber"
 				+ " FROM delivery_process gp, product pd "
 				+ " WHERE gp.merchandise_id = pd.product_id AND pd.product_code = ? ");
 		SQLQuery query = vfData.createSQLQuery(sql.toString());

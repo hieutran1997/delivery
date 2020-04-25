@@ -52,7 +52,7 @@ export function PopupAddDisplay(props) {
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={11}>
-            <FormInput valueName="factory" value="" labelName="Khu sản xuất" inputClassName="ant-input"
+            <FormInput valueName="factory" value="" labelName="Nơi bày bán" inputClassName="ant-input"
               register={register} setValue={setValue} errors={errors} />
           </Col>
           <Col span={2}></Col>

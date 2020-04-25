@@ -52,8 +52,13 @@ function GrowthUpProcess(props) {
         },
         {
             title: 'Mô tả',
-            key: 'image',
+            dataIndex: 'Description',
             width: '10%',
+        },
+        {
+            title: 'Đính kèm',
+            key: 'image',
+            width: '20%',
             render: (text, record) => (
                 <>
                     <TableFile type="image" fileAttachment={record.fileAttachment}></TableFile>
@@ -116,7 +121,7 @@ function GrowthUpProcess(props) {
         else if (props.view && props.view !== 'grid' && code !== '') {
             props.findByMerCode(code);
         }
-    }, [props.view, props.productCode]);
+    }, [props.view, props.productCode, code]);
 
     const handleTableChange = (pagination) => {
         setDataSearch(pagination);
@@ -215,8 +220,8 @@ function GrowthUpProcess(props) {
                                     iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
                                 >
                                     <h3 className="vertical-timeline-element-title"><b>Địa chỉ: </b>{item.address}</h3>
-                                    <span><b>Nội dung: </b> {item.description}</span>
-                                    <br />
+                                    <p><b>Nội dung: </b> {item.description}</p>
+                                    <p><b>File đính kèm: </b></p>
                                     <TableFile type="image" fileAttachment={item.fileAttachment}></TableFile>
                                 </VerticalTimelineElement>
                             )) : ""

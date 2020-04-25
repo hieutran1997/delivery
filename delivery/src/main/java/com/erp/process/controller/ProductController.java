@@ -18,15 +18,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erp.model.OrganizationModel;
 import com.erp.process.bo.ProductBO;
+import com.erp.process.dto.ProcessDTO;
 import com.erp.process.dto.ProductDTO;
 import com.erp.process.service.ProductService;
 import com.erp.service.ServiceChecker;
 import com.erp.service.UserService;
+import com.erp.util.AES;
 import com.erp.util.BaseController;
 import com.erp.util.CommonUtil;
 import com.erp.util.Constants;
@@ -129,6 +132,22 @@ public class ProductController extends BaseController{
 		ProductDTO bo = service.findByCode(code);
 		bo.setFileAttachment("file", FileStorage.getListFileInfo(
 				FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId()));
+		return new ResponseEntity<>(bo, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "find-by-code-without-secure", method = RequestMethod.GET)
+	public ResponseEntity<?> findByCodeWithoutSecure(@RequestParam(value = "encryptCode") String encryptCode) {
+		String code = AES.decrypt(encryptCode);
+		ProductDTO bo = service.findByCode(code);
+		bo.setFileAttachment("file", FileStorage.getListFileInfo(
+				FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId()));
+		return new ResponseEntity<>(bo, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "get-process-by-code-without-secure", method = RequestMethod.GET)
+	public ResponseEntity<?> getProcessByCodeWithoutSecure(@RequestParam(value = "encryptCode") String encryptCode) {
+		String code = AES.decrypt(encryptCode);
+		List<ProcessDTO> bo = service.getProcessByCodeWithoutSecure(code);
 		return new ResponseEntity<>(bo, HttpStatus.OK);
 	}
 }

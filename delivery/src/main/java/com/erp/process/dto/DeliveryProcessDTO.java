@@ -46,4 +46,8 @@ public class DeliveryProcessDTO  extends FileAttachment{
 	private String productCode;
 	
 	private String productName;
+	
+	private String organizationDescName;
+	
+	private String organizationSourceName;
 }

@@ -20,7 +20,7 @@ let productCode = '';
 function ProductInfo(props) {
   const [activeIndex, setActiveIndex] = useState();
   const [view, setView] = useState("grid");
-  const [product, setProduct] = useState("grid");
+  const [product, setProduct] = useState({});
 
   let history = useHistory();
   let query = useQuery();

@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import { ProgressSpinner } from 'primereact/progressspinner';
 import WrappedNormalLoginForm from '../containers/Login';
 import AdminLayout from '../containers/AdminLayout';
+import ViewProduct from '../containers/ViewProduct';
 
 export default function Template() {
     const history = createBrowserHistory();
@@ -23,6 +24,7 @@ export default function Template() {
                                 />
                             )
                         })} */}
+                        <Route path="/view" render={props => <ViewProduct {...props} />} />
                         <Route path="/admin" render={props => <AdminLayout {...props} />} />
                         <Route path='/login' component={WrappedNormalLoginForm} />
 

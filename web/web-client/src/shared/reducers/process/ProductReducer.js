@@ -69,6 +69,30 @@ const productReducer = (state, action) => {
                 error: true,
                 type: action.type
             };
+        case `${ACTION_MODULE.PRODUCT}_${types.FIND_BY_CODE_WITHOUT_SECURE_SUCCESS}`:
+            return {
+                ...action,
+                error: true,
+                type: action.type
+            };
+        case `${ACTION_MODULE.PRODUCT}_${types.FIND_BY_CODE_WITHOUT_SECURE_ERROR}`:
+            return {
+                ...action,
+                error: true,
+                type: action.type
+            };
+        case `${ACTION_MODULE.PRODUCT}_${types.GET_PROCESSS_BY_CODE_WITHOUT_SECURE_SUCCESS}`:
+            return {
+                ...action,
+                error: true,
+                type: action.type
+            };
+        case `${ACTION_MODULE.PRODUCT}_${types.GET_PROCESSS_BY_CODE_WITHOUT_SECURE_ERROR}`:
+            return {
+                ...action,
+                error: true,
+                type: action.type
+            };
         default:
             return null;
     }

@@ -47,17 +47,6 @@ export function PopupAddDelivery(props) {
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <FormInput valueName="address" value="" labelName="Địa chỉ" inputClassName="ant-input"
-              register={register} setValue={setValue} errors={errors} />
-          </Col>
-        </Row>
-        <Row type="flex" justify="space-around">
-          <Col span={11}>
-            <FormInput valueName="factory" value="" labelName="Khu sản xuất" inputClassName="ant-input"
-              register={register} setValue={setValue} errors={errors} />
-          </Col>
-          <Col span={2}></Col>
-          <Col span={11}>
             <FormFile valueName="files" fileAttachment={fileAttachment} register={register} setValue={setValue}></FormFile>
           </Col>
         </Row>

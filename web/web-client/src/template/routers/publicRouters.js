@@ -40,7 +40,7 @@ export default{
     },
     HasNotPermission: {
         component: HasNotPermission,
-        path: '/hpermission',
+        path: '/permission',
         moduleUrl: '/admin/system'
     },
     GroupMerchandise:{

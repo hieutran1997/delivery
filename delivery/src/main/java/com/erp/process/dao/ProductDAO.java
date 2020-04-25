@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.erp.process.bo.ProductBO;
+import com.erp.process.dto.ProcessDTO;
 import com.erp.process.dto.ProductDTO;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
@@ -91,5 +92,16 @@ public interface ProductDAO extends CrudRepository<ProductBO, Long> {
 				+ " FROM product pd WHERE pd.product_code = ?";
 		params.add(code);
         return vfData.get(sql, params, ProductDTO.class);
+	}
+	
+	public default List<ProcessDTO> getProcessByCode(VfData vfData, String code) {
+		List<Object> params = new ArrayList<Object>();
+		String sql = "SELECT vp.objectId, vp.startDate, vp.endDate, vp.organizationName, vp.peopleProcessing, vp.factory, vp.organizationDescName, vp.organizationSourceName"
+				+ " , vp.evaluation, vp.documentNumber, vp.description, vp.typeProcess, vp.productId "
+				+ " FROM v_product_process vp, product pd "
+				+ " WHERE vp.productId = pd.product_id AND pd.product_code = ? "
+				+ " ORDER by vp.typeProcess DESC";
+		params.add(code);
+        return vfData.list(sql, params, ProcessDTO.class);
 	}
 }
