@@ -8,6 +8,13 @@ import ViewProduct from '../containers/ViewProduct';
 
 export default function Template() {
     const history = createBrowserHistory();
+
+    const redirectPath = () => {
+        if(history.location.pathname === '/'){
+            history.push("/admin/home");
+        }
+    }
+
     return (
         <div style={{ height: '100%' }}>
             <Router history={history}>
@@ -24,10 +31,13 @@ export default function Template() {
                                 />
                             )
                         })} */}
+                        
                         <Route path="/view" render={props => <ViewProduct {...props} />} />
                         <Route path="/admin" render={props => <AdminLayout {...props} />} />
                         <Route path='/login' component={WrappedNormalLoginForm} />
-
+                        <Route path="/">
+                            {redirectPath}
+                        </Route>
                         {/* <Route component={ NotFound } /> */}
                     </Switch>
                 </Suspense>

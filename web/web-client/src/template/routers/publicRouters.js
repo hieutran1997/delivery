@@ -15,8 +15,8 @@ const ProductInfo = lazy(() => import ('../../modules/process/productinfo/Produc
 export default{
     Home: {
         component: Home,
-        path: '/',
-        moduleUrl: ''
+        path: '/home',
+        moduleUrl: '/admin'
     },
     User: {
         component: User,

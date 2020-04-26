@@ -28,6 +28,7 @@ export const FormInput = forwardRef((props, ref) => {
 
     React.useEffect(() => {
         props.register({ name: `${props.valueName}` }, props.validation || null); // custom register react-select 
+        setValue(null);
         if (props.value && props.type === typeOfDynamicInput.DATE_TIME) {
             setValue(props.value);
             props.setValue(props.valueName, props.value.toUTCString());
@@ -79,7 +80,7 @@ export const FormInput = forwardRef((props, ref) => {
                     props.validation.required && props.validation.required === true ? <span className="label-required">*</span> : ""
                 }</span>
                 <br />
-                <select name={props.valueName} value={value} className={props.inputClassName} disabled={props.disabled} onChange={(ev) => { setValue(ev.target.value); props.onChange ? props.onChange(ev) : void 0 }}
+                <select name={props.valueName} value={value? value : 0} className={props.inputClassName} disabled={props.disabled} onChange={(ev) => { setValue(ev.target.value); props.onChange ? props.onChange(ev) : void 0 }}
                     ref={props.register(props.validation)} >
                     <option>{props.placeholder}</option>
                     {props.options ? props.options.map((item, index) => (

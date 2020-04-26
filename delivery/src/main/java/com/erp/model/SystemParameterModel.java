@@ -81,5 +81,4 @@ public class SystemParameterModel extends BaseModel {
     public void setDescription(String description) {
         this.description = description;
     }
-    
 }

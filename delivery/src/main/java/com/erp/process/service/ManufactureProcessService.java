@@ -80,7 +80,7 @@ public class ManufactureProcessService {
 	}
 	
 	public void checkBeforeSave(ManufactureProcessDTO dto) {
-		ManufactureProcessDTO data = dao.getLastestData(vfData, dto.getMerchandiseId());
+//		ManufactureProcessDTO data = dao.getLastestData(vfData, dto.getMerchandiseId());
 //		if(data == null) {
 //			return;
 //		}

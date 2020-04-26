@@ -15,7 +15,7 @@
         <file>${LOG_FILE}.json</file>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <includeCallerInfo>true</includeCallerInfo>
-            <customFields>{"appname":"hr-file","version":"1.0"}</customFields>
+            <customFields>{"appname":"file-service","version":"1.0"}</customFields>
         </encoder>
     </appender>
     <appender name="FILE"
@@ -39,7 +39,7 @@
     </appender>
     <!-- Method 3 -->
     <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-      <destination>localhost:8000</destination>
+      <destination>127.0.0.1:3333</destination>
       <!-- encoder is required -->
       <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <includeCallerInfo>true</includeCallerInfo>

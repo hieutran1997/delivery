@@ -41,20 +41,20 @@ import com.erp.util.SearchRequestUtil;
 
 @RestController
 @RequestMapping("/process/product")
-public class ProductController extends BaseController{
+public class ProductController extends BaseController {
 	public ProductController() {
 		LOGGER = LoggerFactory.getLogger(ProductController.class);
 	}
-	
+
 	@Autowired
 	private ServiceChecker serviceChecker;
-	
+
 	@Autowired
 	private ProductService service;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping(value = "/postQuery", method = RequestMethod.POST)
 	public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<ProductDTO> pageable) {
 		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PRODUCT, Constants.PERMISSION.VIEW)) {
@@ -62,25 +62,25 @@ public class ProductController extends BaseController{
 		}
 		String userName = CommonUtil.getCurrentUser().getUsername();
 		OrganizationModel org = userService.getOrganizationByUser(userName);
-		return new ResponseEntity<PaginationUtil<ProductDTO>>(service.processSearch(pageable, org.getCode()), HttpStatus.OK);
+		return new ResponseEntity<PaginationUtil<ProductDTO>>(service.processSearch(pageable, org.getCode()),
+				HttpStatus.OK);
 	}
-	
+
 	@PostMapping(produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> create(HttpServletRequest req, ProductDTO dto) {
 		ProductBO bo = new ProductBO();
-		if(dto.getProductId() != null && dto.getProductId() != 0) {
+		if (dto.getProductId() != null && dto.getProductId() != 0) {
 			if (!serviceChecker.permissionChecker(Constants.RESOURCE.PRODUCT, Constants.PERMISSION.ADD)) {
 				throw new PermissionException();
 			}
 			bo = service.findById(dto.getProductId());
-		}
-		else {
+		} else {
 			if (!serviceChecker.permissionChecker(Constants.RESOURCE.PRODUCT, Constants.PERMISSION.EDIT)) {
 				throw new PermissionException();
 			}
 			String userName = CommonUtil.getCurrentUser().getUsername();
 			OrganizationModel org = userService.getOrganizationByUser(userName);
-			if(!service.validateBeforeSave(dto.getMerchandiseRegisterId(), org.getId())) {
+			if (!service.validateBeforeSave(dto.getMerchandiseRegisterId(), org.getId())) {
 				return new ResponseEntity<ProductBO>(HttpStatus.BAD_REQUEST);
 			}
 			bo.setMerchandiseRegisterId(dto.getMerchandiseRegisterId());
@@ -94,23 +94,25 @@ public class ProductController extends BaseController{
 		bo.setTypeOfManufacture(dto.getTypeOfManufacture());
 		service.saveOrUpdate(bo);
 		FileStorage.append(FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId(), dto.getFiles());
+		FileStorage.append(FileStorage.FILE_TYPE.AVATAR_PRODUCT, bo.getProductId(), dto.getAvatar());
 		return new ResponseEntity<ProductBO>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
 		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PRODUCT, Constants.PERMISSION.VIEW)) {
 			throw new PermissionException();
 		}
 		ProductBO bo = service.findById(id);
-		bo.setFileAttachment("file", FileStorage.getListFileInfo(
-				FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId()));
+		bo.setFileAttachment("file", FileStorage.getListFileInfo(FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId()));
+		bo.setFileAttachment("avatar", FileStorage.getListFileInfo(FileStorage.FILE_TYPE.AVATAR_PRODUCT, bo.getProductId()));
 		return new ResponseEntity<>(bo, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<ResponseUtil<String>> delete(@PathVariable(value = "id") Long id) throws ParseException, IOException {
+	public ResponseEntity<ResponseUtil<String>> delete(@PathVariable(value = "id") Long id)
+			throws ParseException, IOException {
 		ResponseUtil<String> result = new ResponseUtil<String>();
 		if (!serviceChecker.permissionChecker(Constants.RESOURCE.UNIT, Constants.PERMISSION.DELETE)) {
 			throw new PermissionException();
@@ -119,31 +121,33 @@ public class ProductController extends BaseController{
 		service.delete(id);
 		idsDelete.add(id);
 		FileStorage.deleteByObjectIds(FileStorage.FILE_TYPE.PROCDUCT, idsDelete);
+		FileStorage.deleteByObjectIds(FileStorage.FILE_TYPE.AVATAR_PRODUCT, idsDelete);
 		result.setError(false);
 		result.setMessage("Thành công!");
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "find-by-code/{code}", method = RequestMethod.GET)
 	public ResponseEntity<?> findByCode(@PathVariable(value = "code") String code) {
 		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PRODUCT, Constants.PERMISSION.VIEW)) {
 			throw new PermissionException();
 		}
 		ProductDTO bo = service.findByCode(code);
-		bo.setFileAttachment("file", FileStorage.getListFileInfo(
-				FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId()));
+		bo.setFileAttachment("file", FileStorage.getListFileInfo(FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId()));
+		bo.setFileAttachment("avatar", FileStorage.getListFileInfo(FileStorage.FILE_TYPE.AVATAR_PRODUCT, bo.getProductId()));
 		return new ResponseEntity<>(bo, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "find-by-code-without-secure", method = RequestMethod.GET)
 	public ResponseEntity<?> findByCodeWithoutSecure(@RequestParam(value = "encryptCode") String encryptCode) {
 		String code = AES.decrypt(encryptCode);
 		ProductDTO bo = service.findByCode(code);
-		bo.setFileAttachment("file", FileStorage.getListFileInfo(
-				FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId()));
+		bo.setFileAttachment("file", FileStorage.getListFileInfo(FileStorage.FILE_TYPE.PROCDUCT, bo.getProductId()));
+		bo.setFileAttachment("avatar",
+				FileStorage.getListFileInfo(FileStorage.FILE_TYPE.AVATAR_PRODUCT, bo.getProductId()));
 		return new ResponseEntity<>(bo, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "get-process-by-code-without-secure", method = RequestMethod.GET)
 	public ResponseEntity<?> getProcessByCodeWithoutSecure(@RequestParam(value = "encryptCode") String encryptCode) {
 		String code = AES.decrypt(encryptCode);

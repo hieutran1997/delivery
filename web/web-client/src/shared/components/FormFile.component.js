@@ -34,6 +34,7 @@ const FormFile = forwardRef((props, ref) => {
     
     React.useEffect(() => {
         props.register({ name: `${props.valueName}` }, props.validation || null); // custom register react-select 
+        setSelectedFileList([]);
     }, [props.valueName, props.validation]);
 
     React.useEffect(() => {
@@ -81,7 +82,6 @@ const FormFile = forwardRef((props, ref) => {
                 // error or removed
                 setSelectedFileList([]);
                 setSelectedFile({});
-                console.log('selectedFile', selectedFile);
         }
     };
 
@@ -103,6 +103,7 @@ const FormFile = forwardRef((props, ref) => {
 
     return (
         <div className="custom-upload">
+            <p>Đính kèm:</p>
             <Upload
                 showUploadList={false}
                 multiple={props.multiple}

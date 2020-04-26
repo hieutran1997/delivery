@@ -40,4 +40,7 @@ public class ProductDTO extends FileAttachment {
 	private String organizationName;
 	
 	private String productEncrypt;
+	
+    private MultipartFile avatar;
+    
 }

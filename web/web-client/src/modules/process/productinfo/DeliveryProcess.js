@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getDataPaging, findByMerCode, saveOrUpdate } from '../../../shared/actions/process/DeliveryProcessResource';
 import { dataPost, hasPermission, resourceCode, control, DateFormat, ACTION_MODULE, openNotification, message } from '../../../shared/common';
 import { getSelectedData as getSelectedDataOrg } from '../../../shared/actions/system/ActionOrganization';
-import { Table, Button } from 'antd';
+import { Table } from 'antd';
 import moment from 'moment';
 import TableFile from '../../../shared/components/FileTable.component';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
@@ -12,6 +12,7 @@ import 'react-vertical-timeline-component/style.min.css';
 import { PopupAddDelivery } from './PopupAddDelivery.component';
 import * as types from '../../../shared/constants/ActionTypeCommon';
 import { GET_SELETED_ORGANIZATION_SUCCESS } from '../../../shared/constants/ActionTypes';
+import { FormProductInfo } from './FormProductInfo.component';
 
 function DeliveryProcess(props) {
     const [code, setCode] = useState('');
@@ -172,50 +173,7 @@ function DeliveryProcess(props) {
 
     return (
         <div>
-            <table width={'100%'}>
-                <thead style={{ hiden: true }}>
-                    <tr>
-                        <th width="10%">
-                        </th>
-                        <th width="20%">
-                        </th>
-                        <th>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody className="ant-table-tbody">
-                    <tr>
-                        <td><b>Mã hàng: </b></td>
-                        <td>{props.product.productCode}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><b>Tên hàng: </b></td>
-                        <td>{props.product.productName}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><b>Đơn vị: </b></td>
-                        <td>{props.product.organizationName}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><b>File đính kèm: </b></td>
-                        <td><TableFile fileAttachment={props.product.fileAttachment}></TableFile></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            {hasPermission(resourceCode.user, control.hasAdd) === 1 ?
-                                <Button type="primary" icon="plus" style={{ float: "right" }} onClick={() => { setIsShowAdd(true); }}>
-                                    Thêm mới
-                            </Button> : ""}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <FormProductInfo product={props.product} setIsShowAdd={setIsShowAdd}></FormProductInfo>
             {props.view === 'grid' ? <div>
                 {hasPermission(resourceCode.product, control.hasView) === 1 ?
                     <Table

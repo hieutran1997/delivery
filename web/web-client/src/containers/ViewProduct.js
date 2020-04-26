@@ -14,13 +14,15 @@ import 'antd/dist/antd.css';
 import { Card } from 'antd';
 import './ViewProduct.css';
 import TableFile from '../shared/components/FileTable.component';
+import { environments_dev } from '../environment';
+import defaultAva from './default.jpg';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 let productCode = '';
 function ViewProduct(props) {
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useState();
     const [process, setProcess] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -36,7 +38,7 @@ function ViewProduct(props) {
 
     useEffect(() => {
         if (props.propsData && props.propsData.type === `${ACTION_MODULE.PRODUCT}_${types.FIND_BY_CODE_WITHOUT_SECURE_SUCCESS}`) {
-            setProduct(props.propsData);
+            setProduct(props.propsData.result.data);
             setLoading(false);
         }
         if (props.propsData && props.propsData.type === `${ACTION_MODULE.PRODUCT}_${types.GET_PROCESSS_BY_CODE_WITHOUT_SECURE_SUCCESS}`) {
@@ -105,10 +107,53 @@ function ViewProduct(props) {
         }
     }
 
+    const bindAvatar = (item) => {
+        if (item.fileAttachment && item.fileAttachment.avatar && item.fileAttachment.avatar.length > 0) {
+            return (<img alt="example" src={`${environments_dev.URL_SERVICE_FILE}/file/avatar/image/${item.fileAttachment.avatar[0].id}`} />);
+        }
+        else {
+            return (<img alt="example" src={defaultAva} />);
+        }
+    }
+
     return (
         <div>
             <Card style={{ width: '100%' }} loading={loading} className="card-viewer">
+                {
+                    product ? <Card
+                        hoverable
+                        style={{ width: '100%' }}
+                        cover={bindAvatar(product)}
+                    >
+                        <table width={'100%'}>
+                            <thead style={{ hiden: true }}>
+                                <tr>
+                                    <th width="10%">
+                                    </th>
+                                    <th width="20%">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="ant-table-tbody">
+                                <tr>
+                                    <td><b>Mặt hàng: </b></td>
+                                    <td>{product.productName}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Đơn vị sản xuất: </b></td>
+                                    <td>{product.organizationName}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>File đính kèm: </b></td>
+                                    <td><TableFile fileAttachment={product.fileAttachment}></TableFile></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </Card>
+                        : ""
+                }
 
+                <br />
                 <VerticalTimeline>
                     {
                         process ? process.map(item => (

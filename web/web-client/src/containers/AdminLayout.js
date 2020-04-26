@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Icon, Menu, Dropdown } from 'antd';
+import { Layout, Icon, Menu, Dropdown, Badge } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
 import 'primereact/resources/themes/nova-light/theme.css';
@@ -18,6 +18,7 @@ import { environments_dev, url_services } from '../environment';
 import publicRoutes from '../template/routers/publicRouters';
 import { Route, Switch } from 'react-router-dom';
 import _ from 'lodash';
+import { BellOutlined } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
 
@@ -48,7 +49,7 @@ function AdminLayout(props) {
                 && props.currentUser.typeOfUser !== 1
                 && "/admin/permission" !== history.location.pathname
                 //&& "/admin" !== history.location.pathname
-                ) { //Loại bỏ dấu /
+            ) { //Loại bỏ dấu /
                 history.push("/admin/permission");
             }
         } else {
@@ -92,11 +93,11 @@ function AdminLayout(props) {
             </Menu.Item>
             <Menu.Item key="2">
                 <Icon type="logout" />  Đăng xuất
-      </Menu.Item>
+            </Menu.Item>
         </Menu>
     );
 
-    const home = { icon: 'pi pi-home', url: '/' }
+    const home = { icon: 'pi pi-home', url: '/admin/home' }
 
     return (
         <Layout>
@@ -125,6 +126,11 @@ function AdminLayout(props) {
                     />
                     <Dropdown overlay={dropDownUser} trigger={['click']}>
                         <Icon type="user" className="icon-header-right" alt="User" />
+                    </Dropdown>
+                    <Dropdown overlay={dropDownUser} trigger={['click']}>
+                        <Badge count={5} className="icon-header-right" >
+                            <BellOutlined />
+                        </Badge>
                     </Dropdown>
                 </Header>
                 <Content
@@ -156,6 +162,6 @@ function AdminLayout(props) {
     );
 }
 
-const mapStateToProps = state => ({ currentUser: getCurrentUser()})
+const mapStateToProps = state => ({ currentUser: getCurrentUser() })
 
 export default connect(mapStateToProps)(AdminLayout)

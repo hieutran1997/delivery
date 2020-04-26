@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { ACTION_MODULE, typeOfDynamicInput, appConfig } from '../../../shared/common';
 import * as types from '../../../shared/constants/ActionTypeCommon';
 import FormFile from '../../../shared/components/FormFile.component';
+import FormAvatar from '../../../shared/components/FormAvatar.component';
 
 
 export const mapDispatchToProps = dispatch => {
@@ -85,7 +86,12 @@ function PopupAdd(props) {
               validation={{ required: true }}
               showClear={true} />
           </Col>
-          <Col span={13}></Col>
+          <Col span={2}></Col>
+          <Col span={11}>
+            <FormInput valueName="status" labelName="Trạng thái"
+              inputClassName="ant-input custom-input-as-ant-input" dataKey="value" valueFilter={1} options={appConfig.PRODUCT_STATUS} disabled={true}
+              register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.SELECT_FILTER} />
+          </Col>
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={11}>
@@ -112,9 +118,7 @@ function PopupAdd(props) {
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={11}>
-          <FormInput valueName="status" labelName="Trạng thái"
-              inputClassName="ant-input custom-input-as-ant-input" dataKey="value" valueFilter={1} options={appConfig.PRODUCT_STATUS} disabled={true}
-              register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.SELECT_FILTER} />
+            <FormAvatar valueName="avatar" register={register} setValue={setValue}></FormAvatar>
           </Col>
           <Col span={2}></Col>
           <Col span={11}>

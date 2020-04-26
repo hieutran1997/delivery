@@ -40,6 +40,7 @@ public class FileStorage {
         public static Long DELIVERY_PROCESS = 4L;
         public static Long MANUFACTURE_PROCESS = 5L;
         public static Long DISPLAY_PROCESS = 6L;
+        public static Long AVATAR_PRODUCT = 7L;
     }
 
     

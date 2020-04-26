@@ -4,6 +4,7 @@ import useForm from 'react-hook-form';
 import { FormInput, FormAutoComplete } from '../../../shared/components';
 import FormFile from '../../../shared/components/FormFile.component';
 import { typeOfDynamicInput, appConfig } from '../../../shared/common';
+import FormAvatar from '../../../shared/components/FormAvatar.component';
 
 let productId = 0;
 const toDay = new Date();
@@ -76,7 +77,12 @@ export function PopupInfo(props) {
               validation={{ required: true }}
               showClear={true} />
           </Col>
-          <Col span={13}></Col>
+          <Col span={2}></Col>
+          <Col span={11}>
+          <FormInput valueName="status" labelName="Trạng thái"
+              inputClassName="ant-input custom-input-as-ant-input" dataKey="value" valueFilter={status} options={appConfig.PRODUCT_STATUS}
+              register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.SELECT_FILTER} />
+          </Col>
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={11}>
@@ -103,9 +109,7 @@ export function PopupInfo(props) {
         </Row>
         <Row type="flex" justify="space-around">
           <Col span={11}>
-            <FormInput valueName="status" labelName="Trạng thái"
-              inputClassName="ant-input custom-input-as-ant-input" dataKey="value" valueFilter={status} options={appConfig.PRODUCT_STATUS}
-              register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.SELECT_FILTER} />
+            <FormAvatar valueName="avatar" fileAttachment={fileAttachment} register={register} setValue={setValue}></FormAvatar>
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
