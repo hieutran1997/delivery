@@ -19,6 +19,7 @@ export const url_services = {
     ROLE: 'roles',
     ORGANIZATION: 'organizations',
     CONTROL: 'actioncontrol',
+    SYS_PARAMETER: '/sys-parameter',
     WEBSOCKET: 'ws',
     CAT_GROUP_MER: '/cat/group-merchandise',
     CAT_TYPE_MER: '/cat/type-merchandise',
@@ -82,6 +83,13 @@ export const menu = [
                 title: 'Đơn vị',
                 component: 'Organization',
                 url_hash: 'admin/system/org',
+                icon: 'ellipsis'
+            },
+            {
+                key: 'admin/system/parameter',
+                title: 'Tham số hệ thống',
+                component: 'SysParameter',
+                url_hash: 'admin/system/parameter',
                 icon: 'ellipsis'
             }
         ]

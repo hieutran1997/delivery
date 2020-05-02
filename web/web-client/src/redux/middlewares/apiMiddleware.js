@@ -36,7 +36,7 @@ const apiMiddleware = store => next => action => {
     (error) => {
       if(error.response && error.response.status === 400){
         console.log('error.response', error.response);
-        openNotification('warning', 'Cảnh báo', 'Bạn không có quyền truy cập!');
+        openNotification('warning', 'Cảnh báo', 'Bad request!');
         return;
       }
       if(error.response && error.response.status === 401){

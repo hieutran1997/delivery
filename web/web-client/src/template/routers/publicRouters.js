@@ -10,7 +10,8 @@ const TypeMerchandise = lazy(() => import('../../modules/categories/typemerchand
 const Unit = lazy(() => import('../../modules/categories/unit/Unit'));
 const Merchandise = lazy(() => import('../../modules/categories/merchandise/Merchandise'));
 const Product = lazy(() => import('../../modules/process/product/Product'));
-const ProductInfo = lazy(() => import ('../../modules/process/productinfo/ProductInfo'));
+const ProductInfo = lazy(() => import('../../modules/process/productinfo/ProductInfo'));
+const SysParameter = lazy(()=> import('../../modules/system/sysparameter/SysParameter'));
 
 export default{
     Home: {
@@ -36,6 +37,11 @@ export default{
     Organization:{
         component: Organization,
         path: '/org',
+        moduleUrl: '/admin/system'
+    },
+    SysParameter:{
+        component: SysParameter,
+        path: '/parameter',
         moduleUrl: '/admin/system'
     },
     HasNotPermission: {

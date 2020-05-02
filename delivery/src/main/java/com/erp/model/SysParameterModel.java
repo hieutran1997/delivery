@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_parameter")
-public class SystemParameterModel extends BaseModel {
+public class SysParameterModel extends BaseModel {
 	
 	/**
 	 * 
@@ -28,7 +28,7 @@ public class SystemParameterModel extends BaseModel {
 	@Id
     @Column(name = "sys_parameter_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long systemParameterId;
+    private Long sysParameterId;
 	
     @Column(name = "code")
     private String code;
@@ -41,16 +41,19 @@ public class SystemParameterModel extends BaseModel {
     
     @Column(name = "description")
     private String description;
+    
+    @Column(name = "status")
+    private Long status;
+    
+    public Long getSysParameterId() {
+		return sysParameterId;
+	}
 
-    public Long getSystemParameterId() {
-        return systemParameterId;
-    }
+	public void setSysParameterId(Long sysParameterId) {
+		this.sysParameterId = sysParameterId;
+	}
 
-    public void setSystemParameterId(Long systemParameterId) {
-        this.systemParameterId = systemParameterId;
-    }
-
-    public String getCode() {
+	public String getCode() {
         return code;
     }
 
@@ -81,4 +84,13 @@ public class SystemParameterModel extends BaseModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+	public Long getStatus() {
+		return status;
+	}
+
+	public void setStatus(Long status) {
+		this.status = status;
+	}
+    
 }

@@ -30,6 +30,7 @@ public class Constants {
         public static final String USER = "user";
         public static final String ROLE = "role";
         public static final String RESOURCE = "resource";
+        public static final String SYS_PARAMETER = "sysParameter";
         public static final String ORGANIZATION = "org";
         public static final String CAT_MERCHANDISE_GROUP = "groupMerchandise";
         public static final String CAT_MERCHANDISE_TYPE = "typeMerchandise";

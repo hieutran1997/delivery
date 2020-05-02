@@ -5,7 +5,7 @@
  */
 package com.erp.controller;
 
-import com.erp.model.SystemParameterModel;
+import com.erp.model.SysParameterModel;
 import com.erp.service.ServiceChecker;
 import com.erp.service.SysParameterService;
 import com.erp.util.CommonUtil;
@@ -36,37 +36,37 @@ public class SysParameterController {
     private ServiceChecker serviceChecker;
     
     @RequestMapping(value = "/postQuery", method = RequestMethod.POST)
-    public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<SystemParameterModel> pageable){
-    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.RESOURCE, Constants.PERMISSION.VIEW)) {
+    public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<SysParameterModel> pageable){
+    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.SYS_PARAMETER, Constants.PERMISSION.VIEW)) {
     		return new ResponseEntity<>("Bạn không có quyền truy cập", HttpStatus.FORBIDDEN);
     	}
-        return new ResponseEntity<PaginationUtil<SystemParameterModel>>(sysParameterService.getDataSearch(pageable), HttpStatus.OK);
+        return new ResponseEntity<PaginationUtil<SysParameterModel>>(sysParameterService.getDataSearch(pageable), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody SystemParameterModel resource){
-    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.RESOURCE, Constants.PERMISSION.ADD)) {
+    public ResponseEntity<?> create(@RequestBody SysParameterModel resource){
+    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.SYS_PARAMETER, Constants.PERMISSION.ADD)) {
     		return new ResponseEntity<>("Bạn không có quyền truy cập", HttpStatus.FORBIDDEN);
     	}
         resource.setCreatedBy(CommonUtil.getCurrentUser().getUsername());
         resource.setCreatedDate(new Date());
-        return new ResponseEntity<SystemParameterModel>(sysParameterService.save(resource), HttpStatus.OK);
+        return new ResponseEntity<SysParameterModel>(sysParameterService.save(resource), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@RequestBody SystemParameterModel resource){
-    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.RESOURCE, Constants.PERMISSION.EDIT)) {
+    public ResponseEntity<?> update(@RequestBody SysParameterModel resource){
+    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.SYS_PARAMETER, Constants.PERMISSION.EDIT)) {
     		return new ResponseEntity<>("Bạn không có quyền truy cập", HttpStatus.FORBIDDEN);
     	}
         resource.setUpdatedBy(CommonUtil.getCurrentUser().getUsername());
         resource.setUpdatedDate(new Date());
-        return new ResponseEntity<SystemParameterModel>(sysParameterService.save(resource), HttpStatus.OK);
+        return new ResponseEntity<SysParameterModel>(sysParameterService.save(resource), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<ResponseUtil<String>> delete(@PathVariable(value = "id") Long id){
     	ResponseUtil<String> result = new ResponseUtil<String>();
-    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.RESOURCE, Constants.PERMISSION.DELETE)) {
+    	if(!serviceChecker.permissionChecker(Constants.RESOURCE.SYS_PARAMETER, Constants.PERMISSION.DELETE)) {
     		result.setMessage("Bạn không có quyền truy cập");
     		result.setError(true);
     		return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);

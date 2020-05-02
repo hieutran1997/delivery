@@ -5,6 +5,7 @@ import resourceReducer from './ResourceReducer';
 import roleReducer from './RoleReducer';
 import organizationReducer from './OrganizationReducer';
 import controlReducer from './ControlReducer';
+import sysParameterReducer from './SysParameterReducer';
 import groupMerchandiseReducer from './categories/GroupMerchandiseReducer';
 import typeMerchandiseReducer from './categories/TypeMerchandiseReducer';
 import catUnitReducer from './categories/UnitReducer';
@@ -34,5 +35,6 @@ export default combineReducers({
   growthUpReducer,
   manufactureReducer,
   deliveryReducer,
-  displayReducer
+  displayReducer,
+  sysParameterReducer
 })

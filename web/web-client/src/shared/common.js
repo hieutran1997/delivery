@@ -90,6 +90,16 @@ export const appConfig = {
             value: 2,
             name: "Còn sử dụng được"
         },
+    ],
+    STATUS: [
+        {
+            value: 0,
+            name: "Không sử dụng"
+        },
+        {
+            value: 1,
+            name: "Đang sử dụng"
+        },
     ]
 }
 
@@ -136,6 +146,7 @@ export const message = {
     titleFormListUnit: "Danh sách đơn vị tính",
     titleFormListMerchandise: "Danh sách hàng hóa",
     titleFormListProduct: "Danh sách hàng hóa sản xuất",
+    titleFormListParameter: "Danh sách tham số hệ thống",
 }
 
 /**
@@ -180,7 +191,8 @@ export const ACTION_MODULE = {
     GROWTHUP: "GROWTHUP",
     MANUAFACTURE: "MANUAFACTURE",
     DELIVERY: "DELIVERY",
-    DISPLAY: "DISPLAY"
+    DISPLAY: "DISPLAY",
+    SYS_PARAMETER: "SYS_PARAMETER",
 }
 
 export function mappingDataChange(resource, destinnation) {

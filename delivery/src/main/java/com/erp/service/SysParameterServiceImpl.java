@@ -6,7 +6,7 @@
 package com.erp.service;
 
 import com.erp.dao.SysParameterDAO;
-import com.erp.model.SystemParameterModel;
+import com.erp.model.SysParameterModel;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
@@ -28,25 +28,25 @@ public class SysParameterServiceImpl implements SysParameterService {
 	private VfData vfData;
 
 	@Override
-	public SystemParameterModel save(SystemParameterModel user) {
+	public SysParameterModel save(SysParameterModel user) {
 		return sysParameterDao.save(user);
 	}
 
 	@Override
-	public PaginationUtil<SystemParameterModel> getDataSearch(SearchRequestUtil<SystemParameterModel> pageable) {
+	public PaginationUtil<SysParameterModel> getDataSearch(SearchRequestUtil<SysParameterModel> pageable) {
 		return sysParameterDao.getDataPaging(pageable, vfData);
 	}
 
 	@Override
 	public void delete(Long id) {
-		SystemParameterModel user = sysParameterDao.findById(id).orElse(null);
+		SysParameterModel user = sysParameterDao.findById(id).orElse(null);
 		if (user != null)
 			sysParameterDao.delete(user);
 	}
 
 	@Override
-	public SystemParameterModel findById(Long id) {
-		SystemParameterModel data = sysParameterDao.findById(id).orElse(null);
+	public SysParameterModel findById(Long id) {
+		SysParameterModel data = sysParameterDao.findById(id).orElse(null);
 		return data;
 	}
 
