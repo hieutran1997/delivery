@@ -18,4 +18,6 @@ public interface SysParameterService {
     SysParameterModel save(SysParameterModel sysResource);
     void delete(Long id);
     SysParameterModel findById(Long id);
+    boolean checkBeforeSave(String code);
+    SysParameterModel findByCode(String code);
 }

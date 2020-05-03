@@ -48,6 +48,9 @@ public class SysParameterController {
     	if(!serviceChecker.permissionChecker(Constants.RESOURCE.SYS_PARAMETER, Constants.PERMISSION.ADD)) {
     		return new ResponseEntity<>("Bạn không có quyền truy cập", HttpStatus.FORBIDDEN);
     	}
+    	if(!sysParameterService.checkBeforeSave(resource.getCode())) {
+    		return new ResponseEntity<>("Bản ghi đã tồn tại", HttpStatus.BAD_REQUEST);
+    	}
         resource.setCreatedBy(CommonUtil.getCurrentUser().getUsername());
         resource.setCreatedDate(new Date());
         return new ResponseEntity<SysParameterModel>(sysParameterService.save(resource), HttpStatus.OK);
@@ -76,4 +79,9 @@ public class SysParameterController {
         result.setMessage("Thành công!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/find-by-code/{code}", method = RequestMethod.GET)
+    public ResponseEntity<?> findByCode(@PathVariable(value = "code") String code){
+        return new ResponseEntity<SysParameterModel>(sysParameterService.save(sysParameterService.findByCode(code)), HttpStatus.OK);
+    } 
 }

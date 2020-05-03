@@ -40,5 +40,14 @@ const getSelectedData = ()=>{
         types: [`${ACTION_MODULE.SYS_PARAMETER}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.SYS_PARAMETER}_${types.GET_SELETED_SUCCESS}`, `${ACTION_MODULE.SYS_PARAMETER}_${types.GET_SELETED_ERROR}`],
         api: (axios) => axios.get(url)
     };
-} 
-export { getDataPaging, insert, update, deleteData, getSelectedData };
+}
+
+const findByCode = (code) => {
+    const url =  `${url_services.SYS_PARAMETER}/find-by-code/${code}`;
+    return {
+        types: [`${ACTION_MODULE.SYS_PARAMETER}_${types.REQUEST_SUCCESS}`, `${ACTION_MODULE.SYS_PARAMETER}_${types.FIND_BY_CODE_SUCCESS}`, `${ACTION_MODULE.SYS_PARAMETER}_${types.FIND_BY_CODE_ERROR}`],
+        api: (axios) => axios.get(url)
+    };
+}
+
+export { getDataPaging, insert, update, deleteData, getSelectedData, findByCode };

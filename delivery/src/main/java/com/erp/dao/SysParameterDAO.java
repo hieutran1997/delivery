@@ -76,6 +76,9 @@ public interface SysParameterDAO extends JpaRepository<SysParameterModel, Long> 
 
     @Query("SELECT t FROM SysParameterModel t where LOWER(t.code) = LOWER(:code) ")
     List<SysParameterModel> findConflictedCode(@Param("code") String paramString);
+    
+    @Query("SELECT t FROM SysParameterModel t where LOWER(t.code) = LOWER(:code) ")
+    List<SysParameterModel> findByCode(@Param("code") String paramString);
 
     @Query("SELECT t FROM SysParameterModel t where LOWER(t.code) = LOWER(:code) AND t.sysParameterId != :systemParameterId ")
     List<SysParameterModel> findConflictedCode(@Param("code") String paramString, @Param("systemParameterId") Long paramLong);

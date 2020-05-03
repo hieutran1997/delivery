@@ -59,6 +59,18 @@ const sysParameterReducer = (state, action) => {
                 error: false,
                 type: action.type
             };
+        case `${ACTION_MODULE.SYS_PARAMETER}_${types.FIND_BY_CODE_SUCCESS}`:
+            return {
+                ...action,
+                error: false,
+                type: action.type
+            };
+        case `${ACTION_MODULE.SYS_PARAMETER}_${types.FIND_BY_CODE_ERROR}`:
+            return {
+                ...action,
+                error: true,
+                type: action.type
+            };
         default:
             return null;
     }

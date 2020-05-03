@@ -35,8 +35,7 @@ const apiMiddleware = store => next => action => {
     (result) => next({ result, type: SUCCESS }),
     (error) => {
       if(error.response && error.response.status === 400){
-        console.log('error.response', error.response);
-        openNotification('warning', 'Cảnh báo', 'Bad request!');
+        openNotification('warning', 'Cảnh báo', error.response.data);
         return;
       }
       if(error.response && error.response.status === 401){

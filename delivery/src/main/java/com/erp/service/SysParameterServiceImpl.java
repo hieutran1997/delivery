@@ -11,6 +11,8 @@ import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
 import com.erp.util.VfData;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +50,24 @@ public class SysParameterServiceImpl implements SysParameterService {
 	public SysParameterModel findById(Long id) {
 		SysParameterModel data = sysParameterDao.findById(id).orElse(null);
 		return data;
+	}
+	
+	@Override
+	public boolean checkBeforeSave(String code) {
+		List<SysParameterModel> data = sysParameterDao.findConflictedCode(code);
+		if(data != null && data.size() > 0) {
+			return false;
+		}
+		return false;
+	}
+	
+	@Override
+	public SysParameterModel findByCode(String code) {
+		List<SysParameterModel> data = sysParameterDao.findByCode(code);
+		if(data != null && data.size() > 0) {
+			return data.get(0);
+		}
+		return null;
 	}
 
 }

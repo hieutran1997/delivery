@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,32 +17,46 @@ public class MerchandiseIndex {
 	@Id
 	private Long merchandiseId;
 
+	@Field(type = FieldType.text)
 	private String merchandiseCode;
 
+	@Field(type = FieldType.text)
 	private String merchandiseName;
 
+	@Field(type = FieldType.Long)
 	private Long catGroupMerchandiseId;
-
+	
+	@Field(type = FieldType.Long)
 	private Long catTypeMerchandiseId;
 
+	@Field(type = FieldType.Date)
 	private Long catUnitId;
 
+	@Field(type = FieldType.Date)
 	private Date effectiveDate;
 
+	@Field(type = FieldType.Date)
 	private Date expiredDate;
 
+	@Field(type = FieldType.Long)
 	private Long status;
 
+	@Field(type = FieldType.Long)
 	private Long organizationId;
 
+	@Field(type = FieldType.text)
 	private String description;
 
+	@Field(type = FieldType.text)
 	private String urlQRCode;
 
+	@Field(type = FieldType.text)
 	private String createdBy;
 
+	@Field(type = FieldType.Date)
 	private Date createdDate;
 
+	@Field(type = FieldType.text)
 	private String organizationPath;
 
 	public MerchandiseIndex() {
