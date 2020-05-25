@@ -117,7 +117,7 @@ function GroupMerchandise(props) {
 
   useEffect(()=>{
     if(props.typeMerchandiseProps){
-      setLstType(props.typeMerchandiseProps);
+      setLstType(props.typeMerchandiseProps.result.data);
     }
   }, [props.typeMerchandiseProps]);
 
