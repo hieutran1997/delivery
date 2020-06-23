@@ -1,5 +1,7 @@
 package com.erp.process.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.core.MediaType;
@@ -68,6 +70,7 @@ public class GrowthUpController extends BaseController {
 		if(dto != null && dto.getProductCode()!= null) {
 			ProductBO product = productService.findByProductCode(dto.getProductCode());
 			if(product != null) {
+				dto.setStartDate(new Date());
 				dto.setMerchandiseId(product.getProductId());
 				GrowthProcessBO bo = service.saveOrUpdate(dto);
 				FileStorage.append(FileStorage.FILE_TYPE.GROWTH_UP_PROCESS, bo.getGrowthProcessId(), dto.getFile());

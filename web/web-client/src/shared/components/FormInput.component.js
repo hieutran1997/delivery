@@ -36,7 +36,7 @@ export const FormInput = forwardRef((props, ref) => {
     }, [props.register, props.valueName, props.value, props.validation, props.type]);
 
     React.useEffect(() => {
-        if(props.type === typeOfDynamicInput.SELECT_FILTER){
+        if(props.type === typeOfDynamicInput.SELECT_FILTER && props.valueFilter){
             setValue(props.valueFilter.toString());
         }
         else if(props.type === typeOfDynamicInput.TEXT_AREA){
