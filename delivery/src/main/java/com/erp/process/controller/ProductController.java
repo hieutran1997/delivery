@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -152,6 +153,13 @@ public class ProductController extends BaseController {
 	public ResponseEntity<?> getProcessByCodeWithoutSecure(@RequestParam(value = "encryptCode") String encryptCode) {
 		String code = AES.decrypt(encryptCode);
 		List<ProcessDTO> bo = service.getProcessByCodeWithoutSecure(code);
+		return new ResponseEntity<>(bo, HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@RequestMapping(value = "get-all-product", method = RequestMethod.GET)
+	public ResponseEntity<?> getAllProduct(@RequestParam(value = "username") String username) {
+		List<ProductDTO> bo = service.getProductByUsername(username);
 		return new ResponseEntity<>(bo, HttpStatus.OK);
 	}
 }

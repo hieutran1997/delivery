@@ -45,6 +45,7 @@ const char* password = "123456789";
 const char* paramType = "type";
 const char* paramDay = "days";
 const char* paramHour = "hours";
+const char* host = "host";
 
 //variable
 String formattedDate;
@@ -59,9 +60,11 @@ String days = "";
 unsigned long nowLong;
 int dayOfWeek = -1;
 String defaultHour = "10:00:00";
-const char* post_host = "192.168.1.20";
-const int post_port = 8000;
-String url = "/process/growth-up";
+String post_host = "192.168.1.20";
+int post_port = 8000;
+String username = "";
+String merchandiseCode = "";
+String url = "/process/growth-up/save-other";
 int pictureNumber = 0;
 int countTime = 0;
 int countTimeReconnect = 0;
@@ -78,36 +81,50 @@ WiFiClient client;
 const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML>
 <html>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    crossorigin="anonymous">
   <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" crossorigin="anonymous" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+    crossorigin="anonymous" />
   <script src="https://momentjs.com/downloads/moment-with-locales.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" crossorigin="anonymous"/>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"
+    crossorigin="anonymous" />
   <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js" crossorigin="anonymous"></script>
   <style>
     body {
       text-align: center;
     }
+
     .select2-container--default.select2-container--focus .select2-selection--multiple {
       border: 1px solid #aaa;
     }
   </style>
 </head>
+
 <body>
   <div id="container">
     <h2>Ứng dụng quản lý cammera</h2>
     <p>
       <button class="btn btn-primary" id="btn-send-data">Gửi dữ liệu</button>
-      <button class="btn btn-primary" onclick="location.reload();">Làm mới</button>
+      <button class="btn btn-primary" id="btn-capture-photo">Chụp ảnh</button>
     </p>
     <!-- Button trigger modal -->
     <div class="row">
@@ -119,7 +136,7 @@ const char index_html[] PROGMEM = R"rawliteral(
       </button>
     </div>
     <div class="row" style="text-align: center;">
-      <img src="get-photo"/>
+      <img src="get-photo" />
     </div>
     <!-- Modal Config time-->
     <div class="modal fade bd-example-modal-lg" id="popup-setting" tabindex="-1" role="dialog"
@@ -195,12 +212,38 @@ const char index_html[] PROGMEM = R"rawliteral(
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="container">
-            
+          <div class="container-fluid">
+            <form id="form-register">
+              <br />
+              <div class="row">
+                <label class="col-md-3">Máy chủ: </label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control host" name="host"/>
+                </div>
+                <label class="col-md-2">Port: </label>
+                <div class="col-md-3">
+                  <input type="number" class="form-control port" name="port"/>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <label class="col-md-3">Tên đăng nhập: </label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control username" name="username"/>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <label class="col-md-3">Mã hàng hóa</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control merchandiseCode" name="merchandiseCode"/>
+                </div>
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-            <button type="button" class="btn btn-primary" id="btn-save">Xác nhận</button>
+            <button type="button" class="btn btn-primary" id="btn-save-regis">Xác nhận</button>
           </div>
         </div>
       </div>
@@ -220,7 +263,7 @@ const char index_html[] PROGMEM = R"rawliteral(
     $('#days').select2();
     $('.type-day').show();
     $('.type-week').show();
-    $('#type').on('change', function(){
+    $('#type').on('change', function () {
       var type = $('#type').val();
       if (type == 1) {
         $('.type-day').show();
@@ -231,14 +274,14 @@ const char index_html[] PROGMEM = R"rawliteral(
         $('.type-day').show();
       }
     });
-    $('#btn-save').on('click', function(){
+    $('#btn-save').on('click', function () {
       var listDate = $("#days").val();
       var days = '';
-      for(var idx = 0; idx < listDate.length; idx++){
-        if(idx == 0){
+      for (var idx = 0; idx < listDate.length; idx++) {
+        if (idx == 0) {
           days += listDate[idx];
         }
-        else{
+        else {
           days += '_' + listDate[idx];
         }
       }
@@ -253,7 +296,25 @@ const char index_html[] PROGMEM = R"rawliteral(
       xhr.send(data);
     });
 
-    $('#btn-send-data').on('click', function(){
+    $('#btn-capture-photo').on('click', function () {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', "/capture-photo", true);
+      xhr.send();
+    });
+
+    $('#btn-save-regis').on('click', function () {
+      var data = $("#form-register").serialize();
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', "/register", true);
+      xhr.onreadystatechange = function () { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          console.log('1');
+        }
+      }
+      xhr.send(data);
+    });
+
+    $('#btn-send-data').on('click', function () {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', "/send-data", true);
       xhr.send();
@@ -466,9 +527,10 @@ void post(File myFile) {
     Serial.println(fileSize);
     Serial.print("connecting to ");
     Serial.println(post_host);
-
+    char charBuf[50];
+    post_host.toCharArray(charBuf, 50);
     // try connect or return on fail
-    if (!client.connect(post_host, post_port)) {
+    if (!client.connect(charBuf, post_port)) {
       Serial.println("http post connection failed");
       Serial.println("Post Failure");
     }
@@ -498,11 +560,14 @@ void post(File myFile) {
 
     // key header
     String keyHeader = "--" + boundary + "\r\n";
-    keyHeader += "Content-Disposition: form-data; name=\"merchandiseId\"\r\n\r\n";
-    keyHeader += "1\r\n";
+    keyHeader += "Content-Disposition: form-data; name=\"productCode\"\r\n\r\n";
+    keyHeader += merchandiseCode + "\r\n";
     keyHeader += "--" + boundary + "\r\n";
     keyHeader += "Content-Disposition: form-data; name=\"processType\"\r\n\r\n";
     keyHeader += "1\r\n";
+    keyHeader += "--" + boundary + "\r\n";
+    keyHeader += "Content-Disposition: form-data; name=\"username\"\r\n\r\n";
+    keyHeader += username+"\r\n";
 
     // request header
     String requestHead = "--" + boundary + "\r\n";
@@ -602,7 +667,6 @@ void sendNewData(){
   Serial.println(path);
   File f = SD_MMC.open(path);
   post(f);
-  copyImageLastest();
 }
 
 void setup() {
@@ -696,6 +760,10 @@ void setup() {
     request->send(SPIFFS, FILE_PHOTO, "image/jpg", false);
   });
 
+  server.on("/capture-photo", HTTP_GET, [](AsyncWebServerRequest * request) {
+     takeNewPhoto = true;
+     request->send(200, "text/plain", "Thanh cong");
+  });
   server.on("/send-data", HTTP_GET, [](AsyncWebServerRequest * request) {
     sendData = true;
     request->send(200, "text/plain", "Thanh cong");
@@ -725,6 +793,33 @@ void setup() {
       hours = defaultHour;
     }
     request->send(200, "text/plain", "Hello, POST: " + message);
+  });
+
+  // Đặt lịch
+  server.on("/register", HTTP_POST, [](AsyncWebServerRequest * request) {
+    String message;
+    if (request->hasParam(host, true)) {
+      post_host = request->getParam(host, true)->value();
+      Serial.print("post_host: ");
+      Serial.println(post_host);
+    }
+    if (request->hasParam("port", true)) {
+      String portT = request->getParam("port", true)->value();
+      Serial.print("portT: ");
+      Serial.println(portT);
+      post_port = portT.toInt();
+    }
+    if (request->hasParam("username", true)) {
+      username = request->getParam("username", true)->value();
+      Serial.print("username: ");
+      Serial.println(username);
+    }
+    if (request->hasParam("merchandiseCode", true)) {
+      merchandiseCode = request->getParam("merchandiseCode", true)->value();
+      Serial.print("merchandiseCode: ");
+      Serial.println(merchandiseCode);
+    }
+    request->send(200, "text/plain", "POST: " + message);
   });
 
   // Start server

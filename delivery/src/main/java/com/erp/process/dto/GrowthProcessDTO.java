@@ -38,4 +38,6 @@ public class GrowthProcessDTO extends FileAttachment {
 	private String productCode;
 	
 	private String productName;
+	
+	private String username;
 }

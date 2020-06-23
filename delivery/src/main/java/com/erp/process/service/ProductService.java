@@ -38,6 +38,13 @@ public class ProductService {
 	public ProductBO findById(Long sysActionId) {
 		return dao.findById(sysActionId).orElse(null);
 	}
+	
+	public ProductBO findByProductCode(String code) {
+		List<ProductBO> data = dao.findByProductCode(code);
+		if(data != null && data.size() > 0)
+			return data.get(0);
+		return null;
+	}
 
 	@Transactional
 	public void saveOrUpdate(ProductBO entity) {
@@ -81,6 +88,10 @@ public class ProductService {
 			LOGGER.info("Loi doc file");
 		}
 		return result;
+	}
+	
+	public List<ProductDTO> getProductByUsername(String username) {
+		return dao.getAllProduct(vfData, username);
 	}
 
 	private void loadFileAttachment(List<ProcessDTO> lstData) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {

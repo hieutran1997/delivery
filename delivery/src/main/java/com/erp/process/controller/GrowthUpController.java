@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.erp.process.bo.GrowthProcessBO;
+import com.erp.process.bo.ProductBO;
 import com.erp.process.dto.GrowthProcessDTO;
 import com.erp.process.service.GrowthProcessService;
+import com.erp.process.service.ProductService;
 import com.erp.service.ServiceChecker;
 import com.erp.util.BaseController;
 import com.erp.util.Constants;
@@ -36,6 +38,9 @@ public class GrowthUpController extends BaseController {
 	
 	@Autowired
 	private GrowthProcessService service;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@Autowired
 	private ServiceChecker serviceChecker;
@@ -58,11 +63,18 @@ public class GrowthUpController extends BaseController {
 	 * @throws SysException
 	 */
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	@PostMapping(produces = MediaType.APPLICATION_JSON)
+	@PostMapping(value = "/save-other",produces = MediaType.APPLICATION_JSON)
 	public @ResponseBody Response saveOrUpdateWithoutPer(HttpServletRequest req, GrowthProcessDTO dto) throws Exception, SysException {
-		GrowthProcessBO bo = service.saveOrUpdate(dto);
-		FileStorage.append(FileStorage.FILE_TYPE.GROWTH_UP_PROCESS, bo.getGrowthProcessId(), dto.getFile());
-		return Response.success(Constants.RESPONSE_CODE.SUCCESS).withData(bo);
+		if(dto != null && dto.getProductCode()!= null) {
+			ProductBO product = productService.findByProductCode(dto.getProductCode());
+			if(product != null) {
+				dto.setMerchandiseId(product.getProductId());
+				GrowthProcessBO bo = service.saveOrUpdate(dto);
+				FileStorage.append(FileStorage.FILE_TYPE.GROWTH_UP_PROCESS, bo.getGrowthProcessId(), dto.getFile());
+				return Response.success(Constants.RESPONSE_CODE.SUCCESS).withData(bo);
+			}
+		}
+		return Response.error("Lỗi");
 	}
 	
 	/**

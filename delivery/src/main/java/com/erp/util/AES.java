@@ -54,7 +54,6 @@ public class AES {
 			cipher.init(Cipher.DECRYPT_MODE, secretKey);
 			return new String(cipher.doFinal(DatatypeConverter.parseBase64Binary(input)));
 		} catch (Exception e) {
-
 			System.out.println("Error while decrypting: " + e.toString());
 		}
 		return null;

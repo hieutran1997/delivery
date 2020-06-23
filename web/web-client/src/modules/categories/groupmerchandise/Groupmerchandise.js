@@ -116,7 +116,7 @@ function GroupMerchandise(props) {
   }, [props, onInit, dataSearch]);
 
   useEffect(()=>{
-    if(props.typeMerchandiseProps){
+    if(props.typeMerchandiseProps && props.typeMerchandiseProps.type === `${ACTION_MODULE.CAT_TYPE_MER}_${types.GET_SELETED_SUCCESS}`){
       setLstType(props.typeMerchandiseProps.result.data);
     }
   }, [props.typeMerchandiseProps]);

@@ -55,7 +55,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             } catch(MalformedJwtException ex){
                 logger.error("JWT Token invalid");
             }
-        } else if(!request.getRequestURI().contains("/ws")){
+        } else if(!request.getRequestURI().contains("/ws") && !request.getRequestURI().contains("/growth-up/save-other")){
             logger.warn("JWT Token does not begin with Bearer String");
         }else {
         }
@@ -67,8 +67,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             // authentication
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, null);
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 // After setting the Authentication in the context, we specify
                 // that the current user is authenticated. So it passes the
                 // Spring Security Configurations successfully.

@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: delivery Maven Webapp
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: NguyenCongPC
+Built-By: hieut
 Implementation-Vendor-Id: com.erp
-Build-Jdk: 1.8.0_241
+Build-Jdk: 1.8.0_251
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/file-storage
 Created-By: Maven Integration for Eclipse

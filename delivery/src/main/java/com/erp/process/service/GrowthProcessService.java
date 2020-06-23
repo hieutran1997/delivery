@@ -44,10 +44,15 @@ public class GrowthProcessService {
 		bo.setDescription(dto.getDescription());
 		bo.setStartDate(new Date());
 		bo.setMerchandiseId(dto.getMerchandiseId());
-		String userName = CommonUtil.getCurrentUser().getUsername();
-		OrganizationModel org = userService.getOrganizationByUser(userName);
-		if(org != null) {
-			bo.setOrganizationId(org.getId());
+		try {
+			String userName = CommonUtil.getCurrentUser().getUsername();
+			OrganizationModel org = userService.getOrganizationByUser(userName);
+			if(org != null) {
+				bo.setOrganizationId(org.getId());
+			}
+		}
+		catch(Exception ex) {
+			System.out.println("lỗi");
 		}
 		dao.finishPreviousProcess(vfData, dto.getMerchandiseId());
 		dao.save(bo);

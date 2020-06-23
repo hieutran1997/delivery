@@ -81,6 +81,8 @@ public interface ProductDAO extends CrudRepository<ProductBO, Long> {
 		results.setData(query.list());
 		return results;
 	}
+	
+	List<ProductBO> findByProductCode(String code);
 
 	@Query(value = "SELECT * FROM product WHERE merchandise_register_id = ?1 AND orgnization_id = ?2 AND `status` = 1", nativeQuery = true)
 	List<ProductBO> findData(Long merchandiseRegisterId, Long orgId);
@@ -103,5 +105,12 @@ public interface ProductDAO extends CrudRepository<ProductBO, Long> {
 				+ " ORDER by vp.typeProcess DESC";
 		params.add(code);
         return vfData.list(sql, params, ProcessDTO.class);
+	}
+	
+	public default List<ProductDTO> getAllProduct(VfData vfData, String username) {
+		List<Object> params = new ArrayList<Object>();
+		String sql = "SELECT pd.product_code productCode, pd.product_name productName FROM product pd, user us WHERE pd.organization_path like CONCAT('%',us.organization_code,'%') AND username = ?";
+		params.add(username);
+        return vfData.list(sql, params, ProductDTO.class);
 	}
 }

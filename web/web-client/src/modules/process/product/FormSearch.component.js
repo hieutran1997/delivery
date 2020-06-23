@@ -48,7 +48,7 @@ export function FormSearch(props) {
                     <Col span={2}></Col>
                     <Col span={11}>
                         <FormInput valueName="status" labelName="Trạng thái"
-                            inputClassName="ant-input custom-input-as-ant-input" dataKey="value" options={appConfig.PRODUCT_STATUS}
+                            inputClassName="ant-input custom-input-as-ant-input" dataKey="value" valueFilter={1} options={appConfig.PRODUCT_STATUS}
                             register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.SELECT_FILTER} />
                     </Col>
                 </Row>
@@ -61,7 +61,7 @@ export function FormSearch(props) {
                     <Col span={11}>
                         <FormInput valueName="typeOfManufacture" labelName="Trong loại hình" 
                         inputClassName="ant-input custom-input-as-ant-input" dataKey="value" 
-                        options={appConfig.TYPE_OF_MANUFACTURE} showClear={true}
+                        options={appConfig.TYPE_OF_MANUFACTURE} showClear={true} valueFilter={0}
                         register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.SELECT_FILTER} />
                     </Col>
                 </Row>

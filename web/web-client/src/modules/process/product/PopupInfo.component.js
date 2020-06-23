@@ -13,9 +13,9 @@ export function PopupInfo(props) {
   const [isEdit, setIsEdit] = useState(false);
   const [dataDetail, setDataDetail] = useState(props);
   const [fileAttachment, setFileAttachment] = useState({});
-  const [status, setStatus] = useState(0);
-  const [typeOfManufacture, setTypeOfManufacture] = useState(0);
-  const [merchandiseRegisterId, setMerchandiseRegisterId] = useState(0);
+  const [status, setStatus] = useState();
+  const [typeOfManufacture, setTypeOfManufacture] = useState();
+  const [merchandiseRegisterId, setMerchandiseRegisterId] = useState();
 
   const onSaveEdit = data => {
     data.productId = productId;

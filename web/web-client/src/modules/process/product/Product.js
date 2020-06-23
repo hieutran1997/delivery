@@ -69,12 +69,17 @@ function Product(props) {
       key: 'status',
       width: '5%',
       render: (text, record) => {
-        let tmp = appConfig.PRODUCT_STATUS.find(x => x.value === record.status);
-        return (
-          <>
-            <Tag color={tmp.color} key={tmp ? tmp.name : "Chưa xác định"}>{tmp ? tmp.name : "Chưa xác định"}</Tag>
-          </>
-        );
+        if(record.status){
+          let tmp = appConfig.PRODUCT_STATUS.find(x => x.value === record.status);
+          return (
+            <>
+              <Tag color={tmp.color} key={tmp ? tmp.name : "Chưa xác định"}>{tmp ? tmp.name : "Chưa xác định"}</Tag>
+            </>
+          );
+        }else{
+          return ("");
+        }
+        
       }
     },
     {
@@ -184,7 +189,6 @@ function Product(props) {
 
   useEffect(() => {
     if (props.merchandiseData && props.merchandiseData.type === `${ACTION_MODULE.MERCHANDISE_REGISTER}_${types.GET_SELETED_SUCCESS}`) {
-      console.log('props.merchandiseData', props.merchandiseData.data);
       setLstMerchandise(props.merchandiseData.data);
     }
   }, [props.merchandiseData]);
