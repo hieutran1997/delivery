@@ -40,7 +40,7 @@
 #define PCLK_GPIO_NUM     22
 
 //const
-const char* ssid     = "Dragonboss";
+const char* ssid     = "DragonbossMB";
 const char* password = "123456789";
 const char* paramType = "type";
 const char* paramDay = "days";
