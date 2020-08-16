@@ -27,7 +27,7 @@ export function PopupAdd(props) {
         setValue("organizationName", props.dataDetail.organizationName);
         setValue("address", props.dataDetail.address);
         setValue("effectiveTime", props.dataDetail.effectiveTime);
-        setValue("expireTime", props.dataDetail.expireTime);
+        //setValue("expireTime", props.dataDetail.expireTime);
       }, 100);
     }
     setIsShowAdd(props.isShowAdd);
@@ -44,7 +44,7 @@ export function PopupAdd(props) {
       <form onSubmit={handleSubmit(onSaveEdit)}>
         <Row type="flex" justify="space-around">
           <Col span={11}>
-            <span>Mã:</span>
+            <span>Mã <span className="label-required">*</span>:</span>
             <input name="code" className="ant-input" ref={register({ required: true, maxlength: 10 })} />
             <span className="error-message">{errors.code && 'Bắt buộc nhập'}</span>
           </Col>
@@ -85,7 +85,7 @@ export function PopupAdd(props) {
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <FormInput valueName="expireTime" value={toDay} labelName="Ngày hết hiệu lực"
+            <FormInput valueName="expireTime" labelName="Ngày hết hiệu lực"
               register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.DATE_TIME} />
           </Col>
         </Row>

@@ -11,6 +11,8 @@ export function PopupInfo(props) {
   const [isEdit, setIsEdit] = useState(false);
   const [dataDetail, setDataDetail] = useState(props.dataDetail);
   const [lstOrg, setLstOrg] = useState([]);
+  const [effectiveDate, setEffectiveDate] = useState(null);
+  const [expriedDate, setExpiredDate] = useState(null);
   const onSaveEdit = data => {
     props.onSave(data);
   };
@@ -33,8 +35,15 @@ export function PopupInfo(props) {
         setValue("parentCode", props.dataDetail.parentCode);
         setValue("organizationName", props.dataDetail.organizationName);
         setValue("address", props.dataDetail.address);
-        setValue("effectiveTime", props.dataDetail.effectiveTimeNumber);
-        setValue("expireTime", props.dataDetail.expireTimeNumber);
+        if(props.dataDetail.effectiveTimeNumber){
+          setValue("effectiveTime", props.dataDetail.effectiveTimeNumber);
+          setEffectiveDate(new Date(props.dataDetail.effectiveTimeNumber));
+        }
+        if(props.dataDetail.expireTimeNumber){
+          setValue("expireTime", props.dataDetail.expireTimeNumber);
+          setExpiredDate(new Date(props.dataDetail.expireTimeNumber));
+        }
+        
       }, 100);
     }
     setIsEdit(props.isEdit);
@@ -89,12 +98,12 @@ export function PopupInfo(props) {
         <br />
         <Row type="flex" justify="space-around">
           <Col span={11}>
-            <FormInput valueName="effectiveTime" value={toDay} labelName="Ngày hiệu lực"
+            <FormInput valueName="effectiveTime" value={effectiveDate} labelName="Ngày hiệu lực"
               register={register} validation={{ required: true }} setValue={setValue} errors={errors} type={typeOfDynamicInput.DATE_TIME} />
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <FormInput valueName="expireTime" value={toDay} labelName="Ngày hết hiệu lực"
+            <FormInput valueName="expireTime" value={expriedDate} labelName="Ngày hết hiệu lực"
               register={register} setValue={setValue} errors={errors} type={typeOfDynamicInput.DATE_TIME} />
           </Col>
         </Row>

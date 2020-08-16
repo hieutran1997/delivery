@@ -150,7 +150,7 @@ function ManufactureProcess(props) {
         <div>
             <FormProductInfo product={props.product} setIsShowAdd={setIsShowAdd}></FormProductInfo>
             {props.view === 'grid' ? <div>
-                {hasPermission(resourceCode.product, control.hasView) === 1 ?
+                {hasPermission(resourceCode.process, control.hasView) === 1 ?
                     <Table
                         columns={columns} bordered
                         rowKey={record => record.manufactureProcessId}
@@ -183,7 +183,7 @@ function ManufactureProcess(props) {
                     </VerticalTimeline>
                 </div>
             }
-            {hasPermission(resourceCode.product, control.addAction) === 1 ? <PopupAddManufacture isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAddManufacture> : ""}
+            {hasPermission(resourceCode.process, control.hasAdd) === 1 ? <PopupAddManufacture isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAddManufacture> : ""}
         </div>
     );
 }

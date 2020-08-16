@@ -47,13 +47,14 @@ public class MerchandiseRegisterController extends BaseController {
 	
 	@PostMapping(produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> create(HttpServletRequest req, MerchandiseRegisterBO entity) {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.MERCHANDISE, Constants.PERMISSION.ADD)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.MERCHANDISE, Constants.PERMISSION.REGISTER)) {
 			throw new PermissionException();
 		}
 		MerchandiseRegisterBO bo = new MerchandiseRegisterBO();
 		if(entity.getMerchandiseRegisterId() != null && entity.getMerchandiseRegisterId() != 0) {
 			bo = service.findById(entity.getMerchandiseRegisterId());
 			bo.setDescription(entity.getDescription());
+			bo.setStatus(entity.getStatus());
 		}
 		else {
 			bo = entity;

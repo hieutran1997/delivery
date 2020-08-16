@@ -19,7 +19,7 @@ import com.erp.util.VfData;
 @Repository
 @SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 public interface MerchandiseDAO extends CrudRepository<MerchandiseBO, Long> {
-	public default PaginationUtil<MerchandiseDTO> getDataPaging(SearchRequestUtil<MerchandiseDTO> pageable, VfData vfData) {
+	public default PaginationUtil<MerchandiseDTO> getDataPaging(SearchRequestUtil<MerchandiseDTO> pageable, VfData vfData, String orgPath) {
         PaginationUtil<MerchandiseDTO> results = new PaginationUtil<>();
         int start = (pageable.getCurrent() - 1) * pageable.getPageSize();
         StringBuilder strCondition = new StringBuilder(" Where 1 = 1");
@@ -28,8 +28,10 @@ public interface MerchandiseDAO extends CrudRepository<MerchandiseBO, Long> {
         		+", md.effective_date effectiveDate, md.expired_date expiredDate, md.status" 
         		+", (SELECT ctm.name FROM cat_type_mechandise ctm WHERE ctm.cat_type_mechandise_id = md.cat_type_merchandise_id ) typeMerchandise" 
         		+", (SELECT cgm.name FROM cat_group_mechandise cgm WHERE cgm.cat_group_mechandise_id = md.cat_group_merchandise_id ) groupMerchandise" 
-        		+", (SELECT unit.name FROM cat_unit unit WHERE unit.cat_unit_id = md.cat_unit_id ) unit" 
+        		+", (SELECT unit.name FROM cat_unit unit WHERE unit.cat_unit_id = md.cat_unit_id ) unit"
+        		+", (SELECT CASE COUNT(*) when 1 then 1 ELSE 0 end  from merchandise_register mr where mr.organization_path like ? and md.merchandise_id = mr.merchandise_id) isRegistered" 
         		+" FROM merchandise md");
+        paramList.add("%"+orgPath+"%");
         if (pageable.getData() != null && !CommonUtil.isNullOrEmpty(pageable.getData().getMerchandiseCode())) {
             strCondition.append(" AND LOWER(md.`merchandise_code`) = LOWER(?) ");
             paramList.add(pageable.getData().getMerchandiseCode());

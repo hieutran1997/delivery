@@ -53,7 +53,7 @@ export function FormProductInfo(props) {
           <td></td>
           <td></td>
           <td>
-            {hasPermission(resourceCode.user, control.hasAdd) === 1 ?
+            {hasPermission(resourceCode.process, control.hasAdd) === 1 ?
               <Button type="primary" icon="plus" style={{ float: "right" }} onClick={() => { props.setIsShowAdd(true); }}>
                 Thêm mới
               </Button> : ""}

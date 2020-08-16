@@ -79,8 +79,12 @@ public class OrganizationServiceImpl implements OrganizationService{
     public OrganizationModel findOne(Long id) {
     	OrganizationModel result = organizationDao.findById(id).orElse(null);
     	if(result != null) {
-    		result.setEffectiveTimeNumber(result.getEffectiveTime().getTime());
-    		result.setExpireTimeNumber(result.getExpireTime().getTime());
+    		if(result.getEffectiveTime() != null) {
+    			result.setEffectiveTimeNumber(result.getEffectiveTime().getTime());
+    		}
+    		if(result.getExpireTime() != null) {
+    			result.setExpireTimeNumber(result.getExpireTime().getTime());
+    		}
     	}
     	return result;
     }

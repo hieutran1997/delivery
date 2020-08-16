@@ -49,7 +49,7 @@ public class GrowthUpController extends BaseController {
 	
 	@RequestMapping(value = "/postQuery", method = RequestMethod.POST)
 	public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<GrowthProcessDTO> pageable) {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.GROWTH_UP, Constants.PERMISSION.VIEW)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PROCESS, Constants.PERMISSION.VIEW)) {
 			throw new PermissionException();
 		}
 		return new ResponseEntity<PaginationUtil<GrowthProcessDTO>>(service.getDataSearch(pageable), HttpStatus.OK);
@@ -91,7 +91,7 @@ public class GrowthUpController extends BaseController {
 	 */
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON)
 	public @ResponseBody Response saveOrUpdate(HttpServletRequest req, GrowthProcessDTO dto) throws Exception, SysException {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.GROWTH_UP, Constants.PERMISSION.ADD)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PROCESS, Constants.PERMISSION.ADD)) {
 			throw new PermissionException();
 		}
 		GrowthProcessBO bo = service.saveOrUpdate(dto);
@@ -104,7 +104,7 @@ public class GrowthUpController extends BaseController {
 	
 	@RequestMapping(value = "/find-by-merid/{productCode}", method = RequestMethod.GET)
 	public ResponseEntity<?> findBtMerId(@PathVariable(value = "productCode") String productCode) {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.GROWTH_UP, Constants.PERMISSION.VIEW)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PROCESS, Constants.PERMISSION.VIEW)) {
 			throw new PermissionException();
 		}
 		return new ResponseEntity<>(service.findByMerchandiseId(productCode), HttpStatus.OK);

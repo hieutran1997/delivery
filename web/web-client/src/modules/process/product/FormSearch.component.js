@@ -91,7 +91,7 @@ export function FormSearch(props) {
                         Tìm kiếm
                     </button>
                     &nbsp;&nbsp;
-                    {hasPermission(resourceCode.user, control.hasAdd) === 1 ? <Button type="primary" icon="plus" onClick={onCreate}>
+                    {hasPermission(resourceCode.product, control.hasAdd) === 1 ? <Button type="primary" icon="plus" onClick={onCreate}>
                         Thêm mới
                     </Button> : ""}
                 </div>

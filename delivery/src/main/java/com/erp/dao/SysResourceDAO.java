@@ -36,11 +36,11 @@ public interface SysResourceDAO extends CrudRepository<SysResourceModel, Long> {
                                             + " , syr.path_url pathUrl, syr.resource_name resourceName"
                                             + " , syr.type_of_resource typeOfResource, syr.orther_control ortherControls"
                                             + " FROM sys_resource syr ");
-        if (!CommonUtil.isNullOrEmpty(pageable.getData().getCode())) {
+        if (pageable.getData() != null && !CommonUtil.isNullOrEmpty(pageable.getData().getCode())) {
             strCondition.append(" AND LOWER(syr.code) = LOWER(?) ");
             paramList.add(pageable.getData().getCode());
         }
-        if (!CommonUtil.isNullOrEmpty(pageable.getData().getResourceName())) {
+        if (pageable.getData() != null && !CommonUtil.isNullOrEmpty(pageable.getData().getResourceName())) {
             strCondition.append(" AND LOWER(syr.resource_name) LIKE LOWER(?) ");
             paramList.add("%" + pageable.getData().getResourceName() + "%");
         }

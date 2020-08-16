@@ -41,7 +41,7 @@ public class DeliveryProcessController extends BaseController {
 	
 	@RequestMapping(value = "/postQuery", method = RequestMethod.POST)
 	public ResponseEntity<?> postQuery(@RequestBody SearchRequestUtil<DeliveryProcessDTO> pageable) {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.DELIVERY, Constants.PERMISSION.VIEW)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PROCESS, Constants.PERMISSION.VIEW)) {
 			throw new PermissionException();
 		}
 		return new ResponseEntity<PaginationUtil<DeliveryProcessDTO>>(service.getDataSearch(pageable), HttpStatus.OK);
@@ -58,7 +58,7 @@ public class DeliveryProcessController extends BaseController {
 	 */
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON)
 	public @ResponseBody Response saveOrUpdate(HttpServletRequest req, DeliveryProcessDTO dto) throws Exception, SysException {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.DELIVERY, Constants.PERMISSION.ADD)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PROCESS, Constants.PERMISSION.ADD)) {
 			throw new PermissionException();
 		}
 		DeliveryProcessBO bo = service.saveOrUpdate(dto);
@@ -68,7 +68,7 @@ public class DeliveryProcessController extends BaseController {
 	
 	@RequestMapping(value = "/find-by-merid/{productCode}", method = RequestMethod.GET)
 	public ResponseEntity<?> findBtMerId(@PathVariable(value = "productCode") String productCode) {
-		if (!serviceChecker.permissionChecker(Constants.RESOURCE.DELIVERY, Constants.PERMISSION.VIEW)) {
+		if (!serviceChecker.permissionChecker(Constants.RESOURCE.PROCESS, Constants.PERMISSION.VIEW)) {
 			throw new PermissionException();
 		}
 		return new ResponseEntity<>(service.findByMerchandiseId(productCode), HttpStatus.OK);

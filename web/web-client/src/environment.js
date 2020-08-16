@@ -1,15 +1,19 @@
 import axios from 'axios';
 
 export const environments_dev = {
-    URL_SERVICE: 'http://192.168.1.20:8000',
-    URL_SERVICE_FILE: 'http://192.168.1.20:8001',
-    CLIENT_HOST: 'http://192.168.1.20:3000'
+    // URL_SERVICE: 'http://192.168.43.64:8000',
+    // URL_SERVICE_FILE: 'http://192.168.43.64:8001',
+    // CLIENT_HOST: 'http://192.168.43.64:3000'
+    URL_SERVICE: 'http://192.168.1.189:8000',
+    URL_SERVICE_FILE: 'http://192.168.1.189:8001',
+    CLIENT_HOST: 'http://192.168.1.189:3000'
 }
 
+
 export const environments_prod = {
-    URL_SERVICE: 'http://192.168.1.20:8000',
-    URL_SERVICE_FILE: 'http://192.168.1.20:8001',
-    CLIENT_HOST: 'http://192.168.1.20:3000'
+    URL_SERVICE: 'http://192.168.43.64:8000',
+    URL_SERVICE_FILE: 'http://192.168.43.64:8001',
+    CLIENT_HOST: 'http://192.168.43.64:3000'
 }
 
 export const url_services = {
@@ -101,13 +105,13 @@ export const menu = [
         url_hash: 'cat',
         icon: 'database',
         childs: [
-            {
-                key: 'admin/cat/sys_cat',
-                title: 'Danh mục hệ thống',
-                component: 'SysCat',
-                url_hash: 'admin/cat/sys_cat',
-                icon: 'ellipsis'
-            },
+            // {
+            //     key: 'admin/cat/sys_cat',
+            //     title: 'Danh mục hệ thống',
+            //     component: 'SysCat',
+            //     url_hash: 'admin/cat/sys_cat',
+            //     icon: 'ellipsis'
+            // },
             {
                 key: 'admin/cat/group-merchandise',
                 title: 'Danh mục nhóm hàng',

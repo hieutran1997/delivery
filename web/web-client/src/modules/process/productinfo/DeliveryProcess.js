@@ -175,7 +175,7 @@ function DeliveryProcess(props) {
         <div>
             <FormProductInfo product={props.product} setIsShowAdd={setIsShowAdd}></FormProductInfo>
             {props.view === 'grid' ? <div>
-                {hasPermission(resourceCode.product, control.hasView) === 1 ?
+                {hasPermission(resourceCode.process, control.hasView) === 1 ?
                     <Table
                         columns={columns} bordered
                         rowKey={record => record.deliveryProcessId}
@@ -209,7 +209,7 @@ function DeliveryProcess(props) {
                     </VerticalTimeline>
                 </div>
             }
-            {hasPermission(resourceCode.product, control.addAction) === 1 ? <PopupAddDelivery lstOrg={lstOrg} isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAddDelivery> : ""}
+            {hasPermission(resourceCode.process, control.hasAdd) === 1 ? <PopupAddDelivery lstOrg={lstOrg} isShowAdd={isShowAdd} closePopup={closePopup} onSave={onSave}></PopupAddDelivery> : ""}
         </div>
     );
 }
