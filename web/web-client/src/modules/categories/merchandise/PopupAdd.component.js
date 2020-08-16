@@ -51,7 +51,7 @@ export function PopupAdd(props) {
   }, [props.newCode, setValue]);
 
   const changeTypeMer = (ev) => {
-    if(ev){
+    if(ev && ev.value){
       props.getNewCode(ev.value.value);
     }
   }

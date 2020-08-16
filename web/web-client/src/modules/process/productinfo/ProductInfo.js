@@ -10,7 +10,7 @@ import DisplayProcess from './DisplayProcess';
 import { TableOutlined, EyeOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { findByCode } from '../../../shared/actions/process/ProductResource';
-import { ACTION_MODULE, resourceCode, control, hasPermission } from '../../../shared/common';
+import { ACTION_MODULE} from '../../../shared/common';
 import * as types from '../../../shared/constants/ActionTypeCommon';
 
 function useQuery() {
@@ -47,7 +47,7 @@ function ProductInfo(props) {
     <div>
       <div className="content-section implementation">
         <TabView activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
-          {hasPermission(resourceCode.growthUpProcess, control.hasView) === 1 ? <TabPanel header="Nuôi trồng, chăm sóc" leftIcon="pi pi-chart-line">
+          <TabPanel header="Nuôi trồng, chăm sóc" leftIcon="pi pi-chart-line">
             <Row gutter={16}>
               <Radio.Group value={view} style={{ float: "right" }} onChange={handleViewChange}>
                 <Radio.Button value="grid"><TableOutlined /></Radio.Button>
@@ -58,8 +58,7 @@ function ProductInfo(props) {
             <Row gutter={16}>
               <GrowthUpProcess view={view} product={product} productCode={query.get("code")}></GrowthUpProcess>
             </Row>
-          </TabPanel> : ""}
-          {hasPermission(resourceCode.manufactureProcess, control.hasView) === 1 ?
+          </TabPanel> 
             <TabPanel header="Chế biến, sản xuất" leftIcon="pi pi-cog">
               <Row gutter={16}>
                 <Radio.Group value={view} style={{ float: "right" }} onChange={handleViewChange}>
@@ -71,8 +70,8 @@ function ProductInfo(props) {
               <Row gutter={16}>
                 <ManufactureProcess view={view} product={product} productCode={query.get("code")}></ManufactureProcess>
               </Row>
-            </TabPanel> : ""}
-          {hasPermission(resourceCode.deliveryProcess, control.hasView) === 1 ? <TabPanel header="Vận chuyển" leftIcon="pi pi-eject">
+            </TabPanel>
+          <TabPanel header="Vận chuyển" leftIcon="pi pi-eject">
             <Row gutter={16}>
               <Radio.Group value={view} style={{ float: "right" }} onChange={handleViewChange}>
                 <Radio.Button value="grid"><TableOutlined /></Radio.Button>
@@ -83,8 +82,8 @@ function ProductInfo(props) {
             <Row gutter={16}>
               <DeliveryProcess view={view} product={product} productCode={query.get("code")}></DeliveryProcess>
             </Row>
-          </TabPanel> : ""}
-          {hasPermission(resourceCode.deliveryProcess, control.hasView) === 1 ? <TabPanel header="Bày bán" leftIcon="pi pi-shopping-cart">
+          </TabPanel>
+          <TabPanel header="Bày bán" leftIcon="pi pi-shopping-cart">
             <Row gutter={16}>
               <Radio.Group value={view} style={{ float: "right" }} onChange={handleViewChange}>
                 <Radio.Button value="grid"><TableOutlined /></Radio.Button>
@@ -95,7 +94,7 @@ function ProductInfo(props) {
             <Row gutter={16}>
               <DisplayProcess view={view} product={product} productCode={query.get("code")}></DisplayProcess>
             </Row>
-          </TabPanel> : ""}
+          </TabPanel>
         </TabView>
       </div>
     </div>

@@ -14,7 +14,9 @@ import com.erp.categories.dao.MerchandiseDAO;
 import com.erp.categories.dto.MerchandiseDTO;
 import com.erp.elastic.index.MerchandiseIndex;
 import com.erp.elastic.repository.MerchandiseRepository;
+import com.erp.model.OrganizationModel;
 import com.erp.model.dto.SelectedFormDTO;
+import com.erp.service.UserService;
 import com.erp.util.CommonUtil;
 import com.erp.util.PaginationUtil;
 import com.erp.util.SearchRequestUtil;
@@ -33,6 +35,9 @@ public class MerchandiseService {
 	
 	@Autowired
 	private DeliverSeqDAO deliverSeqDAO;
+	
+	@Autowired
+	private UserService userService;
 	
 	public MerchandiseBO findById(Long merchandiseId) {
 		return dao.findById(merchandiseId).orElse(null);
@@ -54,7 +59,9 @@ public class MerchandiseService {
      * @return
      */
     public PaginationUtil<MerchandiseDTO> processSearch(SearchRequestUtil<MerchandiseDTO> pageable) {
-        return dao.getDataPaging(pageable, vfData);
+    	String userName = CommonUtil.getCurrentUser().getUsername();
+		OrganizationModel org = userService.getOrganizationByUser(userName);
+        return dao.getDataPaging(pageable, vfData, org.getOrganizationPath());
     }
     
     public List<SelectedFormDTO> getSelectedData(){

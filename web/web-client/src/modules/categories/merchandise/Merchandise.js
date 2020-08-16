@@ -94,8 +94,12 @@ function Merchandise(props) {
               </Popconfirm> : ""
           }
           {
-            hasPermission(resourceCode.merchandise, control.regisMerchandise, 1) === 1 && record.status === 2 ? 
+            hasPermission(resourceCode.merchandise, control.regisMerchandise, 1) === 1 && record.isRegistered !== 1 && record.status === 2 ? 
               <Icon type="select" onClick={() => { handleRegis(record) }} className="icon-action icon-edit" title="Đăng ký" theme="outlined" /> : ""
+          }
+          {
+            hasPermission(resourceCode.merchandise, control.regisMerchandise, 1) === 1 && record.isRegistered === 1 && record.status === 2 ? 
+              <Icon type="eye" onClick={() => { handleRegis(record) }} className="icon-action icon-edit" title="Xem" theme="outlined" /> : ""
           }
         </span>
       ),

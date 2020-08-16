@@ -5,3 +5,10 @@
 /file-storage/logs/*.log
 /delivery/logs/archived/*.log
 /delivery/logs/app.log
+delivery/logs/api-2020-07-29.0.log
+delivery/logs/api-2020-07-28.0.log
+delivery/logs/*.log
+.classpath
+.project
+.settings/.jsdtscope
+.settings/*

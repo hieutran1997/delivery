@@ -179,6 +179,7 @@ export const resourceCode = {
     deliveryProcess: 'delivery_process',
     manufactureProcess: 'manufacture_process',
     displayProcess: 'display_process',
+    process: 'process'
 }
 
 export const ACTION_MODULE = {

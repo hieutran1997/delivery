@@ -24,6 +24,7 @@ public class Constants {
         public static final String VIEW = "VIEW";
         public static final String APPROVE = "APPROVE";
         public static final String ORTHER = "ORTHER";
+        public static final String REGISTER = "regisMerchandise";
     }
     
     public static class RESOURCE {
@@ -41,6 +42,7 @@ public class Constants {
         public static final String DELIVERY = "delivery_process";
         public static final String MANUFACTURE = "manufacture_process";
         public static final String DISPLAY = "display_process";
+        public static final String PROCESS = "process";
     }
     
     public interface CORS_FILTER {

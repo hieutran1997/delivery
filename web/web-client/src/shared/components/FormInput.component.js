@@ -64,7 +64,7 @@ export const FormInput = forwardRef((props, ref) => {
                 <DatePicker
                     className={props.inputClassName}
                     onChange={onChangeDate}
-                    value={value ? moment(value, DateFormat) : moment(toDay, DateFormat)}
+                    value={value ? moment(value, DateFormat) : null}
                     disabled={props.disabled}
                     placeholder="Chọn ngày"
                     format={DateFormat} />

@@ -43,4 +43,6 @@ public class MerchandiseDTO {
 	private String groupMerchandise;
 	
 	private String unit;
+	
+	private long isRegistered;
 }
