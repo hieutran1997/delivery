@@ -1,0 +1,14 @@
+Người dùng: hieutv, anhnd, suunv, adam
+
+Cấu hình thông tin:
+Máy chủ: 192.168.43.64:8000
+
+Ex1: Dưa hấu | adam
+- Tạo mới đv: 
+- Them moi hang hoa
+- Them moi san pham
+    +) Giong cay dat chuan
+    +) Vuon nuoi trong
+    +) Cham soc cay trong
+    +) Thu hoach, van chuyen dua hau
+    +) Bay ban trong sieu thi

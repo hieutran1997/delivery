@@ -51,7 +51,8 @@ const TableFile = forwardRef((props, ref) => {
     const checkFile = fileName => {
         let indexJpg = fileName.indexOf("jpg");
         let indexPng = fileName.indexOf("png");
-        if (indexJpg >= 0 || indexPng >= 0) {
+        let indexJpeg = fileName.indexOf("jpeg");
+        if (indexJpg >= 0 || indexPng >= 0 || indexJpeg>=0) {
             return 'image';
         }
         return 'file'

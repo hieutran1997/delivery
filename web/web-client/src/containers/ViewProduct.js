@@ -92,7 +92,7 @@ function ViewProduct(props) {
             return (
                 <>
                     <p><b>Số văn bản: </b>{item.documentNumber}</p>
-                    <p><b>Vận chuyển từ: </b> {item.organizationSourceName} -> {item.organizationDescName}</p>
+                    <p><b>Vận chuyển từ: </b> {item.organizationSourceName} - {item.organizationDescName}</p>
                     <p><b>Đánh giá: </b> {item.evaluation}</p>
                 </>
             );

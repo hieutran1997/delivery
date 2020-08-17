@@ -42,7 +42,7 @@ public class GrowthProcessService {
 		GrowthProcessBO bo = new GrowthProcessBO();
 		bo.setAddress(dto.getAddress());
 		bo.setDescription(dto.getDescription());
-		bo.setStartDate(new Date());
+		bo.setStartDate(dto.getStartDate());
 		bo.setMerchandiseId(dto.getMerchandiseId());
 		try {
 			String userName = CommonUtil.getCurrentUser().getUsername();
